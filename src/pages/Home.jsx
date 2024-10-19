@@ -13,22 +13,20 @@ const Home = () => {
 
   const [currentStage, setCurrentStage] = useState(1);
   const [isRotating, setIsRotating] = useState(false);
-  const [isPlayingMusic, setIsPlayingMusic] = useState(false);
+  const [isPlayingMusic, setIsPlayingMusic] = useState(true); // Initially true to auto-play
 
   useEffect(() => {
-    if (isPlayingMusic) {
-      audioRef.current.play();
-    }
+    // Automatically play music when the page loads
+    audioRef.current.play();
 
     return () => {
       audioRef.current.pause();
     };
-  }, [isPlayingMusic]);
+  }, []); // Empty dependency array ensures it runs once on component mount
 
   const adjustBiplaneForScreenSize = () => {
     let screenScale, screenPosition;
 
-    // If screen width is less than 768px, adjust the scale and position
     if (window.innerWidth < 768) {
       screenScale = [1.5, 1.5, 1.5];
       screenPosition = [0, -1.5, 0];
@@ -108,7 +106,14 @@ const Home = () => {
         <img
           src={!isPlayingMusic ? soundoff : soundon}
           alt='jukebox'
-          onClick={() => setIsPlayingMusic(!isPlayingMusic)}
+          onClick={() => {
+            if (isPlayingMusic) {
+              audioRef.current.pause();
+            } else {
+              audioRef.current.play();
+            }
+            setIsPlayingMusic(!isPlayingMusic);
+          }}
           className='w-10 h-10 cursor-pointer object-contain'
         />
       </div>
