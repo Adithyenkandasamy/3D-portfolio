@@ -3,6 +3,7 @@
   import App from './App.jsx';
   import './index.css';
   import { Helmet } from 'react-helmet-async';
+  import { LazyLoadImage } from 'react-lazy-load-image-component';
 
   ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -42,6 +43,9 @@
           `}
           </script>
         </Helmet>
+
+        <LazyLoadImage src="your-image.jpg" alt="portfolio image" effect="blur" />
+
         
         <h1>Adithyen - Full Stack Developer</h1>
         <h2>Portfolio</h2>
