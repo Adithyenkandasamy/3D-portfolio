@@ -1,20 +1,29 @@
-import { NavLink } from "react-router-dom";
+'use client'
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation'; // Import from next/navigation
 
-import { logo } from "../assets/images";
+const logo = '/assets/images/logo.svg';
 
 const Navbar = () => {
+  const pathname = usePathname(); // Get the current pathname
+
   return (
     <header className='header'>
-      <NavLink to='/'>
-        <img src={logo} alt='logo' className='w-18 h-18 object-contain' />
-      </NavLink>
+      <Link href='/' passHref>
+        <Image src={logo} alt='logo' width={72} height={72} className='object-contain' />
+      </Link>
       <nav className='flex text-lg gap-7 font-medium'>
-        <NavLink to='/about' className={({ isActive }) => isActive ? "text-blue-600" : "text-black" }>
-          About
-        </NavLink>
-        <NavLink to='/projects' className={({ isActive }) => isActive ? "text-blue-600" : "text-black"}>
-          Projects
-        </NavLink>
+        <Link href='/about'>
+          <p className={pathname === '/about' ? 'text-blue-600' : 'text-white'}>
+            About
+          </p>
+        </Link>
+        <Link href='/projects'>
+          <p className={pathname === '/projects' ? 'text-blue-600' : 'text-white'}>
+            Projects
+          </p>
+        </Link>
       </nav>
     </header>
   );
