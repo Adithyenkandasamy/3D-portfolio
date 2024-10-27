@@ -109,7 +109,7 @@ export const experiences = [
         company_name: "MagizhTech",
         icon: magizhtech,
         iconBg: "#accbe1",
-        date: "March 2020 - April 2021",
+        date: "June 2024",
         points: [
             "Developing and maintaining web applications using React.js and other related technologies.",
             "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
@@ -118,16 +118,17 @@ export const experiences = [
         ],
     },
     {
-        title: "React Native Developer",
+        title: "Python developer",
         company_name: "Student management",
         icon: tesla,
         iconBg: "#fbc3bc",
-        date: "Jan 2021 - Feb 2022",
+        date: "Augest 2024",
         points: [
-            "Developing and maintaining web applications using React.js and other related technologies.",
+            "Developing and maintaining web applications using FastAPI and other related technologies such as Python, JavaScript, HTML, and CSS.",
             "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
             "Implementing responsive design and ensuring cross-browser compatibility.",
             "Participating in code reviews and providing constructive feedback to other developers.",
+            "Using Python to manage students in a database, including creating new students, retrieving students, updating students, and deleting students.",
         ],
     },
     {
@@ -135,7 +136,7 @@ export const experiences = [
         company_name: "Shopify",
         icon: shopify,
         iconBg: "#b7e4c7",
-        date: "Jan 2022 - Jan 2023",
+        date: "July 2024",
         points: [
             "Worked in my own office website and added some features using React in the help of v0.dev.",
         ],
@@ -145,7 +146,7 @@ export const experiences = [
         company_name: "Meta",
         icon: meta,
         iconBg: "#a2d2ff",
-        date: "Jan 2023 - Present",
+        date: "June 2024",
         points: [
             "Developing an AI assistant named Jarvis, which can access and control a laptop using voice commands.",
             "Using Python to develop a speech recognition system that can recognize and execute voice commands.",
