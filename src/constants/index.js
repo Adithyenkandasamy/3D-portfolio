@@ -192,8 +192,8 @@ export const projects = [
     {
         iconUrl: car,
         theme: 'btn-back-blue',
-        name: 'Mern stack',
-        description: 'Learned about React by building a mobile app for finding and comparing cars on the market, streamlining the car-buying process. I also learned about Node.js and how to use it to create a RESTful API.',
+        name: 'Mern stack-Todo-app',
+        description: 'Learned about React by building a mobile app for finding and comparing cars on the market, streamlining the car-buying process. I also learned about Node.js and how to use it to create a RESTful API.With the backend of mongo db',
         link: 'https://github.com/Adithyenkandasamy/Todo_app-react',
     },
     {
