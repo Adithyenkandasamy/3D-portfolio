@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # Production build with Nginx
+  portfolio-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    container_name: 3d-portfolio-prod
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    networks:
+      - portfolio-network
+
+  # Simple production build with serve
+  portfolio-simple:
+    build:
+      context: .
+      dockerfile: Dockerfile.simple
+    ports:
+      - "3001:3000"
+    container_name: 3d-portfolio-simple
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    networks:
+      - portfolio-network
+
+  # Development build
+  portfolio-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    container_name: 3d-portfolio-dev
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - portfolio-network
+
+networks:
+  portfolio-network:
+    driver: bridge

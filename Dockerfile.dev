@@ -1,0 +1,23 @@
+# Development Dockerfile - simpler approach
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Set memory limit for Node.js
+ENV NODE_OPTIONS="--max-old-space-size=2048"
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install --legacy-peer-deps
+
+# Copy source code
+COPY . .
+
+# Expose port 5173 (Vite default)
+EXPOSE 5173
+
+# Start development server
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

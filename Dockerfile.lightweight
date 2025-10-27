@@ -1,0 +1,14 @@
+# Lightweight Dockerfile - pre-built approach
+FROM nginx:alpine
+
+# Copy pre-built files (assumes you've built locally)
+COPY dist/ /usr/share/nginx/html/
+
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expose port 80
+EXPOSE 80
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
