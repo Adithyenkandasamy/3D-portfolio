@@ -3,7 +3,7 @@ import {
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 
-import { CTA } from "../components";
+import { CTA, ResumeButton } from "../components";
 import { experiences, skills } from "../constants";
 
 import "react-vertical-timeline-component/style.min.css";
@@ -25,6 +25,14 @@ const About = () => {
           Software Engineer based in Croatia, specializing in technical
           education through hands-on learning and building applications.
         </p>
+      </div>
+
+      <div className='mt-8 flex justify-center'>
+        <ResumeButton 
+          googleDriveLink="https://drive.google.com/file/d/YOUR_FILE_ID/view?usp=sharing"
+          fileName="Adithyen_Resume.pdf"
+          variant="outline"
+        />
       </div>
 
       <div className='py-10 flex flex-col'>

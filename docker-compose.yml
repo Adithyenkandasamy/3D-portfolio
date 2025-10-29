@@ -1,13 +1,26 @@
 version: '3.8'
 
 services:
-  # Production build with Nginx
+  # Lightweight production build (recommended)
+  portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile.lightweight
+    ports:
+      - "3000:80"
+    container_name: 3d-portfolio-app
+    environment:
+      - NODE_ENV=production
+    networks:
+      - portfolio-network
+
+  # Production build with Nginx (memory intensive)
   portfolio-prod:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:80"
+      - "3001:80"
     container_name: 3d-portfolio-prod
     restart: unless-stopped
     environment:
@@ -15,13 +28,13 @@ services:
     networks:
       - portfolio-network
 
-  # Simple production build with serve
+  # Simple production build with serve (memory intensive)
   portfolio-simple:
     build:
       context: .
       dockerfile: Dockerfile.simple
     ports:
-      - "3001:3000"
+      - "3002:3000"
     container_name: 3d-portfolio-simple
     restart: unless-stopped
     environment:
@@ -29,7 +42,7 @@ services:
     networks:
       - portfolio-network
 
-  # Development build
+  # Development build (memory intensive)
   portfolio-dev:
     build:
       context: .
@@ -45,6 +58,12 @@ services:
       - /app/node_modules
     networks:
       - portfolio-network
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
 
 networks:
   portfolio-network:

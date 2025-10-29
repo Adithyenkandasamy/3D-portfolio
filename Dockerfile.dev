@@ -5,16 +5,19 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Set memory limit for Node.js
-ENV NODE_OPTIONS="--max-old-space-size=2048"
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install --legacy-peer-deps
+# Install all dependencies including devDependencies
+RUN npm install --legacy-peer-deps --no-audit --no-fund
 
 # Copy source code
 COPY . .
+
+# Rebuild node modules if needed
+RUN npm rebuild
 
 # Expose port 5173 (Vite default)
 EXPOSE 5173
