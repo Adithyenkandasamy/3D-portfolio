@@ -43,7 +43,7 @@ const ResumeButton = () => {
         e.preventDefault();
         handleDownload();
       }}
-      className="text-blue-600 hover:text-blue-800 hover:underline cursor-pointer transition-colors"
+      className="text-black hover:text-gray-700 cursor-pointer transition-colors font-medium"
     >
       {isDownloading ? 'Opening...' : 'View my Resume'}
     </a>
