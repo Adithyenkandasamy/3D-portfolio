@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const ResumeButton = () => {
   const [isDownloading, setIsDownloading] = useState(false);
-  const googleDriveLink = "https://drive.google.com/file/d/1KC1MhrBlyxFwA-NPox5NU3a_MKSD51vj/view?usp=sharing";
+  const googleDriveLink = "https://drive.google.com/file/d/1SAQf-hS1VJ0pmNOIFAB82CSGaItRzVOh/view?usp=drive_link";
   const fileName = "Adithyen_Resume.pdf";
 
   const getDirectDownloadLink = (driveLink) => {
