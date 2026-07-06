@@ -1,4 +1,4 @@
-import { magizhtech,meta, shopify, starbucks, tesla } from "../assets/images";
+import { magizhtech, shopify, snssquarehub } from "../assets/images";
 import {
     car,
     contact,
@@ -34,14 +34,34 @@ export const skills = [
         type: "Backend",
     },
     {
-        imageUrl: css,
-        name: "CSS",
+        imageUrl: javascript,
+        name: "JavaScript",
+        type: "Frontend",
+    },
+    {
+        imageUrl: react,
+        name: "React",
+        type: "Frontend",
+    },
+    {
+        imageUrl: nextjs,
+        name: "Next.js",
         type: "Frontend",
     },
     {
         imageUrl: express,
-        name: "Express",
+        name: "FastAPI / Flask",
         type: "Backend",
+    },
+    {
+        imageUrl: nodejs,
+        name: "Node.js",
+        type: "Backend",
+    },
+    {
+        imageUrl: mongodb,
+        name: "MongoDB",
+        type: "Database",
     },
     {
         imageUrl: git,
@@ -54,104 +74,55 @@ export const skills = [
         type: "Version Control",
     },
     {
+        imageUrl: tailwindcss,
+        name: "Tailwind CSS",
+        type: "Frontend",
+    },
+    {
+        imageUrl: css,
+        name: "CSS",
+        type: "Frontend",
+    },
+    {
         imageUrl: html,
         name: "HTML",
         type: "Frontend",
     },
     {
-        imageUrl: javascript,
-        name: "JavaScript",
-        type: "Frontend",
-    },
-    {
-        imageUrl: mongodb,
-        name: "MongoDB",
+        imageUrl: typescript,
+        name: "SQL",
         type: "Database",
     },
     {
-        imageUrl: motion,
-        name: "Motion",
-        type: "Animation",
+        imageUrl: redux,
+        name: "Docker",
+        type: "DevOps",
     },
-    {
-        imageUrl: mui,
-        name: "Material-UI",
-        type: "Frontend",
-    },
-    {
-        imageUrl: nextjs,
-        name: "Next.js",
-        type: "Frontend",
-    },
-    {
-        imageUrl: nodejs,
-        name: "Node.js",
-        type: "Backend",
-    },
-    {
-        imageUrl: react,
-        name: "React",
-        type: "Frontend",
-    },
-   
- 
-    {
-        imageUrl: tailwindcss,
-        name: "Tailwind CSS",
-        type: "Frontend",
-    },
-   
 ];
 
 export const experiences = [
     {
-        title: "Reactjs",
-        company_name: "MagizhTech",
+        title: "AI/ML Engineering Intern",
+        company_name: "Magizh Technologies | Sathyamangalam",
         icon: magizhtech,
         iconBg: "#accbe1",
-        date: "June 2024",
+        date: "03/07/2025 – 22/07/2025",
         points: [
-            "Developing and maintaining web applications using React.js and other related technologies.",
-            "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-            "Implementing responsive design and ensuring cross-browser compatibility.",
-            "Participating in code reviews and providing constructive feedback to other developers.",
+            "Developed and integrated AI/ML models into Python web applications using Flask and FastAPI.",
+            "Implemented computer vision and NLP solutions for real-world business applications.",
+            "Deployed scalable AI solutions with focus on model optimization and performance.",
         ],
     },
     {
-        title: "Python developer",
-        company_name: "Student management",
-        icon: tesla,
-        iconBg: "#fbc3bc",
-        date: "Augest 2024",
+        title: "Software Intern",
+        company_name: "SNS Square Hub | Coimbatore",
+        icon: snssquarehub,
+        iconBg: "#1a3a5c",
+        date: "02/2026 – 04/2026",
         points: [
-            "Developing and maintaining web applications using FastAPI and other related technologies such as Python, JavaScript, HTML, and CSS.",
-            "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-            "Implementing responsive design and ensuring cross-browser compatibility.",
-            "Participating in code reviews and providing constructive feedback to other developers.",
-            "Using Python to manage students in a database, including creating new students, retrieving students, updating students, and deleting students.",
-        ],
-    },
-    {
-        title: "Web Developer",
-        company_name: "Shopify",
-        icon: shopify,
-        iconBg: "#b7e4c7",
-        date: "July 2024",
-        points: [
-            "Worked in my own office website and added some features using React in the help of v0.dev.",
-        ],
-    },
-    {
-        title: "Full stack Developer",
-        company_name: "Meta",
-        icon: meta,
-        iconBg: "#a2d2ff",
-        date: "June 2024",
-        points: [
-            "Developing an AI assistant named Jarvis, which can access and control a laptop using voice commands.",
-            "Using Python to develop a speech recognition system that can recognize and execute voice commands.",
-            "Implementing a natural language processing system to understand and generate human-like text responses.",
-            "Integrating the AI assistant with various APIs and services to enable it to perform tasks such as sending emails and controlling the laptop's hardware.",
+            "Developed scalable web applications using Next.js and FastAPI, focusing on clean architecture, API design, and performance optimization.",
+            "Worked with AI, Computer Vision, OCR, and multimodal models, integrating intelligent document processing and automation solutions into real-world applications.",
+            "Gained hands-on experience with LLM concepts, tokenization, prompt engineering, and AI model integration, while contributing to production-ready software systems.",
         ],
     },
 ];
@@ -178,43 +149,57 @@ export const projects = [
     {
         iconUrl: pricewise,
         theme: 'btn-back-red',
-        name: 'Ai-voice-assistant',
-        description: 'Developed an AI assistant with Python that can easily interact with other processes, executing tasks such as sending emails and controlling hardware components.',
-        link: 'https://github.com/Adithyenkandasamy/Ai-voice-Assistant',
+        name: 'Real-Time Voice Chat Web App',
+        description: 'AI-powered voice chat using Ollama, FasterWhisper & Kokoro with WebSocket — achieved <200ms latency with 95% accuracy.',
+        link: 'https://github.com/Adithyenkandasamy',
     },
     {
         iconUrl: threads,
         theme: 'btn-back-green',
-        name: 'Full Stack Threads Clone',
-        description: 'Created an Fast API application like Instagram and did many things in this project. I learned about Fast API and how to use it to create a RESTful API. I also learned how to use Python\'s built-in support for asynchronous programming with asyncio. I used the Fast API framework to create the API endpoints and used the Pydantic library to define the data models. I also used the SQLAlchemy library to interact with the PostgreSQL database. I used the Alembic library to manage the database migrations. I also used the JWT library to handle the authentication. I used the Black library to format the code. I used the Flake8 library to lint the code. I used the MyPy library to type check the code.',
-        link: 'https://github.com/Adithyenkandasamy/Fast_Api',
+        name: 'Hand Gesture Control System',
+        description: 'Computer vision system using OpenCV and ML for touchless human-computer interaction via gesture recognition. Recognized 10+ gestures with 92% accuracy.',
+        link: 'https://github.com/Adithyenkandasamy',
     },
     {
         iconUrl: car,
         theme: 'btn-back-blue',
-        name: 'Mern stack-Todo-app',
-        description: 'Learned about React by building a mobile app for finding and comparing cars on the market, streamlining the car-buying process. I also learned about Node.js and how to use it to create a RESTful API.With the backend of mongo db',
-        link: 'https://github.com/Adithyenkandasamy/Todo_app-react',
+        name: 'Image Classification System',
+        description: 'Web app with TensorFlow model training and Flask deployment for real-time image recognition.',
+        link: 'https://github.com/Adithyenkandasamy',
     },
     {
         iconUrl: snapgram,
         theme: 'btn-back-pink',
-        name: 'Full Stack Todo-list',
-        description: 'Learned about Flask framework in Python by building a complete clone of Instagram, allowing users to share photos and connect with friends in a familiar social media environment.',
-        link: 'https://github.com/Adithyenkandasamy/Flask_todo',
-    }// },
-    // {
-    //     iconUrl: estate,
-    //     theme: 'btn-back-black',
-    //     name: 'Real-Estate Application',
-    //     description: 'Developed a web application for real estate listings, facilitating property searches and connecting buyers with sellers.',
-    //     link: 'https://github.com/adrianhajdin/projects_realestate',
-    // },
-    // {
-    //     iconUrl: summiz,
-    //     theme: 'btn-back-yellow',
-    //     name: 'AI Summarizer Application',
-    //     description: 'App that leverages AI to automatically generate concise & informative summaries from lengthy text content, or blogs.',
-    //     link: 'https://github.com/adrianhajdin/project_ai_summarizer',
-    // }
+        name: 'Quiz Application',
+        description: 'Full-stack quiz app with FastAPI backend, user authentication and adaptive scoring system. Supports concurrent users.',
+        link: 'https://github.com/Adithyenkandasamy',
+    },
+    {
+        iconUrl: summiz,
+        theme: 'btn-back-yellow',
+        name: 'LinkedIn Post Automation',
+        description: 'Automated content scheduling workflow using n8n and Make.com for social media management.',
+        link: 'https://github.com/Adithyenkandasamy',
+    },
+    {
+        iconUrl: estate,
+        theme: 'btn-back-black',
+        name: 'JARVIS-MARK_1',
+        description: 'Personal AI assistant prototype showcasing automation and AI integrations — voice commands, task execution, and smart responses.',
+        link: 'https://github.com/Adithyenkandasamy',
+    },
+    {
+        iconUrl: redux,
+        theme: 'btn-back-red',
+        name: 'MCP Server',
+        description: 'Implemented a stdio-based MCP server in Python, exposing custom tools for LLMs through Claude Desktop.',
+        link: 'https://github.com/Adithyenkandasamy',
+    },
+    {
+        iconUrl: motion,
+        theme: 'btn-back-green',
+        name: 'Subscription Manager – React Native',
+        description: 'React Native application for tracking and managing recurring subscriptions with automated reminders and expense monitoring.',
+        link: 'https://github.com/Adithyenkandasamy',
+    },
 ];

@@ -5,6 +5,7 @@ import starbucks from './starbucks.png'
 import tesla from './tesla.png'
 import logo from './logo.svg'
 import magizhtech from './magizh.png'
+import snssquarehub from './sns.jpeg'
 
 export {
     hero,
@@ -13,5 +14,6 @@ export {
     starbucks,
     tesla,
     logo,
-    magizhtech
+    magizhtech,
+    snssquarehub
 }

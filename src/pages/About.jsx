@@ -15,22 +15,28 @@ const About = () => {
         Hello, I'm{" "}
         <span className='blue-gradient_text font-semibold drop-shadow'>
           {" "}
-          Adithyen
+          Adithyen K
         </span>{" "}
         👋
       </h1>
 
       <div className='mt-5 flex flex-col gap-3 text-slate-500'>
         <p>
-          Software Engineer based in Croatia, specializing in technical
-          education through hands-on learning and building applications.
+          Computer Science student pursuing <strong>B.E. in CSE</strong> at{" "}
+          <strong>SNS College of Technology</strong> with internship experience
+          in AI/ML and software development at <strong>Magizh Technologies</strong>{" "}
+          and <strong>SNS Square Hub</strong>. Skilled in Python, FastAPI, React,
+          Next.js, Linux, databases, cloud deployment, and AI technologies
+          including Computer Vision, OCR, and LLM-based applications. Passionate
+          about software engineering, artificial intelligence, and continuous
+          learning, with a focus on developing innovative real-world applications.
         </p>
       </div>
 
       <div className='mt-8 flex justify-center'>
         <ResumeButton 
-          googleDriveLink="https://drive.google.com/file/d/YOUR_FILE_ID/view?usp=sharing"
-          fileName="Adithyen_Resume.pdf"
+          googleDriveLink="https://drive.google.com/file/d/1example/view?usp=sharing"
+          fileName="Adithyen_K_Resume.pdf"
           variant="outline"
         />
       </div>
@@ -58,8 +64,9 @@ const About = () => {
         <h3 className='subhead-text'>Work Experience.</h3>
         <div className='mt-5 flex flex-col gap-3 text-slate-500'>
           <p>
-            I've worked with all sorts of companies, leveling up my skills and
-            teaming up with smart people. Here's the rundown:
+          I've completed internships in AI/ML engineering and full-stack
+          development, working on real-world production systems. Here's the
+          rundown:
           </p>
         </div>
 

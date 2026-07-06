@@ -7,10 +7,10 @@ const HomeInfo = ({ currentStage }) => {
     return (
       <h1 className='sm:text-xl sm:leading-snug text-center neo-brutalism-blue py-4 px-8 text-white mx-5'>
         Hi, I'm
-        <span className='font-semibold mx-2 text-white'>Adhii_pro</span>
+        <span className='font-semibold mx-2 text-white'>Adithyen K</span>
         👋
         <br />
-        An Full StackDeveloper in 🇮🇳 MagizhTech  
+        An AI/ML & Full Stack Developer
       </h1>
     );
 
@@ -18,7 +18,7 @@ const HomeInfo = ({ currentStage }) => {
     return (
       <div className='info-box'>
         <p className='font-medium sm:text-xl text-center'>
-          Worked in some projects <br /> and picked up many skills along the way
+          Built AI/ML & Full Stack projects <br /> and picked up many real-world skills along the way
         </p>
 
         <Link to='/about' className='neo-brutalism-white neo-btn'>
@@ -33,7 +33,7 @@ const HomeInfo = ({ currentStage }) => {
     return (
       <div className='info-box'>
         <p className='font-medium text-center sm:text-xl'>
-          Led multiple projects to success over the years. <br /> Curious about the impact?
+          Built 8+ projects — from voice chat AI to gesture control. <br /> Curious about the impact?
         </p>
 
         <Link to='/projects' className='neo-brutalism-white neo-btn'>

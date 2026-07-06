@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const ResumeButton = () => {
   const [isDownloading, setIsDownloading] = useState(false);
-  const googleDriveLink = "https://drive.google.com/file/d/1SAQf-hS1VJ0pmNOIFAB82CSGaItRzVOh/view?usp=drive_link";
+  const googleDriveLink = "https://drive.google.com/file/d/1PP6bXxSrHKyKoazU4zgkT110gBLp13-K/view?usp=sharing";
   const fileName = "Adithyen_Resume.pdf";
 
   const getDirectDownloadLink = (driveLink) => {
@@ -45,7 +45,7 @@ const ResumeButton = () => {
       }}
       className="text-black hover:text-gray-700 cursor-pointer transition-colors font-medium"
     >
-      {isDownloading ? 'Opening...' : 'View my Resume'}
+      {isDownloading ? 'Opening...' : 'View My Resume'}
     </a>
   );
 };
