@@ -1,0 +1,24 @@
+{
+  "siteName": "Adithyen K — Interactive Developer Portfolio",
+  "shortTitle": "Adithyen K",
+  "tagline": "AI/ML Engineer & Full-Stack Developer",
+  "description": "Interactive developer portfolio of Adithyen K, showcasing production-grade AI systems, Computer Vision pipelines, and modern full-stack web applications.",
+  "theme": "light",
+  "audioTrack": {
+    "title": "Sakura Ambient Harmony",
+    "artist": "Adithyen K Portfolio Track",
+    "src": "/audio/sakura.mp3"
+  },
+  "sections": [
+    { "id": "hero", "label": "Hero", "enabled": true },
+    { "id": "about", "label": "About", "enabled": true },
+    { "id": "projects", "label": "Projects", "enabled": true },
+    { "id": "experience", "label": "Experience", "enabled": true },
+    { "id": "education", "label": "Education", "enabled": true },
+    { "id": "skills", "label": "Skills", "enabled": true },
+    { "id": "certificates", "label": "Certificates", "enabled": true },
+    { "id": "achievements", "label": "Achievements", "enabled": true },
+    { "id": "github", "label": "GitHub & Activity", "enabled": true },
+    { "id": "contact", "label": "Contact", "enabled": true }
+  ]
+}

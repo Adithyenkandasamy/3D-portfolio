@@ -1,0 +1,34 @@
+[
+  {
+    "id": "sns-square-hub",
+    "role": "Software Intern",
+    "organization": "SNS Square Hub",
+    "location": "Coimbatore, Tamil Nadu",
+    "startDate": "February 2026",
+    "endDate": "April 2026",
+    "isCurrent": true,
+    "description": "Architected and delivered scalable web applications and AI workflow integrations focusing on clean system architecture, API reliability, and modern full-stack performance.",
+    "highlights": [
+      "Developed high-throughput web applications using Next.js and FastAPI, emphasizing modular design and API efficiency.",
+      "Engineered intelligent document extraction solutions combining Computer Vision, OCR, and multimodal LLMs for automated enterprise pipelines.",
+      "Implemented prompt engineering techniques, tokenization budgeting, and model orchestration in production-ready software systems."
+    ],
+    "technologies": ["Next.js", "FastAPI", "Python", "Computer Vision", "OCR", "Multimodal LLMs", "TypeScript"]
+  },
+  {
+    "id": "magizh-tech",
+    "role": "AI/ML Engineering Intern",
+    "organization": "Magizh Technologies",
+    "location": "Sathyamangalam, Tamil Nadu",
+    "startDate": "July 2025",
+    "endDate": "July 2025",
+    "isCurrent": false,
+    "description": "Implemented and deployed custom computer vision and NLP models into lightweight web services, focusing on inference optimization and practical business automation.",
+    "highlights": [
+      "Trained and integrated tailored machine learning classifiers into Python services using Flask and FastAPI endpoints.",
+      "Engineered computer vision pipelines for real-world automated visual inspection and object recognition.",
+      "Benchmark-tested and optimized model inference speeds to ensure responsive real-time serving."
+    ],
+    "technologies": ["Python", "FastAPI", "Flask", "OpenCV", "NLP", "Machine Learning", "Docker"]
+  }
+]

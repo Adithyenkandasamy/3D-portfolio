@@ -1,0 +1,23 @@
+[
+  {
+    "platform": "GitHub",
+    "username": "Adithyenkandasamy",
+    "url": "https://github.com/Adithyenkandasamy",
+    "description": "Open source code repositories, AI models, and web applications",
+    "icon": "github"
+  },
+  {
+    "platform": "LinkedIn",
+    "username": "adithyen-k",
+    "url": "https://www.linkedin.com/in/adithyen-k",
+    "description": "Professional network, experience updates, and articles",
+    "icon": "linkedin"
+  },
+  {
+    "platform": "Email",
+    "username": "adithyen.k@example.com",
+    "url": "mailto:adithyen.k@example.com",
+    "description": "Direct communication for opportunities and consulting",
+    "icon": "mail"
+  }
+]

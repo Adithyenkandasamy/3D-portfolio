@@ -1,0 +1,29 @@
+[
+  {
+    "id": "deep-learning-ai",
+    "title": "Machine Learning & Neural Networks Specialization",
+    "issuer": "DeepLearning.AI / Coursera",
+    "issueDate": "2024",
+    "credentialId": "DL-AI-2024-CERT",
+    "verificationUrl": "https://coursera.org/verify",
+    "skills": ["Supervised Learning", "Deep Learning", "TensorFlow", "Model Evaluation"]
+  },
+  {
+    "id": "computer-vision-opencv",
+    "title": "Computer Vision & Image Processing",
+    "issuer": "OpenCV University / Kaggle",
+    "issueDate": "2024",
+    "credentialId": "CV-KAG-99120",
+    "verificationUrl": "https://kaggle.com/learn",
+    "skills": ["OpenCV", "Feature Extraction", "Object Tracking", "Image Augmentation"]
+  },
+  {
+    "id": "full-stack-web",
+    "title": "Modern Full-Stack Web Development with React & Node",
+    "issuer": "FreeCodeCamp / Meta Learning",
+    "issueDate": "2023",
+    "credentialId": "FCC-FS-5582",
+    "verificationUrl": "https://freecodecamp.org/certification",
+    "skills": ["React", "Node.js", "REST APIs", "Modern JavaScript"]
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "undergraduate",
+    "degree": "Bachelor of Engineering (B.E.) in Computer Science & Engineering",
+    "institution": "Anna University Affiliated Institution",
+    "location": "Tamil Nadu, India",
+    "startDate": "2022",
+    "endDate": "2026",
+    "status": "Final Year Undergraduate",
+    "description": "Core focus on Artificial Intelligence, Machine Learning, Data Structures & Algorithms, Operating Systems, Database Management Systems, and Distributed Computing.",
+    "courses": [
+      "Machine Learning & Pattern Recognition",
+      "Design and Analysis of Algorithms",
+      "Full-Stack Web Architectures",
+      "Deep Learning & Computer Vision",
+      "Database Management Systems"
+    ]
+  }
+]

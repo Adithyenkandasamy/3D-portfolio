@@ -1,0 +1,26 @@
+[
+  {
+    "id": "voice-latency-opt",
+    "title": "Sub-200ms Voice Pipeline Latency Milestone",
+    "category": "Engineering Optimization",
+    "date": "2025",
+    "description": "Successfully engineered a low-latency speech pipeline orchestrating FasterWhisper, Ollama LLM streaming, and Kokoro TTS over bi-directional WebSockets under 200ms round-trip.",
+    "impact": "Real-time human-like speech conversational feel on local GPU hardware."
+  },
+  {
+    "id": "mcp-protocol-tooling",
+    "title": "Model Context Protocol Tooling Architecture",
+    "category": "Open Source & Systems",
+    "date": "2025",
+    "description": "Developed and published an open-source MCP server implementation empowering Anthropic Claude Desktop with automated filesystem analysis and execution primitives.",
+    "impact": "Seamless developer workflow automation via standard protocol."
+  },
+  {
+    "id": "hackathon-ai-cv",
+    "title": "Inter-College AI & Innovation Hackathon Finalist",
+    "category": "Hackathons & Competitions",
+    "date": "2024",
+    "description": "Selected among top project teams for presenting a real-time gesture control and accessibility interface for physically challenged individuals.",
+    "impact": "Demonstrated 92% gesture accuracy under diverse lighting conditions."
+  }
+]

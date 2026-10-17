@@ -1,0 +1,50 @@
+{
+  "lastUpdated": "2026-10-17T22:00:00.000Z",
+  "platforms": [
+    {
+      "id": "leetcode",
+      "platform": "LeetCode",
+      "username": "Adithyenkandasamy",
+      "profileUrl": "https://leetcode.com/u/Adithyenkandasamy",
+      "source": "verified_entry",
+      "stats": {
+        "totalSolved": 185,
+        "easySolved": 82,
+        "mediumSolved": 88,
+        "hardSolved": 15,
+        "ranking": "Top 18%",
+        "acceptanceRate": "64.2%"
+      },
+      "badges": ["50 Days Badge 2025", "Binary Search Specialist"],
+      "verified": true
+    },
+    {
+      "id": "neetcode",
+      "platform": "NeetCode",
+      "username": "Adithyen K",
+      "profileUrl": "https://neetcode.io",
+      "source": "verified_entry",
+      "stats": {
+        "tracksCompleted": "NeetCode 150 (Core Complete)",
+        "focusAreas": "Trees, Dynamic Programming, Graphs, Backtracking",
+        "consistencyStreak": "Active Practice"
+      },
+      "badges": ["Data Structures Mastery"],
+      "verified": true
+    },
+    {
+      "id": "coding-ninjas",
+      "platform": "Coding Ninjas",
+      "username": "Adithyen K",
+      "profileUrl": "https://www.naukri.com/code360",
+      "source": "verified_entry",
+      "stats": {
+        "problemScore": "Level 6 Practitioner",
+        "domainProficiency": "Python & Algorithms",
+        "accuracy": "89%"
+      },
+      "badges": ["Specialist in DSA"],
+      "verified": true
+    }
+  ]
+}

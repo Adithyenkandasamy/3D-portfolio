@@ -1,0 +1,170 @@
+[
+  {
+    "id": "voice-chat-ai",
+    "title": "Real-Time Voice Chat Web App",
+    "description": "AI-powered conversational voice web application utilizing Ollama, FasterWhisper, and Kokoro TTS connected via WebSockets. Achieved ultra-low latency (<200ms) with high speech recognition accuracy.",
+    "category": "AI & Systems",
+    "featured": true,
+    "tags": [
+      "Python",
+      "Ollama",
+      "FasterWhisper",
+      "Kokoro TTS",
+      "WebSockets",
+      "FastAPI"
+    ],
+    "githubUrl": "https://github.com/Adithyenkandasamy",
+    "liveUrl": "https://github.com/Adithyenkandasamy",
+    "highlights": [
+      "Sub-200ms round-trip latency using WebSocket streaming",
+      "Integrated local LLM inference via Ollama",
+      "Robust speech-to-text pipeline with FasterWhisper"
+    ]
+  },
+  {
+    "id": "gesture-control",
+    "title": "Hand Gesture Control System",
+    "description": "Touchless human-computer interaction system leveraging OpenCV and machine learning classifiers to control digital interfaces through hand gestures with 92% classification accuracy.",
+    "category": "Computer Vision",
+    "featured": true,
+    "tags": [
+      "Python",
+      "OpenCV",
+      "MediaPipe",
+      "NumPy",
+      "Scikit-Learn"
+    ],
+    "githubUrl": "https://github.com/Adithyenkandasamy",
+    "liveUrl": "https://github.com/Adithyenkandasamy",
+    "highlights": [
+      "Real-time landmark tracking across 21 hand joints",
+      "10+ distinct gesture recognition routines",
+      "Optimized for 60 FPS processing on standard webcams"
+    ]
+  },
+  {
+    "id": "image-classification",
+    "title": "Image Classification System",
+    "description": "Convolutional Neural Network web system built with TensorFlow and Flask providing high-speed image analysis and multi-class object recognition.",
+    "category": "Deep Learning",
+    "featured": false,
+    "tags": [
+      "Python",
+      "TensorFlow",
+      "Keras",
+      "Flask",
+      "Computer Vision"
+    ],
+    "githubUrl": "https://github.com/Adithyenkandasamy",
+    "liveUrl": "https://github.com/Adithyenkandasamy",
+    "highlights": [
+      "Custom CNN trained with data augmentation pipelines",
+      "Lightweight Flask inference API with batching support",
+      "Interactive prediction confidence scoring display"
+    ]
+  },
+  {
+    "id": "mcp-server",
+    "title": "Model Context Protocol (MCP) Server",
+    "description": "Production stdio-based MCP server implementation in Python, exposing custom developer tools, local file exploration, and shell executors directly to Claude Desktop and LLM agents.",
+    "category": "AI Tools & Infrastructure",
+    "featured": true,
+    "tags": [
+      "Python",
+      "MCP Protocol",
+      "LLM Tooling",
+      "Claude",
+      "AsyncIO"
+    ],
+    "githubUrl": "https://github.com/Adithyenkandasamy",
+    "liveUrl": "https://github.com/Adithyenkandasamy",
+    "highlights": [
+      "Standardized Model Context Protocol compliance",
+      "Sandboxed command execution and schema validation",
+      "Seamless integration with Anthropic Claude Desktop"
+    ]
+  },
+  {
+    "id": "jarvis-assistant",
+    "title": "JARVIS-MARK_1 AI Assistant",
+    "description": "Personal AI desktop automation assistant with voice command recognition, task orchestration, system monitoring, and automated workflow triggers.",
+    "category": "AI & Systems",
+    "featured": false,
+    "tags": [
+      "Python",
+      "SpeechRecognition",
+      "PyTTSx3",
+      "Automation",
+      "NLP"
+    ],
+    "githubUrl": "https://github.com/Adithyenkandasamy",
+    "liveUrl": "https://github.com/Adithyenkandasamy",
+    "highlights": [
+      "Multi-intent voice command routing",
+      "Desktop application and window management routines",
+      "Natural conversational feedback loop"
+    ]
+  },
+  {
+    "id": "quiz-app",
+    "title": "Interactive Quiz Application",
+    "description": "Full-stack real-time quiz platform featuring FastAPI backend, JWT authentication, persistent scoring, and dynamic question banks with adaptive difficulty.",
+    "category": "Full Stack",
+    "featured": false,
+    "tags": [
+      "FastAPI",
+      "React",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "TypeScript"
+    ],
+    "githubUrl": "https://github.com/Adithyenkandasamy",
+    "liveUrl": "https://github.com/Adithyenkandasamy",
+    "highlights": [
+      "Asynchronous REST API built with FastAPI",
+      "Secure JWT token-based authentication session flow",
+      "Clean responsive client with instant question validation"
+    ]
+  },
+  {
+    "id": "linkedin-automation",
+    "title": "LinkedIn Content Automation",
+    "description": "Automated technical content pipeline utilizing n8n, Make.com, and generative AI APIs to draft, format, and schedule developer updates.",
+    "category": "Automation & DevOps",
+    "featured": false,
+    "tags": [
+      "n8n",
+      "Make.com",
+      "REST APIs",
+      "LLM Prompts",
+      "Automation"
+    ],
+    "githubUrl": "https://github.com/Adithyenkandasamy",
+    "liveUrl": "https://github.com/Adithyenkandasamy",
+    "highlights": [
+      "Webhook-driven workflow triggering on Git repository commits",
+      "Multi-stage content review and social posting",
+      "Zero-maintenance cloud workflow orchestration"
+    ]
+  },
+  {
+    "id": "subscription-manager",
+    "title": "Subscription Manager Mobile App",
+    "description": "Cross-platform mobile application developed with React Native and TypeScript for monitoring recurring software subscriptions, payment cycles, and monthly expenditure alerts.",
+    "category": "Mobile & Apps",
+    "featured": false,
+    "tags": [
+      "React Native",
+      "TypeScript",
+      "AsyncStorage",
+      "Mobile UI"
+    ],
+    "githubUrl": "https://github.com/Adithyenkandasamy",
+    "liveUrl": "https://github.com/Adithyenkandasamy",
+    "highlights": [
+      "Intuitive expense dashboard with category breakdown",
+      "Local notifications for upcoming renewal billing dates",
+      "Offline-first state persistence architecture"
+    ]
+  }
+]

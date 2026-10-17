@@ -1,0 +1,50 @@
+{
+  "categories": [
+    {
+      "name": "Languages & Core",
+      "description": "Primary programming languages and computational foundations",
+      "skills": [
+        { "name": "Python", "level": "Advanced", "category": "Backend & AI" },
+        { "name": "TypeScript", "level": "Proficient", "category": "Frontend & Full-Stack" },
+        { "name": "JavaScript (ES6+)", "level": "Advanced", "category": "Full-Stack" },
+        { "name": "SQL", "level": "Intermediate", "category": "Data & Queries" },
+        { "name": "HTML5 & Modern CSS", "level": "Advanced", "category": "UI Systems" }
+      ]
+    },
+    {
+      "name": "AI & Machine Learning",
+      "description": "Computer vision, deep neural networks, and LLM integrations",
+      "skills": [
+        { "name": "Computer Vision (OpenCV)", "level": "Advanced", "category": "Vision Systems" },
+        { "name": "TensorFlow / Keras", "level": "Intermediate", "category": "Deep Learning" },
+        { "name": "LLM Orchestration & Prompting", "level": "Advanced", "category": "Generative AI" },
+        { "name": "FasterWhisper & Kokoro TTS", "level": "Proficient", "category": "Audio AI" },
+        { "name": "OCR & Document AI", "level": "Proficient", "category": "Document Pipelines" },
+        { "name": "Model Context Protocol (MCP)", "level": "Advanced", "category": "Agent Protocols" }
+      ]
+    },
+    {
+      "name": "Frontend & Interactive 3D",
+      "description": "Component architecture, reactive state, and visual experiences",
+      "skills": [
+        { "name": "React 19", "level": "Advanced", "category": "Component Architecture" },
+        { "name": "Next.js (App Router)", "level": "Advanced", "category": "Full-Stack Framework" },
+        { "name": "Tailwind CSS & shadcn/ui", "level": "Advanced", "category": "Design Systems" },
+        { "name": "Three.js & React Three Fiber", "level": "Intermediate", "category": "3D Canvas" },
+        { "name": "Motion for React", "level": "Advanced", "category": "Micro-interactions" }
+      ]
+    },
+    {
+      "name": "Backend & Cloud Services",
+      "description": "High-throughput APIs, asynchronous workers, and database layer",
+      "skills": [
+        { "name": "FastAPI", "level": "Advanced", "category": "Async Python APIs" },
+        { "name": "Flask", "level": "Proficient", "category": "Microservices" },
+        { "name": "Node.js & Express", "level": "Proficient", "category": "Server Runtime" },
+        { "name": "WebSockets", "level": "Proficient", "category": "Real-time Streams" },
+        { "name": "PostgreSQL & MongoDB", "level": "Intermediate", "category": "Persistence" },
+        { "name": "Docker & Git", "level": "Proficient", "category": "DevOps & Versioning" }
+      ]
+    }
+  ]
+}

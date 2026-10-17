@@ -1,0 +1,24 @@
+{
+  "name": "Adithyen K",
+  "displayName": "ADITHYEN K",
+  "title": "AI/ML Engineer & Full-Stack Developer",
+  "shortBio": "Building intelligent systems, computer vision pipelines, and high-performance interactive web applications.",
+  "about": "I am an AI/ML engineer and full-stack software developer dedicated to crafting production-grade software that bridges advanced machine learning with responsive user experiences. My work spans real-time computer vision, low-latency LLM voice systems, FastAPI backends, and dynamic frontend architectures built with React, Next.js, and modern TypeScript.",
+  "location": "Tamil Nadu, India",
+  "email": "adithyen.k@example.com",
+  "availability": "Available for engineering roles & impactful collaborations",
+  "avatarUrl": "/images/hero.jpg",
+  "resumePath": "/resume.pdf",
+  "terminalIntro": [
+    "Initializing engineer environment...",
+    "User: Adithyen K (AI/ML & Full-Stack Engineer)",
+    "Specializations: Computer Vision, LLMs, Next.js, FastAPI",
+    "Status: System operational. Ready for collaboration."
+  ],
+  "stats": [
+    { "label": "Production Projects", "value": "8+" },
+    { "label": "AI/ML Focus Areas", "value": "Computer Vision & LLMs" },
+    { "label": "Core Technologies", "value": "14+" },
+    { "label": "Code Reliability", "value": "100% Typed" }
+  ]
+}
