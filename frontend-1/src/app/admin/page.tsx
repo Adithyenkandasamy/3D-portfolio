@@ -26,6 +26,7 @@ import {
   AlertCircle,
   Loader2,
   Lock,
+  Music,
 } from "lucide-react";
 import { MediaUploader } from "@/components/admin/media-uploader";
 import type {
@@ -452,6 +453,21 @@ export default function AdminPage() {
                 </button>
               );
             })}
+
+            <div className="pt-2 mt-2 border-t border-border/60">
+              <Link
+                href="/admin/music"
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-foreground bg-border-subtle/60 hover:bg-border-subtle transition-colors group"
+              >
+                <div className="flex items-center gap-3">
+                  <Music className="w-4 h-4 text-accent shrink-0" />
+                  <span className="font-semibold">Music Library</span>
+                </div>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-foreground/10 text-foreground">
+                  New
+                </span>
+              </Link>
+            </div>
           </nav>
         </aside>
 

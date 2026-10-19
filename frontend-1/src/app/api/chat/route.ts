@@ -57,10 +57,51 @@ export async function POST(req: NextRequest) {
     // 3. Compile Ground Truth Knowledge
     const systemPrompt = buildPortfolioKnowledge();
 
-    const apiKey = process.env.XAI_API_KEY || process.env.GROK_API_KEY;
+    const groqApiKey = process.env.GROQ_API_KEY;
+    const xaiApiKey = process.env.XAI_API_KEY || process.env.GROK_API_KEY;
 
-    // 4. If xAI Grok API Key is present, call Grok API
-    if (apiKey) {
+    // 4. If Groq API Key is present, call Groq (GroqCloud)
+    if (groqApiKey) {
+      const payload = {
+        model: "llama-3.3-70b-versatile",
+        messages: [{ role: "system", content: systemPrompt }, ...trimmedHistory],
+        temperature: 0.3,
+        max_tokens: 600,
+        stream,
+      };
+
+      const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${groqApiKey}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!groqRes.ok) {
+        const errorText = await groqRes.text();
+        console.error("Groq API error:", errorText);
+        return handleKnowledgeFallback(trimmedHistory);
+      }
+
+      if (stream) {
+        return new Response(groqRes.body, {
+          headers: {
+            "Content-Type": "text/event-stream",
+            "Cache-Control": "no-cache",
+            Connection: "keep-alive",
+          },
+        });
+      }
+
+      const data = await groqRes.json();
+      const content = data.choices?.[0]?.message?.content || "No response received.";
+      return NextResponse.json({ role: "assistant", content });
+    }
+
+    // 5. If xAI Grok API Key is present, call xAI
+    if (xaiApiKey) {
       const payload = {
         model: "grok-2-latest",
         messages: [{ role: "system", content: systemPrompt }, ...trimmedHistory],
@@ -73,7 +114,7 @@ export async function POST(req: NextRequest) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
+          Authorization: `Bearer ${xaiApiKey}`,
         },
         body: JSON.stringify(payload),
       });
