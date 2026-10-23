@@ -32,12 +32,51 @@ export function MediaUploader({
     setIsUploading(true);
     setProgress(20);
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("folder", folder);
-
     try {
-      setProgress(50);
+      // 1. Attempt direct signed Cloudinary upload (bypasses Vercel 4.5MB limit)
+      const signRes = await fetch("/api/admin/cloudinary-sign", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ folder }),
+      });
+
+      if (signRes.ok) {
+        const signData = await signRes.json();
+        if (signData.signature && signData.uploadUrl) {
+          setProgress(50);
+          const cldData = new FormData();
+          cldData.append("file", file);
+          cldData.append("api_key", signData.apiKey);
+          cldData.append("timestamp", String(signData.timestamp));
+          cldData.append("signature", signData.signature);
+          cldData.append("folder", signData.folder);
+
+          const cldRes = await fetch(signData.uploadUrl, {
+            method: "POST",
+            body: cldData,
+          });
+
+          if (cldRes.ok) {
+            const cldJson = await cldRes.json();
+            const assetUrl = cldJson.secure_url || cldJson.url;
+            setProgress(100);
+            setPreviewUrl(assetUrl);
+            onUploadSuccess(assetUrl, {
+              name: file.name,
+              url: assetUrl,
+              size: file.size,
+            });
+            return;
+          }
+        }
+      }
+
+      // 2. Fallback to server route /api/admin/upload
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("folder", folder);
+
+      setProgress(60);
       const res = await fetch("/api/admin/upload", {
         method: "POST",
         body: formData,

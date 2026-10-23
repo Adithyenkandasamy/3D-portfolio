@@ -21,6 +21,7 @@ import {
   CONTRIBUTION_CLEAR_EVENT,
   ContributionInteraction,
 } from "@/components/github/contribution-interaction";
+import { GitHubSkyline } from "@/components/github/github-skyline";
 
 const WEEKDAY_LABELS = [
   { label: "Mon", weekday: 1 },
@@ -208,11 +209,11 @@ export function ContributionStage({
             />
 
             <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-start justify-between gap-3 p-3 md:p-4">
-              <span className="rounded-full bg-background/80 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.14em] text-muted backdrop-blur-sm">
+              <span className="rounded-full bg-background/80 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.14em] text-muted ">
                 Contribution calendar
               </span>
               {!reducedMotion ? (
-                <span className="hidden items-center gap-1.5 rounded-full bg-background/80 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.14em] text-muted backdrop-blur-sm [@media(hover:hover)]:inline-flex">
+                <span className="hidden items-center gap-1.5 rounded-full bg-background/80 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.14em] text-muted  [@media(hover:hover)]:inline-flex">
                   <span className="contribution-hint-calendar">Hover to lift</span>
                   <span className="contribution-hint-graph">3D view</span>
                 </span>
@@ -232,12 +233,16 @@ export function ContributionStage({
               ? "Show 2D contribution calendar"
               : "Show 3D contribution graph"
           }
-          className="absolute right-3 top-3 z-40 inline-flex items-center gap-1 rounded-full border border-border bg-background/90 px-2.5 py-1 text-[10px] font-semibold text-foreground shadow-sm backdrop-blur-sm [@media(hover:hover)]:hidden"
+          className="absolute right-3 top-3 z-40 inline-flex items-center gap-1 rounded-full border border-border bg-background/90 px-2.5 py-1 text-[10px] font-semibold text-foreground   [@media(hover:hover)]:hidden"
         >
           <Box className="h-3 w-3 text-accent" aria-hidden="true" />
           {touchGraph ? "2D" : "3D"}
         </button>
       ) : null}
+
+      <div className="mt-4">
+        <GitHubSkyline data={data} year={data.year} touchGraph={touchGraph} />
+      </div>
     </div>
   );
 }

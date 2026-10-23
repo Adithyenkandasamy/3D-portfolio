@@ -151,7 +151,7 @@ export function PortfolioChat() {
         {!isOpen ? (
           <button
             onClick={() => setIsOpen(true)}
-            className="group flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-foreground text-background shadow-elevated hover:bg-neutral-800 transition-all hover:scale-105 active:scale-95"
+            className="group flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-foreground text-background  hover:bg-neutral-800 transition-all hover:scale-105 active:scale-95"
             aria-label="Open Grok AI Chat"
           >
             <div className="w-5 h-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center">
@@ -164,7 +164,7 @@ export function PortfolioChat() {
 
       {/* Floating Chat Modal Window */}
       {isOpen && (
-        <div data-ui="chat-assistant" className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 w-[calc(100vw-2rem)] sm:w-96 max-h-[80vh] flex flex-col bg-surface rounded-2xl shadow-float overflow-hidden animate-fade-in text-foreground">
+        <div data-ui="chat-assistant" className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 w-[calc(100vw-2rem)] sm:w-96 max-h-[80vh] flex flex-col bg-surface rounded-2xl  overflow-hidden animate-fade-in text-foreground">
           {/* Header */}
           <div className="px-4 py-3 bg-surface border-b border-border flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2.5">
@@ -278,7 +278,7 @@ export function PortfolioChat() {
             <button
               type="submit"
               disabled={!input.trim() || isLoading}
-              className="p-2 rounded-xl bg-foreground text-background hover:bg-neutral-800 disabled:opacity-40 transition-colors shrink-0 shadow-xs"
+              className="p-2 rounded-xl bg-foreground text-background hover:bg-neutral-800 disabled:opacity-40 transition-colors shrink-0 "
               aria-label="Send query"
             >
               <Send className="w-3.5 h-3.5" />

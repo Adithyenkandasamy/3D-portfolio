@@ -12,8 +12,7 @@ import { CertificatesSection } from "@/components/sections/certificates-section"
 import { AchievementsSection } from "@/components/sections/achievements-section";
 import { GithubActivitySection } from "@/components/sections/github-activity-section";
 import { ContactSection } from "@/components/sections/contact-section";
-import { FloatingMusicPlayer } from "@/components/music/floating-music-player";
-import { PortfolioChat } from "@/components/chat/portfolio-chat";
+import { FloatingDock } from "@/components/dock/floating-dock";
 import { ResumeModal } from "@/components/ui/resume-modal";
 
 export default function Home() {
@@ -34,6 +33,11 @@ export default function Home() {
 
   return (
     <>
+      {/* Cinematic Intro Screen */}
+      {!introFinished && (
+        <CinematicIntro onComplete={() => setIntroFinished(true)} />
+      )}
+
       {/* Main Portfolio Flow */}
       <main className="w-full">
         {/* Hero with interactive terminal */}
@@ -67,11 +71,8 @@ export default function Home() {
         <ContactSection />
       </main>
 
-      {/* Floating Functional Music Player (Bottom-Right) */}
-      <FloatingMusicPlayer />
-
-      {/* Interactive Grok AI Assistant (Bottom-Left) */}
-      <PortfolioChat />
+      {/* Unified Floating Dock (AI Assistant + Music Player) */}
+      <FloatingDock />
 
       {/* Resume Modal */}
       <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />

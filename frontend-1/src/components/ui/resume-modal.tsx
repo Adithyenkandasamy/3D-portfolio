@@ -29,8 +29,8 @@ export function ResumeModal({
   };
 
   return (
-    <div data-ui="modal" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/30 backdrop-blur-sm animate-fade-in">
-      <div className="bg-surface rounded-2xl shadow-elevated w-full max-w-lg p-6 sm:p-8 relative">
+    <div data-ui="modal" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/30  animate-fade-in">
+      <div className="bg-surface rounded-2xl  w-full max-w-lg p-6 sm:p-8 relative">
         <button
           onClick={onClose}
           className="absolute top-5 right-5 p-2 rounded-lg text-muted hover:text-foreground hover:bg-surface-elevated transition-colors"

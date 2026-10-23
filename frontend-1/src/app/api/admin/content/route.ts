@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import {
   getServerProfile,
@@ -92,46 +93,47 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { type, data } = body;
 
+    let resultData: unknown = null;
     switch (type) {
       case "profile": {
-        const updated = await updateServerProfile(data);
-        return NextResponse.json({ success: true, data: updated });
+        resultData = await updateServerProfile(data);
+        break;
       }
       case "project": {
-        const updatedList = await saveServerProject(data);
-        return NextResponse.json({ success: true, data: updatedList });
+        resultData = await saveServerProject(data);
+        break;
       }
       case "experience": {
-        const updatedList = await saveServerExperience(data);
-        return NextResponse.json({ success: true, data: updatedList });
+        resultData = await saveServerExperience(data);
+        break;
       }
       case "education": {
-        const updatedList = await saveServerEducation(data);
-        return NextResponse.json({ success: true, data: updatedList });
+        resultData = await saveServerEducation(data);
+        break;
       }
       case "skills": {
-        const updated = await updateServerSkills(data);
-        return NextResponse.json({ success: true, data: updated });
+        resultData = await updateServerSkills(data);
+        break;
       }
       case "certificate": {
-        const updatedList = await saveServerCertificate(data);
-        return NextResponse.json({ success: true, data: updatedList });
+        resultData = await saveServerCertificate(data);
+        break;
       }
       case "achievement": {
-        const updatedList = await saveServerAchievement(data);
-        return NextResponse.json({ success: true, data: updatedList });
+        resultData = await saveServerAchievement(data);
+        break;
       }
       case "resume": {
-        const updated = await updateServerResume(data);
-        return NextResponse.json({ success: true, data: updated });
+        resultData = await updateServerResume(data);
+        break;
       }
       case "socialLinks": {
-        const updated = await updateServerSocialLinks(data);
-        return NextResponse.json({ success: true, data: updated });
+        resultData = await updateServerSocialLinks(data);
+        break;
       }
       case "siteSettings": {
-        const updated = await updateServerSiteSettings(data);
-        return NextResponse.json({ success: true, data: updated });
+        resultData = await updateServerSiteSettings(data);
+        break;
       }
       default:
         return NextResponse.json(
@@ -139,6 +141,10 @@ export async function POST(req: NextRequest) {
           { status: 400 }
         );
     }
+
+    revalidatePath("/");
+    revalidatePath("/admin");
+    return NextResponse.json({ success: true, data: resultData });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Failed to save content.";
     return NextResponse.json({ error: message }, { status: 400 });
@@ -166,30 +172,31 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
+    let deleteResult: unknown = null;
     switch (type) {
       case "project": {
-        const updated = await deleteServerProject(id);
-        return NextResponse.json({ success: true, data: updated });
+        deleteResult = await deleteServerProject(id);
+        break;
       }
       case "experience": {
-        const updated = await deleteServerExperience(id);
-        return NextResponse.json({ success: true, data: updated });
+        deleteResult = await deleteServerExperience(id);
+        break;
       }
       case "education": {
-        const updated = await deleteServerEducation(id);
-        return NextResponse.json({ success: true, data: updated });
+        deleteResult = await deleteServerEducation(id);
+        break;
       }
       case "certificate": {
-        const updated = await deleteServerCertificate(id);
-        return NextResponse.json({ success: true, data: updated });
+        deleteResult = await deleteServerCertificate(id);
+        break;
       }
       case "achievement": {
-        const updated = await deleteServerAchievement(id);
-        return NextResponse.json({ success: true, data: updated });
+        deleteResult = await deleteServerAchievement(id);
+        break;
       }
       case "media": {
-        const updated = await deleteServerMedia(id);
-        return NextResponse.json({ success: true, data: updated });
+        deleteResult = await deleteServerMedia(id);
+        break;
       }
       default:
         return NextResponse.json(
@@ -197,6 +204,10 @@ export async function DELETE(req: NextRequest) {
           { status: 400 }
         );
     }
+
+    revalidatePath("/");
+    revalidatePath("/admin");
+    return NextResponse.json({ success: true, data: deleteResult });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Failed to delete item.";
     return NextResponse.json({ error: message }, { status: 500 });

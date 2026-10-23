@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Mail, ArrowUp } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
+import { Magnetic } from "@/components/ui/magnetic-button";
 
 const footerLinks = [
   {
@@ -42,7 +43,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-surface text-foreground" role="contentinfo">
+    <footer className="bg-surface border-t border-border text-foreground" role="contentinfo">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
         {/* Main Footer */}
         <div className="py-14 sm:py-20 grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12">
@@ -57,31 +58,37 @@ export function Footer() {
               AI/ML engineer and full-stack developer building scalable backend architectures, real-time systems, and practical AI solutions.
             </p>
             <div className="flex items-center gap-2 pt-2">
-              <a
-                href="https://github.com/Adithyenkandasamy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 text-muted hover:text-foreground transition-colors rounded-lg bg-background"
-                aria-label="GitHub Profile"
-              >
-                <GithubIcon className="w-4 h-4" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/adithyen-k"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 text-muted hover:text-foreground transition-colors rounded-lg bg-background"
-                aria-label="LinkedIn Profile"
-              >
-                <LinkedinIcon className="w-4 h-4" />
-              </a>
-              <a
-                href="mailto:adithyen@example.com"
-                className="p-2.5 text-muted hover:text-foreground transition-colors rounded-lg bg-background"
-                aria-label="Email Address"
-              >
-                <Mail className="w-4 h-4" />
-              </a>
+              <Magnetic strength={0.25}>
+                <a
+                  href="https://github.com/Adithyenkandasamy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 text-muted hover:text-foreground transition-colors rounded-xl bg-surface-elevated border border-border flex items-center justify-center"
+                  aria-label="GitHub Profile"
+                >
+                  <GithubIcon className="w-4 h-4" />
+                </a>
+              </Magnetic>
+              <Magnetic strength={0.25}>
+                <a
+                  href="https://www.linkedin.com/in/adithyen-k"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 text-muted hover:text-foreground transition-colors rounded-xl bg-surface-elevated border border-border flex items-center justify-center"
+                  aria-label="LinkedIn Profile"
+                >
+                  <LinkedinIcon className="w-4 h-4" />
+                </a>
+              </Magnetic>
+              <Magnetic strength={0.25}>
+                <a
+                  href="mailto:adithyen1@gmail.com"
+                  className="p-2.5 text-muted hover:text-foreground transition-colors rounded-xl bg-surface-elevated border border-border flex items-center justify-center"
+                  aria-label="Email Address"
+                >
+                  <Mail className="w-4 h-4" />
+                </a>
+              </Magnetic>
             </div>
           </div>
 

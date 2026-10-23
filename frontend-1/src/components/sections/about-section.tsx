@@ -1,95 +1,164 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
+import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { SectionHeader } from "@/components/ui/section-header";
-import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
-import { Code2, Brain, Rocket, Users } from "lucide-react";
+import { Brain, Code2, Cpu, Terminal, Sparkles, MapPin, Award } from "lucide-react";
 
-const ABOUT = {
-  description: [
-    "Computer Science and Engineering student at SNS College of Technology with internship experience in AI/ML and software development. Experienced in building full-stack applications, real-time systems, AI-powered automation, computer vision, OCR, and LLM integrations using Python, FastAPI, React, and Next.js.",
-    "Passionate about scalable backend engineering, developer tools, and practical AI solutions. Whether developing emergency response platforms, model context protocol servers, or Python code visualization engines, I focus on clean system design, API performance, and tangible real-world impact.",
-  ],
-  highlights: [
-    {
-      icon: Brain,
-      title: "Machine Learning & CV",
-      description:
-        "Computer vision, NLP pipelines, and latency optimization for real-time edge and server deployments.",
-    },
-    {
-      icon: Code2,
-      title: "Full-Stack Architecture",
-      description:
-        "End-to-end web engineering with TypeScript, Next.js App Router, Python FastAPI, and cloud data stores.",
-    },
-    {
-      icon: Rocket,
-      title: "Production Velocity",
-      description:
-        "From mathematical formulation to tested codebases: modular components, type safety, and automated builds.",
-    },
-    {
-      icon: Users,
-      title: "Engineering Rigor",
-      description:
-        "Thorough testing, clear technical documentation, API design, and cross-disciplinary collaboration.",
-    },
-  ],
-};
+interface WordProps {
+  children: string;
+  progress: MotionValue<number>;
+  range: [number, number];
+}
+
+function Word({ children, progress, range }: WordProps) {
+  const opacity = useTransform(progress, range, [0.18, 1]);
+  const color = useTransform(progress, range, ["#525262", "#F4F4F6"]);
+
+  return (
+    <motion.span
+      style={{ opacity, color }}
+      className="inline-block mr-[0.28em] transition-colors duration-150"
+    >
+      {children}
+    </motion.span>
+  );
+}
+
+const STATEMENT =
+  "I engineer practical AI systems, high-throughput backend microservices, and latency-critical computer vision pipelines. I view machine learning not as isolated research prototypes, but as production-ready software that runs predictably, securely, and with measurable real-world performance.";
+
+const FACTS = [
+  {
+    icon: Brain,
+    label: "Core Specialization",
+    value: "AI/ML Systems & Computer Vision",
+    detail: "FastAPI, OpenCV, MediaPipe, LLM MCP",
+  },
+  {
+    icon: Code2,
+    label: "Full-Stack Architecture",
+    value: "Next.js 16, React 19, TypeScript",
+    detail: "App Router, SSR, Turbopack, Tailwind CSS",
+  },
+  {
+    icon: Award,
+    label: "Competitive Distinction",
+    value: "Cryptora'26 1st Place Winner",
+    detail: "Emergency incident response platform (RESQ)",
+  },
+  {
+    icon: MapPin,
+    label: "Location & Status",
+    value: "Sathyamangalam / Coimbatore, India",
+    detail: "Available for engineering roles & collaborations",
+  },
+];
 
 export function AboutSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 0.85", "end 0.4"],
+  });
+
+  const words = STATEMENT.split(" ");
+
   return (
-    <section id="about" className="py-24 sm:py-32 px-6 sm:px-10 lg:px-16">
+    <section id="about" className="py-24 sm:py-32 px-6 sm:px-10 lg:px-16 scroll-mt-20">
       <div className="max-w-7xl mx-auto">
         <SectionHeader
           title="Engineering intelligence at scale."
-          description="A systematic approach to building intelligent software systems that run reliably in production environments."
+          description="A systematic discipline for building autonomous systems and resilient web architectures."
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Column: Narrative & Image */}
-          <div className="lg:col-span-6 space-y-8">
-            <div className="space-y-4 text-base sm:text-lg text-foreground/90 leading-relaxed">
-              {ABOUT.description.map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start mt-10">
+          {/* Left Column: Monumental Scroll-Filled Statement */}
+          <div className="lg:col-span-7 space-y-10">
+            <div ref={containerRef} className="py-4">
+              <p className="text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.3] tracking-tight select-none">
+                {words.map((word, i) => {
+                  const start = i / words.length;
+                  const end = start + 1 / words.length;
+                  return (
+                    <Word key={i} progress={scrollYProgress} range={[start, end]}>
+                      {word}
+                    </Word>
+                  );
+                })}
+              </p>
             </div>
 
-            {/* Editorial Architectural Visual */}
-            <div className="relative rounded-2xl overflow-hidden aspect-[16/10] bg-surface">
+            <p className="text-base sm:text-lg text-muted leading-relaxed">
+              Currently completing my B.E. in Computer Science and Engineering at SNS College of
+              Technology. Through internships at SNS Square Hub and Magizh Technologies, I have
+              designed multimodal OCR extraction engines, touchless computer vision interfaces, and
+              concurrency-safe dispatch architectures deployed across cloud environments.
+            </p>
+
+            {/* Editorial Visual with Subtle Depth */}
+            <div className="relative rounded-xl overflow-hidden aspect-[16/9] bg-surface border border-border group">
               <Image
                 src="/images/editorial/griffith-observatory-2006-architecture-closeup.jpg"
                 alt="Architectural precision geometry"
                 fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover grayscale contrast-105 hover:grayscale-0 transition-transform duration-500 hover:scale-[1.02]"
+                sizes="(max-width: 1024px) 100vw, 55vw"
+                className="object-cover grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
               />
-              <div className="absolute bottom-3 left-3 bg-surface-elevated px-2.5 py-1 rounded text-xs text-muted">
-                Architectural Form &bull; Precision &bull; Structure
+              <div className="absolute inset-0 from-background/90 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute bottom-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface/90 border border-border  text-xs font-mono text-muted">
+                <Sparkles className="w-3.5 h-3.5 text-accent" />
+                <span>Form &bull; Precision &bull; Architectural Structure</span>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Highlights Grid */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {ABOUT.highlights.map((item, i) => (
-              <AnimateOnScroll key={item.title} delay={i * 80}>
-                <div className="p-6 rounded-xl bg-surface h-full flex flex-col justify-between hover:bg-surface-elevated transition-colors">
-                  <div>
-                    <div className="w-10 h-10 rounded-lg bg-foreground text-background flex items-center justify-center mb-4">
-                      <item.icon className="w-5 h-5 text-accent" />
+          {/* Right Column: Verified Facts Column */}
+          <div className="lg:col-span-5 space-y-4">
+            <div className="px-4 py-2 rounded-xl bg-surface/60 border border-border/80 flex items-center justify-between">
+              <span className="text-xs font-mono uppercase tracking-wider text-muted">
+                Fast Facts &bull; Index
+              </span>
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+            </div>
+
+            <div className="space-y-3.5">
+              {FACTS.map((fact) => (
+                <div
+                  key={fact.label}
+                  className="p-5 rounded-xl bg-surface border border-border hover:border-accent/40 transition-all hover:translate-x-1 duration-200 group"
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-surface-elevated border border-border/80 flex items-center justify-center text-accent group-hover:scale-110 transition-transform">
+                      <fact.icon className="w-4 h-4 text-accent" />
                     </div>
-                    <h3 className="text-base font-semibold text-foreground mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-muted leading-relaxed">
-                      {item.description}
-                    </p>
+                    <div>
+                      <span className="text-[11px] font-mono uppercase tracking-wider text-muted">
+                        {fact.label}
+                      </span>
+                      <h4 className="text-sm font-semibold text-foreground leading-snug">
+                        {fact.value}
+                      </h4>
+                    </div>
                   </div>
+                  <p className="text-xs text-muted pl-11">{fact.detail}</p>
                 </div>
-              </AnimateOnScroll>
-            ))}
+              ))}
+            </div>
+
+            {/* Quick highlight block */}
+            <div className="p-5 rounded-xl from-surface to-surface-elevated border border-border/80 space-y-2">
+              <div className="flex items-center gap-2 text-xs font-semibold text-accent">
+                <Terminal className="w-4 h-4" />
+                <span>Autonomous Agent Readiness</span>
+              </div>
+              <p className="text-xs text-muted leading-relaxed">
+                Proficient in modern agent paradigms including the Model Context Protocol (MCP),
+                tool-calling protocols, streaming responses, and low-latency local inference with
+                Ollama.
+              </p>
+            </div>
           </div>
         </div>
       </div>

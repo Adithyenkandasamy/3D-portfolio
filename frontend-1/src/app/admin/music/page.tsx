@@ -256,7 +256,7 @@ export default function AdminMusicPage() {
     }
   };
 
-  // Multi-file upload submit handler
+  // Multi-file upload submit handler (Direct Cloudinary upload with serverless fallback)
   const handleUploadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (selectedFiles.length === 0 || isUploading) return;
@@ -266,6 +266,72 @@ export default function AdminMusicPage() {
     setUploadResults(null);
 
     try {
+      // 1. Attempt direct signed Cloudinary uploads (bypasses Vercel 4.5MB payload limit)
+      const signRes = await fetch("/api/admin/cloudinary-sign", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ folder: "portfolio/music" }),
+      });
+
+      if (signRes.ok) {
+        const signData = await signRes.json();
+        if (signData.signature && signData.uploadUrl) {
+          const uploadedNames: string[] = [];
+          const uploadErrors: { filename: string; error: string }[] = [];
+
+          for (let i = 0; i < selectedFiles.length; i++) {
+            const file = selectedFiles[i];
+            setUploadProgress(Math.round(20 + ((i + 1) / selectedFiles.length) * 70));
+
+            const cldData = new FormData();
+            cldData.append("file", file);
+            cldData.append("api_key", signData.apiKey);
+            cldData.append("timestamp", String(signData.timestamp));
+            cldData.append("signature", signData.signature);
+            cldData.append("folder", signData.folder);
+
+            try {
+              const cldRes = await fetch(signData.uploadUrl, {
+                method: "POST",
+                body: cldData,
+              });
+              if (cldRes.ok) {
+                uploadedNames.push(file.name);
+              } else {
+                const errData = await cldRes.json().catch(() => ({}));
+                uploadErrors.push({
+                  filename: file.name,
+                  error: errData.error?.message || "Cloudinary direct upload rejected.",
+                });
+              }
+            } catch (uErr: unknown) {
+              uploadErrors.push({
+                filename: file.name,
+                error: uErr instanceof Error ? uErr.message : "Network error during upload.",
+              });
+            }
+          }
+
+          setUploadProgress(100);
+          setUploadResults({ uploaded: uploadedNames, errors: uploadErrors });
+          if (uploadedNames.length > 0) {
+            setStatusMessage({
+              type: "success",
+              text: `Successfully uploaded ${uploadedNames.length} song(s) directly to Cloudinary.`,
+            });
+            setSelectedFiles([]);
+            loadMusicLibrary();
+          } else {
+            setStatusMessage({
+              type: "error",
+              text: "Upload failed. Please check file format and sizes.",
+            });
+          }
+          return;
+        }
+      }
+
+      // 2. Fallback to server route /api/admin/music/upload
       const formData = new FormData();
       selectedFiles.forEach((file) => {
         formData.append("files", file);
@@ -293,7 +359,6 @@ export default function AdminMusicPage() {
           text: `Successfully uploaded ${data.totalUploaded} song(s).`,
         });
         setSelectedFiles([]);
-        // Auto-refresh the library
         loadMusicLibrary();
       } else {
         setUploadResults({

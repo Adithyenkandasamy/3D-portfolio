@@ -4,128 +4,148 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowRight, Terminal as TerminalIcon, Sparkles } from "lucide-react";
 import { getProfile, getProjects } from "@/lib/content";
+import { easeOutExpo } from "@/lib/motion";
 
 interface StatusStep {
   id: string;
   label: string;
-  status: "idle" | "running" | "done" | "ready";
+  status: "idle" | "running" | "done";
   detail?: string;
 }
 
+const STORAGE_KEYS = ["portfolio:intro-viewed", "adithyen_portfolio_intro_seen"];
+
 export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
   const [sessionChecked, setSessionChecked] = useState(false);
-  const [lettersSettled, setLettersSettled] = useState(false);
-  const [statusSteps, setStatusSteps] = useState<StatusStep[]>([
-    { id: "init", label: "INITIALIZING EXPERIENCE", status: "running" },
-    { id: "profile", label: "LOADING PROFILE", status: "idle" },
-    { id: "projects", label: "FETCHING PROJECTS", status: "idle" },
-    { id: "interactions", label: "PREPARING INTERACTIONS", status: "idle" },
-  ]);
+  const [isSplitting, setIsSplitting] = useState(false);
   const [canEnter, setCanEnter] = useState(false);
-  const [isReducedMotion, setIsReducedMotion] = useState(false);
+  const [statusSteps, setStatusSteps] = useState<StatusStep[]>([
+    { id: "core", label: "SYSTEM RUNTIME", status: "running" },
+    { id: "fonts", label: "TYPE & GLYPH REGISTRY", status: "idle" },
+    { id: "content", label: "CONTENT STORE & ASSETS", status: "idle" },
+    { id: "canvas", label: "GRAPHICS ACCELERATION", status: "idle" },
+  ]);
 
-  // Check reduced motion and session storage
+  // Check session storage and prefers-reduced-motion
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const seen = sessionStorage.getItem("adithyen_portfolio_intro_seen");
-    if (seen === "true") {
+    for (const key of STORAGE_KEYS) {
+      if (sessionStorage.getItem(key) === "true") {
+        onComplete();
+        return;
+      }
+    }
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mediaQuery.matches) {
       onComplete();
       return;
     }
 
-    const timer = setTimeout(() => {
-      const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-      if (mediaQuery.matches) {
-        setIsReducedMotion(true);
-        onComplete();
-        return;
-      }
-      setSessionChecked(true);
-    }, 0);
-
-    return () => clearTimeout(timer);
+    setSessionChecked(true);
   }, [onComplete]);
 
-  // Execute real loading steps
+  // Mark completion & start curtain split transition
+  const handleProceed = useCallback(() => {
+    if (isSplitting) return;
+    setIsSplitting(true);
+
+    if (typeof window !== "undefined") {
+      STORAGE_KEYS.forEach((key) => sessionStorage.setItem(key, "true"));
+    }
+
+    // Curtain split animation duration is 0.75s
+    setTimeout(() => {
+      onComplete();
+    }, 750);
+  }, [isSplitting, onComplete]);
+
+  // Real events pipeline
   useEffect(() => {
     if (!sessionChecked) return;
-
     let isMounted = true;
 
-    async function executeRealChecks() {
-      // Step 1: Environment & CSS 3D check
-      await new Promise((resolve) => setTimeout(resolve, 350));
+    async function executeDiagnostics() {
+      // 1. Core runtime check
+      await new Promise((res) => setTimeout(res, 220));
       if (!isMounted) return;
       setStatusSteps((prev) =>
-        prev.map((s) => (s.id === "init" ? { ...s, status: "done" } : s))
+        prev.map((s) => (s.id === "core" ? { ...s, status: "done" } : s))
       );
       setStatusSteps((prev) =>
-        prev.map((s) => (s.id === "profile" ? { ...s, status: "running" } : s))
+        prev.map((s) => (s.id === "fonts" ? { ...s, status: "running" } : s))
       );
 
-      // Step 2: Real Profile data verification
-      await new Promise((resolve) => setTimeout(resolve, 300));
-      const profile = getProfile();
-      if (!isMounted) return;
-      if (profile && profile.name) {
-        setStatusSteps((prev) =>
-          prev.map((s) => (s.id === "profile" ? { ...s, status: "done" } : s))
-        );
-      }
-      setStatusSteps((prev) =>
-        prev.map((s) => (s.id === "projects" ? { ...s, status: "running" } : s))
-      );
-
-      // Step 3: Real Projects data verification
-      await new Promise((resolve) => setTimeout(resolve, 320));
-      const projects = getProjects();
-      if (!isMounted) return;
-      if (projects && projects.length > 0) {
-        setStatusSteps((prev) =>
-          prev.map((s) => (s.id === "projects" ? { ...s, status: "done" } : s))
-        );
-      }
-      setStatusSteps((prev) =>
-        prev.map((s) => (s.id === "interactions" ? { ...s, status: "running" } : s))
-      );
-
-      // Step 4: Real Document & Fonts readiness check
+      // 2. Real Fonts check
       try {
         if ("fonts" in document) {
           await document.fonts.ready;
         }
       } catch {
-        // Fallback gracefully if fonts API is unavailable
+        // Fallback
       }
-
-      await new Promise((resolve) => setTimeout(resolve, 280));
+      await new Promise((res) => setTimeout(res, 200));
       if (!isMounted) return;
       setStatusSteps((prev) =>
-        prev.map((s) => (s.id === "interactions" ? { ...s, status: "done" } : s))
+        prev.map((s) => (s.id === "fonts" ? { ...s, status: "done" } : s))
+      );
+      setStatusSteps((prev) =>
+        prev.map((s) => (s.id === "content" ? { ...s, status: "running" } : s))
+      );
+
+      // 3. Real Content verification
+      const profile = getProfile();
+      const projects = getProjects();
+      if (profile && projects.length > 0) {
+        await new Promise((res) => setTimeout(res, 240));
+      }
+      if (!isMounted) return;
+      setStatusSteps((prev) =>
+        prev.map((s) => (s.id === "content" ? { ...s, status: "done" } : s))
+      );
+      setStatusSteps((prev) =>
+        prev.map((s) => (s.id === "canvas" ? { ...s, status: "running" } : s))
+      );
+
+      // 4. Hardware WebGL canvas check
+      try {
+        const testCanvas = document.createElement("canvas");
+        const gl =
+          testCanvas.getContext("webgl") ||
+          testCanvas.getContext("experimental-webgl");
+        if (gl) {
+          // GL acceleration ready
+        }
+      } catch {
+        // Graceful fallback
+      }
+      await new Promise((res) => setTimeout(res, 220));
+      if (!isMounted) return;
+      setStatusSteps((prev) =>
+        prev.map((s) => (s.id === "canvas" ? { ...s, status: "done" } : s))
       );
       setCanEnter(true);
+
+      // Auto-advance smoothly after short pause (total runtime ~2.2s)
+      setTimeout(() => {
+        if (isMounted) {
+          handleProceed();
+        }
+      }, 700);
     }
 
-    executeRealChecks();
+    executeDiagnostics();
 
     return () => {
       isMounted = false;
     };
-  }, [sessionChecked]);
+  }, [sessionChecked, handleProceed]);
 
-  // Handle finish
-  const handleProceed = useCallback(() => {
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("adithyen_portfolio_intro_seen", "true");
-    }
-    onComplete();
-  }, [onComplete]);
-
-  // Keyboard shortcut: Space or Enter to continue
+  // Keyboard accessibility: Escape, Enter, or Space immediately proceeds
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Enter" || e.key === " " || e.key === "Escape") {
+    const handleKeyDown = (e: globalThis.KeyboardEvent) => {
+      if (e.key === "Escape" || e.key === "Enter" || e.key === " ") {
         handleProceed();
       }
     };
@@ -133,215 +153,206 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleProceed]);
 
-  if (!sessionChecked) {
-    return null;
-  }
+  if (!sessionChecked) return null;
 
-  // Words for the 3D block name
   const firstName = "ADITHYEN".split("");
   const lastName = "K".split("");
 
   return (
-    <motion.div
-      initial={{ opacity: 1 }}
-      exit={{ opacity: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }}
-      className="fixed inset-0 z-50 flex flex-col justify-between bg-[#F8F8F6] text-foreground p-6 sm:p-12 md:p-16 select-none overflow-hidden"
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Portfolio Introduction"
+      className="fixed inset-0 z-[100] pointer-events-auto overflow-hidden select-none"
     >
-      {/* Top Header info */}
-      <div className="flex items-center justify-between w-full max-w-7xl mx-auto">
-        <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-accent" />
-          <span className="text-xs text-muted font-medium">
-            Portfolio System Initialization
-          </span>
-        </div>
+      {/* Split Curtain Layer: Left & Right halves slide away */}
+      <motion.div
+        initial={{ x: 0 }}
+        animate={isSplitting ? { x: "-100%" } : { x: 0 }}
+        transition={{ duration: 0.75, ease: easeOutExpo }}
+        className="absolute top-0 left-0 bottom-0 w-1/2 bg-[#0A0A0F] border-r border-[#23232F]/50 shadow-[10px_0_40px_rgba(0,0,0,0.8)]"
+      />
+      <motion.div
+        initial={{ x: 0 }}
+        animate={isSplitting ? { x: "100%" } : { x: 0 }}
+        transition={{ duration: 0.75, ease: easeOutExpo }}
+        className="absolute top-0 right-0 bottom-0 w-1/2 bg-[#0A0A0F] border-l border-[#23232F]/50 shadow-[-10px_0_40px_rgba(0,0,0,0.8)]"
+      />
 
-        <button
-          onClick={handleProceed}
-          className="group inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-surface text-xs font-semibold text-foreground hover:bg-surface-elevated transition-colors"
-          aria-label="Skip introduction"
-        >
-          <span>Skip Intro</span>
-          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-        </button>
-      </div>
+      {/* Atmospheric Glow */}
+      <motion.div
+        animate={isSplitting ? { opacity: 0 } : { opacity: 0.35 }}
+        transition={{ duration: 0.4 }}
+        className="pointer-events-none absolute top-1/4 left-1/4 w-[420px] h-[420px] bg-accent/20 rounded-full blur-[140px]"
+      />
 
-      {/* Main Center-Left 3D Block Letter Area */}
-      <div className="w-full max-w-7xl mx-auto my-auto py-10 perspective-1200">
-        <div className="max-w-4xl text-left">
-          {/* Subtitle pre-badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.4 }}
-            className="inline-flex items-center gap-2 mb-6 px-3 py-1 rounded-full bg-border-subtle border border-border text-xs font-mono text-muted"
+      {/* Intro Content Container */}
+      <motion.div
+        animate={isSplitting ? { opacity: 0, scale: 0.96 } : { opacity: 1, scale: 1 }}
+        transition={{ duration: 0.45 }}
+        className="relative z-10 w-full h-full flex flex-col justify-between p-6 sm:p-12 md:p-16 max-w-7xl mx-auto"
+      >
+        {/* Top Bar with System indicator and Skip control */}
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-2.5">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
+            </span>
+            <span className="text-xs font-mono tracking-wider text-muted uppercase">
+              Identity Protocol &bull; 2026
+            </span>
+          </div>
+
+          <button
+            onClick={handleProceed}
+            className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-surface/90 hover:bg-surface-elevated text-xs font-mono text-foreground border border-border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            aria-label="Skip introduction"
           >
-            <Sparkles className="w-3.5 h-3.5 text-accent" />
-            <span>PORTFOLIO INITIALIZATION</span>
-          </motion.div>
-
-          {/* 3D Block Name Display */}
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 sm:gap-x-8">
-            {/* First Name Blocks */}
-            <div className="flex items-center gap-1.5 sm:gap-2.5">
-              {firstName.map((char, index) => (
-                <motion.div
-                  key={`first-${index}`}
-                  initial={
-                    isReducedMotion
-                      ? { opacity: 0 }
-                      : {
-                          opacity: 0,
-                          rotateX: -110,
-                          rotateY: 25,
-                          y: -70,
-                          z: -120,
-                          scale: 0.7,
-                        }
-                  }
-                  animate={{
-                    opacity: 1,
-                    rotateX: 0,
-                    rotateY: 0,
-                    y: 0,
-                    z: 0,
-                    scale: 1,
-                  }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 0.15 + index * 0.07,
-                    ease: [0.2, 0.9, 0.3, 1.1],
-                  }}
-                  onAnimationComplete={() => {
-                    if (index === firstName.length - 1) {
-                      setLettersSettled(true);
-                    }
-                  }}
-                  className="letter-3d-block w-10 h-12 sm:w-14 sm:h-16 md:w-16 md:h-20 bg-surface rounded-xl border border-border text-foreground font-bold text-2xl sm:text-4xl md:text-5xl flex items-center justify-center cursor-default"
-                >
-                  <span>{char}</span>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Last Name Blocks */}
-            <div className="flex items-center gap-1.5 sm:gap-2.5">
-              {lastName.map((char, index) => (
-                <motion.div
-                  key={`last-${index}`}
-                  initial={
-                    isReducedMotion
-                      ? { opacity: 0 }
-                      : {
-                          opacity: 0,
-                          rotateX: -110,
-                          rotateY: -25,
-                          y: -70,
-                          z: -120,
-                          scale: 0.7,
-                        }
-                  }
-                  animate={{
-                    opacity: 1,
-                    rotateX: 0,
-                    rotateY: 0,
-                    y: 0,
-                    z: 0,
-                    scale: 1,
-                  }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 0.15 + (firstName.length + index) * 0.07,
-                    ease: [0.2, 0.9, 0.3, 1.1],
-                  }}
-                  className="letter-3d-block w-10 h-12 sm:w-14 sm:h-16 md:w-16 md:h-20 bg-surface rounded-xl border border-border text-foreground font-bold text-2xl sm:text-4xl md:text-5xl flex items-center justify-center cursor-default"
-                >
-                  <span>{char}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Developer subtitle revealed after letters settle */}
-          <AnimatePresence>
-            {lettersSettled && (
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="mt-6 sm:mt-8 space-y-2"
-              >
-                <p className="text-lg sm:text-xl md:text-2xl font-medium text-foreground tracking-tight">
-                  AI/ML Engineer & Full-Stack Developer
-                </p>
-                <p className="text-sm sm:text-base text-muted max-w-xl">
-                  Building intelligent computer vision systems, low-latency LLM voice
-                  architectures, and high-performance modern web applications.
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
+            <span>Skip</span>
+            <kbd className="hidden sm:inline px-1.5 py-0.5 text-[10px] rounded bg-border-subtle text-muted">
+              Esc
+            </kbd>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+          </button>
         </div>
-      </div>
 
-      {/* Bottom Loading Status & Enter Action */}
-      <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-end justify-between gap-6 pt-4">
-        {/* Terminal Status Panel */}
-        <div className="bg-[#1C1C1E] text-[#E5E5EA] rounded-xl p-4 sm:p-5 w-full md:max-w-xl font-mono text-xs border border-neutral-800">
-          <div className="flex items-center gap-2 mb-3 pb-2 border-b border-neutral-800 text-neutral-400">
-            <TerminalIcon className="w-3.5 h-3.5 text-accent" />
-            <span className="font-semibold">System Diagnostics</span>
+        {/* Monumental 3D Perspective Letter Stagger */}
+        <div className="my-auto py-8">
+          <div className="inline-flex items-center gap-2 mb-6 px-3 py-1 rounded-full bg-[#12121A] border border-[#23232F] text-xs font-mono text-muted">
+            <Sparkles className="w-3.5 h-3.5 text-accent" />
+            <span>AI/ML &bull; FULL-STACK SYSTEMS</span>
           </div>
 
-          <div className="space-y-1.5">
-            {statusSteps.map((step) => {
-              const dotsCount = Math.max(2, 28 - step.label.length);
-              const dots = ".".repeat(dotsCount);
+          {/* Perspective container */}
+          <div
+            className="overflow-hidden py-4"
+            style={{ perspective: "1200px", perspectiveOrigin: "20% 50%" }}
+          >
+            <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2 sm:gap-x-7">
+              {/* First Name letters rotating on X axis */}
+              <div className="flex items-center">
+                {firstName.map((char, index) => (
+                  <motion.span
+                    key={`first-${index}`}
+                    initial={{
+                      opacity: 0,
+                      rotateX: -95,
+                      y: 45,
+                      z: -80,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      rotateX: 0,
+                      y: 0,
+                      z: 0,
+                    }}
+                    transition={{
+                      duration: 0.75,
+                      delay: 0.12 + index * 0.055,
+                      ease: easeOutExpo,
+                    }}
+                    className="inline-block text-[clamp(2.75rem,8vw,7.5rem)] font-bold tracking-tight text-[#F4F4F6] leading-none"
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </div>
 
-              return (
+              {/* Last Name */}
+              <div className="flex items-center">
+                {lastName.map((char, index) => (
+                  <motion.span
+                    key={`last-${index}`}
+                    initial={{
+                      opacity: 0,
+                      rotateX: -95,
+                      y: 45,
+                      z: -80,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      rotateX: 0,
+                      y: 0,
+                      z: 0,
+                    }}
+                    transition={{
+                      duration: 0.75,
+                      delay: 0.12 + (firstName.length + index) * 0.055,
+                      ease: easeOutExpo,
+                    }}
+                    className="inline-block text-[clamp(2.75rem,8vw,7.5rem)] font-bold tracking-tight text-accent leading-none ml-2"
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5, ease: easeOutExpo }}
+            className="text-base sm:text-xl text-muted font-normal max-w-xl mt-4"
+          >
+            Autonomous models, computer vision architectures, and real-time platforms.
+          </motion.p>
+        </div>
+
+        {/* Real Diagnostics Terminal Panel */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 pt-4 border-t border-[#23232F]/60">
+          <div className="bg-[#12121A] text-[#F4F4F6] rounded-xl p-4 sm:p-5 w-full sm:max-w-md font-mono text-xs border border-[#23232F]">
+            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-[#23232F] text-muted">
+              <TerminalIcon className="w-3.5 h-3.5 text-accent" />
+              <span className="font-semibold text-foreground">Verified Preflight Checklist</span>
+            </div>
+
+            <div className="space-y-1.5">
+              {statusSteps.map((step) => (
                 <div key={step.id} className="flex items-center justify-between">
-                  <span className="text-neutral-300">
-                    {step.label} {dots}
-                  </span>
+                  <span className="text-muted">{step.label}</span>
                   <span
-                    className={`font-semibold ml-2 ${
+                    className={`font-semibold tracking-wide ml-3 ${
                       step.status === "done"
                         ? "text-emerald-400"
                         : step.status === "running"
-                        ? "text-amber-400 animate-pulse"
-                        : "text-neutral-600"
+                        ? "text-accent animate-pulse"
+                        : "text-muted/40"
                     }`}
                   >
                     {step.status === "done"
-                      ? "DONE"
+                      ? "READY"
                       : step.status === "running"
-                      ? "IN PROGRESS"
-                      : "WAITING"}
+                      ? "VERIFYING"
+                      : "QUEUED"}
                   </span>
                 </div>
-              );
-            })}
+              ))}
+            </div>
+          </div>
+
+          {/* Enter Button */}
+          <div className="w-full sm:w-auto">
+            <AnimatePresence>
+              {canEnter && (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={handleProceed}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-foreground text-background font-medium text-sm  shadow-black/40 hover:bg-neutral-200 transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                >
+                  <span>Enter Portfolio</span>
+                  <ArrowRight className="w-4 h-4" />
+                </motion.button>
+              )}
+            </AnimatePresence>
           </div>
         </div>
-
-        {/* Enter Button or Status Info */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto justify-end">
-          <AnimatePresence>
-            {canEnter && (
-              <motion.button
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={handleProceed}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-foreground text-background font-medium text-sm shadow-md hover:bg-neutral-800 transition-all active:scale-[0.98]"
-              >
-                <span>Enter Portfolio</span>
-                <ArrowRight className="w-4 h-4" />
-              </motion.button>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }

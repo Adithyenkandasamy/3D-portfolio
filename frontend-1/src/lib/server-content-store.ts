@@ -231,6 +231,27 @@ export async function deleteServerExperience(id: string): Promise<ExperienceItem
   return filtered;
 }
 
+export async function reorderServerExperience(orderedIds: string[]): Promise<ExperienceItem[]> {
+  const list = await getServerExperience();
+  const map = new Map(list.map((item) => [item.id, item]));
+  const reordered: ExperienceItem[] = [];
+
+  for (const id of orderedIds) {
+    const item = map.get(id);
+    if (item) {
+      reordered.push(item);
+      map.delete(id);
+    }
+  }
+
+  for (const item of map.values()) {
+    reordered.push(item);
+  }
+
+  await writeDataFile("experience.json", reordered, z.array(ExperienceSchema));
+  return reordered;
+}
+
 // Education
 export async function getServerEducation(): Promise<EducationItem[]> {
   return readDataFile<EducationItem[]>("education.json");
@@ -256,6 +277,27 @@ export async function deleteServerEducation(id: string): Promise<EducationItem[]
   const filtered = list.filter((e) => e.id !== id);
   await writeDataFile("education.json", filtered, z.array(EducationSchema));
   return filtered;
+}
+
+export async function reorderServerEducation(orderedIds: string[]): Promise<EducationItem[]> {
+  const list = await getServerEducation();
+  const map = new Map(list.map((item) => [item.id, item]));
+  const reordered: EducationItem[] = [];
+
+  for (const id of orderedIds) {
+    const item = map.get(id);
+    if (item) {
+      reordered.push(item);
+      map.delete(id);
+    }
+  }
+
+  for (const item of map.values()) {
+    reordered.push(item);
+  }
+
+  await writeDataFile("education.json", reordered, z.array(EducationSchema));
+  return reordered;
 }
 
 // Skills
@@ -295,6 +337,27 @@ export async function deleteServerCertificate(id: string): Promise<CertificateIt
   return filtered;
 }
 
+export async function reorderServerCertificates(orderedIds: string[]): Promise<CertificateItem[]> {
+  const list = await getServerCertificates();
+  const map = new Map(list.map((item) => [item.id, item]));
+  const reordered: CertificateItem[] = [];
+
+  for (const id of orderedIds) {
+    const item = map.get(id);
+    if (item) {
+      reordered.push(item);
+      map.delete(id);
+    }
+  }
+
+  for (const item of map.values()) {
+    reordered.push(item);
+  }
+
+  await writeDataFile("certificates.json", reordered, z.array(CertificateSchema));
+  return reordered;
+}
+
 // Achievements
 export async function getServerAchievements(): Promise<AchievementItem[]> {
   return readDataFile<AchievementItem[]>("achievements.json");
@@ -320,6 +383,27 @@ export async function deleteServerAchievement(id: string): Promise<AchievementIt
   const filtered = list.filter((a) => a.id !== id);
   await writeDataFile("achievements.json", filtered, z.array(AchievementSchema));
   return filtered;
+}
+
+export async function reorderServerAchievements(orderedIds: string[]): Promise<AchievementItem[]> {
+  const list = await getServerAchievements();
+  const map = new Map(list.map((item) => [item.id, item]));
+  const reordered: AchievementItem[] = [];
+
+  for (const id of orderedIds) {
+    const item = map.get(id);
+    if (item) {
+      reordered.push(item);
+      map.delete(id);
+    }
+  }
+
+  for (const item of map.values()) {
+    reordered.push(item);
+  }
+
+  await writeDataFile("achievements.json", reordered, z.array(AchievementSchema));
+  return reordered;
 }
 
 // Resume

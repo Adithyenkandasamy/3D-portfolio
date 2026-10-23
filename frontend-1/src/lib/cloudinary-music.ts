@@ -151,21 +151,23 @@ export async function listMusicAssets(options?: {
           };
         });
 
-      const totalBytes = assets.reduce((sum, a) => sum + a.bytes, 0);
+      if (assets.length > 0) {
+        const totalBytes = assets.reduce((sum, a) => sum + a.bytes, 0);
 
-      return {
-        assets,
-        totalCount: assets.length,
-        totalBytes,
-        nextCursor: res.next_cursor || null,
-        provider: "cloudinary",
-      };
+        return {
+          assets,
+          totalCount: assets.length,
+          totalBytes,
+          nextCursor: res.next_cursor || null,
+          provider: "cloudinary",
+        };
+      }
     } catch (err: unknown) {
       console.warn("Cloudinary music listing failed, checking fallback:", err);
     }
   }
 
-  // 2. Local fallback if Cloudinary is offline or credentials not yet provided
+  // 2. Local fallback if Cloudinary has 0 tracks or credentials offline
   return await listLocalMusicAssets();
 }
 

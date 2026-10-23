@@ -106,7 +106,7 @@ export function GithubActivitySection() {
         <div className="space-y-10">
           {/* GitHub Header Card */}
           <AnimateOnScroll>
-            <div className="p-7 md:p-8 rounded-2xl bg-background">
+            <div className="p-7 md:p-8 rounded-xl bg-background">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-4 min-w-0">
                   <div className="w-12 h-12 rounded-xl bg-foreground text-background flex items-center justify-center shrink-0">
@@ -200,7 +200,7 @@ export function GithubActivitySection() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {codingData.platforms.map((p, idx) => (
                 <AnimateOnScroll key={p.id} delay={idx * 80}>
-                  <div className="p-6 rounded-2xl bg-background flex flex-col justify-between h-full hover:bg-surface-elevated transition-colors">
+                  <div className="p-6 rounded-xl bg-background flex flex-col justify-between h-full hover:bg-surface-elevated transition-colors">
                     <div>
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-2">

@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { SectionHeader } from "@/components/ui/section-header";
-import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
-import { Send, Loader2, CheckCircle, AlertCircle, ArrowUpRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Send, Loader2, CheckCircle, AlertCircle, ArrowUpRight, Mail } from "lucide-react";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
+import { Magnetic } from "@/components/ui/magnetic-button";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
@@ -37,66 +36,93 @@ export function ContactSection() {
     } catch {
       setFormState("error");
     } finally {
-      setTimeout(() => setFormState("idle"), 4000);
+      setTimeout(() => setFormState("idle"), 5000);
     }
   };
 
   return (
-    <section id="contact" className="py-24 sm:py-32 px-6 sm:px-10 lg:px-16 bg-[#1a1918] text-[#eeecea]">
+    <section id="contact" className="py-24 sm:py-32 px-6 sm:px-10 lg:px-16 bg-background scroll-mt-20">
       <div className="max-w-7xl mx-auto space-y-16">
+        {/* Monumental Headline */}
         <div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-[1.05]">
-            Let&apos;s build together.
+          <span className="text-xs font-mono uppercase tracking-wider text-accent mb-4 inline-block">
+            Initiate Collaboration &bull; Direct Channel
+          </span>
+          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.05]">
+            Let&apos;s talk.
           </h2>
-          <div className="mt-8">
+          <div className="mt-6">
             <a
               href="mailto:adithyen1@gmail.com"
-              className="inline-flex items-center gap-2 text-xl sm:text-2xl lg:text-4xl font-semibold text-[#eeecea] hover:text-[#84a98c] transition-colors break-all"
+              className="inline-flex items-center gap-3 text-2xl sm:text-3xl lg:text-5xl font-medium text-foreground hover:text-accent transition-colors break-all group"
             >
               <span>adithyen1@gmail.com</span>
-              <ArrowUpRight className="w-6 h-6 sm:w-8 sm:h-8 shrink-0" />
+              <ArrowUpRight className="w-6 h-6 sm:w-10 sm:h-10 text-accent group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </a>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start pt-8">
-          <div className="lg:col-span-5 space-y-4 text-sm text-[#b5b1aa] leading-relaxed">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start pt-6 border-t border-border">
+          {/* Left Column: Status, Location & Magnetic Social Links */}
+          <div className="lg:col-span-5 space-y-6 text-sm text-muted leading-relaxed">
             <p>
-              Available for full-time software engineering roles, AI/ML research projects, and scalable backend implementations.
+              Available for full-time AI/ML engineering roles, scalable backend architectures, and high-impact software systems.
             </p>
             <p>
-              Based in Sathyamangalam, Erode (Tamil Nadu, India). Open to local, hybrid, and remote distributed teams.
+              Based in Sathyamangalam / Coimbatore (Tamil Nadu, India). Open to on-site, hybrid, and remote engineering teams worldwide.
             </p>
-            <div className="pt-4 flex gap-4 text-sm font-semibold text-white">
-              <a
-                href="https://github.com/Adithyenkandasamy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[#84a98c] transition-colors"
-              >
-                GitHub &rarr;
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[#84a98c] transition-colors"
-              >
-                LinkedIn &rarr;
-              </a>
+
+            <div className="pt-2 flex flex-wrap gap-3">
+              <Magnetic strength={0.3}>
+                <a
+                  href="https://github.com/Adithyenkandasamy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface border border-border text-foreground hover:border-accent hover:text-accent transition-colors text-xs font-medium"
+                >
+                  <GithubIcon className="w-4 h-4" />
+                  <span>GitHub</span>
+                  <ArrowUpRight className="w-3 h-3 text-muted" />
+                </a>
+              </Magnetic>
+
+              <Magnetic strength={0.3}>
+                <a
+                  href="https://www.linkedin.com/in/adithyen-k"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface border border-border text-foreground hover:border-accent hover:text-accent transition-colors text-xs font-medium"
+                >
+                  <LinkedinIcon className="w-4 h-4" />
+                  <span>LinkedIn</span>
+                  <ArrowUpRight className="w-3 h-3 text-muted" />
+                </a>
+              </Magnetic>
+
+              <Magnetic strength={0.3}>
+                <a
+                  href="mailto:adithyen1@gmail.com"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface border border-border text-foreground hover:border-accent hover:text-accent transition-colors text-xs font-medium"
+                >
+                  <Mail className="w-4 h-4" />
+                  <span>Email</span>
+                  <ArrowUpRight className="w-3 h-3 text-muted" />
+                </a>
+              </Magnetic>
             </div>
           </div>
 
+          {/* Right Column: Server-Validated Contact Form */}
           <div className="lg:col-span-7">
             <form
               onSubmit={handleSubmit}
-              className="p-7 sm:p-8 rounded-2xl bg-[#242220] space-y-5"
+              className="p-7 sm:p-8 rounded-xl bg-surface border border-border space-y-5 "
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label
                     htmlFor="contact-name"
-                    className="block text-xs font-semibold text-[#eeecea] mb-2"
+                    className="block text-xs font-mono uppercase tracking-wider text-muted mb-2"
                   >
                     Your Name
                   </label>
@@ -108,14 +134,14 @@ export function ContactSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full px-4 py-3 text-sm rounded-lg border border-[#3e3b38] bg-[#1a1918] text-white focus:outline-hidden focus:border-[#84a98c] transition-colors"
+                    className="w-full px-4 py-3 text-sm rounded-xl border border-border bg-surface-elevated text-foreground focus:outline-none focus:border-accent transition-colors"
                     placeholder="Adithyen K"
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="contact-email"
-                    className="block text-xs font-semibold text-[#eeecea] mb-2"
+                    className="block text-xs font-mono uppercase tracking-wider text-muted mb-2"
                   >
                     Email Address
                   </label>
@@ -127,7 +153,7 @@ export function ContactSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full px-4 py-3 text-sm rounded-lg border border-[#3e3b38] bg-[#1a1918] text-white focus:outline-hidden focus:border-[#84a98c] transition-colors"
+                    className="w-full px-4 py-3 text-sm rounded-xl border border-border bg-surface-elevated text-foreground focus:outline-none focus:border-accent transition-colors"
                     placeholder="name@company.com"
                   />
                 </div>
@@ -136,7 +162,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="contact-subject"
-                  className="block text-xs font-semibold text-[#eeecea] mb-2"
+                  className="block text-xs font-mono uppercase tracking-wider text-muted mb-2"
                 >
                   Subject
                 </label>
@@ -148,7 +174,7 @@ export function ContactSection() {
                   onChange={(e) =>
                     setFormData({ ...formData, subject: e.target.value })
                   }
-                  className="w-full px-4 py-3 text-sm rounded-lg border border-[#3e3b38] bg-[#1a1918] text-white focus:outline-hidden focus:border-[#84a98c] transition-colors"
+                  className="w-full px-4 py-3 text-sm rounded-xl border border-border bg-surface-elevated text-foreground focus:outline-none focus:border-accent transition-colors"
                   placeholder="Engineering collaboration or opportunity"
                 />
               </div>
@@ -156,7 +182,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="contact-message"
-                  className="block text-xs font-semibold text-[#eeecea] mb-2"
+                  className="block text-xs font-mono uppercase tracking-wider text-muted mb-2"
                 >
                   Message
                 </label>
@@ -168,43 +194,45 @@ export function ContactSection() {
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
                   }
-                  className="w-full px-4 py-3 text-sm rounded-lg resize-none border border-[#3e3b38] bg-[#1a1918] text-white focus:outline-hidden focus:border-[#84a98c] transition-colors"
-                  placeholder="Details regarding your project, architecture, or timeline..."
+                  className="w-full px-4 py-3 text-sm rounded-xl resize-none border border-border bg-surface-elevated text-foreground focus:outline-none focus:border-accent transition-colors"
+                  placeholder="Details regarding your project, architecture, or role..."
                 />
               </div>
 
-              <div className="flex items-center justify-between pt-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
                 {formState === "success" && (
-                  <p className="flex items-center gap-2 text-sm text-[#84a98c] font-medium">
+                  <p className="flex items-center gap-2 text-sm text-emerald-400 font-medium">
                     <CheckCircle className="w-4 h-4" />
-                    Message delivered successfully.
+                    Transmission delivered successfully.
                   </p>
                 )}
                 {formState === "error" && (
-                  <p className="flex items-center gap-2 text-sm text-red-400 font-medium">
+                  <p className="flex items-center gap-2 text-sm text-rose-400 font-medium">
                     <AlertCircle className="w-4 h-4" />
-                    Transmission failed. Please reach out via email.
+                    Failed to send message. Please reach out via email directly.
                   </p>
                 )}
                 {formState !== "success" && formState !== "error" && <div />}
 
-                <button
-                  type="submit"
-                  disabled={formState === "submitting"}
-                  className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg bg-white text-[#1a1918] hover:bg-neutral-200 transition-transform active:scale-98 disabled:opacity-50"
-                >
-                  {formState === "submitting" ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Sending...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4" />
-                      <span>Send Direct Message</span>
-                    </>
-                  )}
-                </button>
+                <Magnetic strength={0.2}>
+                  <button
+                    type="submit"
+                    disabled={formState === "submitting"}
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-xl bg-foreground text-background hover:bg-neutral-200 transition-transform active:scale-98 disabled:opacity-50  w-full sm:w-auto"
+                  >
+                    {formState === "submitting" ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin text-accent" />
+                        <span>Sending Transmission...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>Send Direct Message</span>
+                      </>
+                    )}
+                  </button>
+                </Magnetic>
               </div>
             </form>
           </div>

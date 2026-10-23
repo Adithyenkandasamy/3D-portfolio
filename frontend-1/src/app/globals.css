@@ -5,25 +5,25 @@
    ======================================== */
 
 @theme inline {
-  /* --- Color Palette (Three Stones: Light neutral, charcoal ink, deep moss accent) --- */
-  --color-background: #EEECEA;
-  --color-foreground: #1F1E1D;
-  --color-surface: #E4E1DD;
-  --color-surface-elevated: #DDD9D4;
-  --color-muted: #5E5B57;
-  --color-muted-foreground: #7D7974;
-  --color-border: #D4D0CA;
-  --color-border-subtle: #E5E2DD;
-  --color-accent: #2E4A3B;
+  /* --- Color Palette (Master Specification: Dark, rich, cinematic) --- */
+  --color-background: #0A0A0F;
+  --color-foreground: #F4F4F6;
+  --color-surface: #12121A;
+  --color-surface-elevated: #181824;
+  --color-muted: #8B8B9A;
+  --color-muted-foreground: #A4A4B5;
+  --color-border: #23232F;
+  --color-border-subtle: #181822;
+  --color-accent: #7C5CFF;
   --color-accent-foreground: #FFFFFF;
-  --color-accent-muted: #DBE4DE;
-  --color-destructive: #9E2A2B;
+  --color-accent-muted: rgba(124, 92, 255, 0.15);
+  --color-destructive: #EF4444;
   --color-destructive-foreground: #FFFFFF;
 
   /* Admin */
-  --color-admin-bg: #EEECEA;
-  --color-admin-sidebar: #E4E1DD;
-  --color-admin-border: #D4D0CA;
+  --color-admin-bg: #0A0A0F;
+  --color-admin-sidebar: #12121A;
+  --color-admin-border: #23232F;
 
   /* --- Typography --- */
   --font-sans: "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -35,11 +35,11 @@
   --spacing-section: 7rem;
   --spacing-section-sm: 4.5rem;
 
-  /* --- Shadows (Eliminating decorative artificial box-shadows at rest) --- */
+  /* --- Shadows (clean, minimal) --- */
   --shadow-card: none;
-  --shadow-card-hover: 0 4px 14px rgba(31, 30, 29, 0.05);
-  --shadow-elevated: 0 10px 30px rgba(31, 30, 29, 0.08);
-  --shadow-float: 0 20px 40px rgba(31, 30, 29, 0.12);
+  --shadow-card-hover: none;
+  --shadow-elevated: none;
+  --shadow-float: none;
 
   /* --- Border Radius --- */
   --radius-sm: 0.25rem;
@@ -671,33 +671,33 @@ body {
 }
 
 [data-contrib-level="0"] {
-  --contrib-top: #e8e4df;
-  --contrib-front: #ddd8d2;
-  --contrib-side: #d3cdc6;
+  --contrib-top: #161622;
+  --contrib-front: #101018;
+  --contrib-side: #0b0b12;
 }
 
 [data-contrib-level="1"] {
-  --contrib-top: #cfdcd4;
-  --contrib-front: #b7c9be;
-  --contrib-side: #a2b6aa;
+  --contrib-top: #2D1B69;
+  --contrib-front: #231553;
+  --contrib-side: #1A0F3D;
 }
 
 [data-contrib-level="2"] {
-  --contrib-top: #a8c0b2;
-  --contrib-front: #8baa97;
-  --contrib-side: #769584;
+  --contrib-top: #4F2CC8;
+  --contrib-front: #3E229E;
+  --contrib-side: #2F1976;
 }
 
 [data-contrib-level="3"] {
-  --contrib-top: #6e907d;
-  --contrib-front: #557765;
-  --contrib-side: #456352;
+  --contrib-top: #7C5CFF;
+  --contrib-front: #6546DE;
+  --contrib-side: #4E34B3;
 }
 
 [data-contrib-level="4"] {
-  --contrib-top: #2e4a3b;
-  --contrib-front: #22392d;
-  --contrib-side: #1b2e24;
+  --contrib-top: #A78BFA;
+  --contrib-front: #7C5CFF;
+  --contrib-side: #6546DE;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -715,6 +715,70 @@ body {
   }
 
   .contribution-stage[data-graph="true"] .contribution-scene {
+    transform: none;
+  }
+}
+
+/* ========================================
+   MUSIC EQUALIZER ANIMATION (DOCK SATELLITE)
+   ======================================== */
+
+@keyframes equalizer {
+  0%, 100% {
+    height: 3px;
+  }
+  50% {
+    height: 14px;
+  }
+}
+
+.animate-equalizer {
+  animation: equalizer 0.8s ease-in-out infinite;
+}
+
+/* ========================================
+   OPPOSING MARQUEE ANIMATIONS
+   ======================================== */
+
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 34s linear infinite;
+}
+
+.animate-marquee-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-right 34s linear infinite;
+}
+
+.animate-marquee-left:hover,
+.animate-marquee-right:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation: none;
     transform: none;
   }
 }

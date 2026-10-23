@@ -357,7 +357,7 @@ export function ContributionInteraction({
         transform: `translate(-50%, ${active.placement === "top" ? "-100%" : "0"})`,
       }}
     >
-      <div className="max-w-[220px] rounded-lg border border-white/10 bg-foreground px-3 py-2 text-background shadow-elevated">
+      <div className="max-w-[220px] rounded-lg border border-white/10 bg-foreground px-3 py-2 text-background ">
         <div className="flex items-center gap-2 whitespace-nowrap">
           <span
             data-contrib-level={active.status === "available" ? active.level : 0}

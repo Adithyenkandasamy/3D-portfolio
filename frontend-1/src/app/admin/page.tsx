@@ -266,6 +266,68 @@ export default function AdminPage() {
     }
   };
 
+  // Reorder Experience
+  const handleReorderExperience = async (index: number, direction: "up" | "down") => {
+    if (
+      (direction === "up" && index === 0) ||
+      (direction === "down" && index === experience.length - 1)
+    ) {
+      return;
+    }
+
+    const newIndex = direction === "up" ? index - 1 : index + 1;
+    const reordered = [...experience];
+    const [moved] = reordered.splice(index, 1);
+    reordered.splice(newIndex, 0, moved);
+
+    const orderedIds = reordered.map((e) => e.id);
+
+    try {
+      const res = await fetch("/api/admin/reorder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "experience", ids: orderedIds }),
+      });
+      if (res.ok) {
+        setExperience(reordered);
+        flashStatus("success", "Experience items reordered.");
+      }
+    } catch {
+      flashStatus("error", "Failed to reorder experience.");
+    }
+  };
+
+  // Reorder Certificates
+  const handleReorderCertificate = async (index: number, direction: "up" | "down") => {
+    if (
+      (direction === "up" && index === 0) ||
+      (direction === "down" && index === certificates.length - 1)
+    ) {
+      return;
+    }
+
+    const newIndex = direction === "up" ? index - 1 : index + 1;
+    const reordered = [...certificates];
+    const [moved] = reordered.splice(index, 1);
+    reordered.splice(newIndex, 0, moved);
+
+    const orderedIds = reordered.map((c) => c.id);
+
+    try {
+      const res = await fetch("/api/admin/reorder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "certificates", ids: orderedIds }),
+      });
+      if (res.ok) {
+        setCertificates(reordered);
+        flashStatus("success", "Certificates reordered.");
+      }
+    } catch {
+      flashStatus("error", "Failed to reorder certificates.");
+    }
+  };
+
   /* -------------------------------------------------------------
      RENDER: Loading Check
      ------------------------------------------------------------- */
@@ -914,7 +976,7 @@ export default function AdminPage() {
               </div>
 
               <div className="space-y-4">
-                {experience.map((exp) => (
+                {experience.map((exp, index) => (
                   <div key={exp.id} className="card p-6">
                     <div className="flex items-start justify-between gap-4 mb-2">
                       <div>
@@ -926,10 +988,26 @@ export default function AdminPage() {
                         </p>
                       </div>
 
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1 shrink-0">
+                        <button
+                          onClick={() => handleReorderExperience(index, "up")}
+                          disabled={index === 0}
+                          className="p-1.5 text-muted hover:text-foreground disabled:opacity-30 rounded hover:bg-border-subtle"
+                          title="Move Up"
+                        >
+                          <ArrowUp className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => handleReorderExperience(index, "down")}
+                          disabled={index === experience.length - 1}
+                          className="p-1.5 text-muted hover:text-foreground disabled:opacity-30 rounded hover:bg-border-subtle"
+                          title="Move Down"
+                        >
+                          <ArrowDown className="w-4 h-4" />
+                        </button>
                         <button
                           onClick={() => setEditingExperience(exp)}
-                          className="p-1.5 text-muted hover:text-foreground rounded hover:bg-border-subtle"
+                          className="p-1.5 text-muted hover:text-foreground rounded hover:bg-border-subtle ml-2"
                           title="Edit"
                         >
                           <Edit className="w-4 h-4" />
@@ -1388,12 +1466,41 @@ export default function AdminPage() {
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-foreground text-background text-xs font-medium hover:bg-neutral-800 transition-colors"
                 >
                   <Plus className="w-4 h-4" />
-                  <span>Add Certificate</span>
+                  <span>Add Manually</span>
                 </button>
               </div>
 
+              {/* Direct Certificate Upload Dropzone */}
+              <div className="card p-5 border border-dashed border-border bg-surface/50">
+                <MediaUploader
+                  label="Quick Upload Certificate (PDF or Image)"
+                  folder="portfolio/certificates"
+                  accept="application/pdf,image/*"
+                  onUploadSuccess={async (url, asset) => {
+                    const cleanTitle = asset.name
+                      .replace(/\.[^/.]+$/, "")
+                      .replace(/[-_]/g, " ")
+                      .replace(/\b\w/g, (c) => c.toUpperCase());
+                    const newCert: CertificateItem = {
+                      id: `cert-${Date.now()}`,
+                      title: cleanTitle || "Verified Certificate",
+                      issuer: "Verified Credential",
+                      issueDate: String(new Date().getFullYear()),
+                      credentialId: `ID-${Date.now().toString().slice(-6)}`,
+                      verificationUrl: url,
+                      skills: [],
+                    };
+                    await handleSaveContent("certificate", newCert);
+                    setStatusMessage({
+                      type: "success",
+                      text: `Certificate "${newCert.title}" uploaded and added to portfolio!`,
+                    });
+                  }}
+                />
+              </div>
+
               <div className="space-y-4">
-                {certificates.map((cert) => (
+                {certificates.map((cert, index) => (
                   <div key={cert.id} className="card p-5 flex items-center justify-between gap-4">
                     <div>
                       <h4 className="text-sm font-semibold text-foreground">{cert.title}</h4>
@@ -1402,16 +1509,34 @@ export default function AdminPage() {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1 shrink-0">
+                      <button
+                        onClick={() => handleReorderCertificate(index, "up")}
+                        disabled={index === 0}
+                        className="p-1.5 text-muted hover:text-foreground disabled:opacity-30 rounded hover:bg-border-subtle"
+                        title="Move Up"
+                      >
+                        <ArrowUp className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => handleReorderCertificate(index, "down")}
+                        disabled={index === certificates.length - 1}
+                        className="p-1.5 text-muted hover:text-foreground disabled:opacity-30 rounded hover:bg-border-subtle"
+                        title="Move Down"
+                      >
+                        <ArrowDown className="w-4 h-4" />
+                      </button>
                       <button
                         onClick={() => setEditingCertificate(cert)}
-                        className="p-1.5 text-muted hover:text-foreground rounded hover:bg-border-subtle"
+                        className="p-1.5 text-muted hover:text-foreground rounded hover:bg-border-subtle ml-2"
+                        title="Edit Certificate"
                       >
                         <Edit className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleDeleteItem("certificate", cert.id, cert.title)}
                         className="p-1.5 text-destructive hover:bg-destructive/10 rounded"
+                        title="Delete Certificate"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>

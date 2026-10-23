@@ -11,6 +11,9 @@ import Image from "next/image";
 import { RotateCcw, Mail, FileDown, Terminal as TerminalIcon, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+import { ScrambleText } from "@/components/ui/scramble-text";
+import { Magnetic } from "@/components/ui/magnetic-button";
+
 const PROFILE = {
   name_pronunciation: "Ah-dith-yen",
   display_name: "Adithyen K",
@@ -216,8 +219,8 @@ export function TerminalHero() {
     >
       {/* Monumental Headline Block */}
       <div className="my-6 md:my-10 space-y-4">
-        <h1 className="text-[clamp(3.5rem,11.5vw,9.5rem)] font-bold tracking-tight text-foreground leading-[0.9] select-none break-words">
-          ADITHYEN K
+        <h1 className="text-[clamp(3.5rem,11.5vw,9.5rem)] font-bold tracking-tight text-foreground leading-[0.9] select-none break-words cursor-default">
+          <ScrambleText text="ADITHYEN K" />
         </h1>
         <p className="text-xl sm:text-2xl md:text-3xl font-medium text-foreground max-w-4xl leading-snug">
           AI/ML Engineer &amp; Full-Stack Developer designing and deploying autonomous models, real-time computer vision, and resilient web platforms.
@@ -241,26 +244,41 @@ export function TerminalHero() {
           </p>
 
           <div className="flex flex-wrap items-center gap-3 pt-1">
-            <a
-              href="#projects"
-              className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold rounded-lg bg-foreground text-background hover:bg-foreground/90 transition-transform active:scale-98"
-            >
-              View Selected Works
-            </a>
-            <a
-              href="#resume"
-              className="inline-flex items-center gap-2 px-5 py-3 text-sm font-medium rounded-lg bg-surface hover:bg-surface-elevated text-foreground transition-colors"
-            >
-              <FileDown className="w-4 h-4 text-accent" />
-              Download Resume
-            </a>
-            <button
-              onClick={() => setShowConsole(!showConsole)}
-              className="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg text-muted hover:text-foreground transition-colors"
-            >
-              <TerminalIcon className="w-4 h-4" />
-              <span>{showConsole ? "Show Visual Plate" : "Open Terminal"}</span>
-            </button>
+            <Magnetic strength={0.28}>
+              <a
+                href="#projects"
+                className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold rounded-xl bg-foreground text-background hover:bg-neutral-200 transition-transform active:scale-98 "
+              >
+                View Selected Works
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.28}>
+              <a
+                href="#resume"
+                className="inline-flex items-center gap-2 px-5 py-3 text-sm font-medium rounded-xl bg-surface hover:bg-surface-elevated text-foreground border border-border transition-colors "
+              >
+                <FileDown className="w-4 h-4 text-accent" />
+                Resume
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.28}>
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 px-5 py-3 text-sm font-medium rounded-xl bg-surface hover:bg-surface-elevated text-foreground border border-border transition-colors "
+              >
+                <Mail className="w-4 h-4 text-accent" />
+                Contact
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.2}>
+              <button
+                onClick={() => setShowConsole(!showConsole)}
+                className="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-xl text-muted hover:text-foreground transition-colors"
+              >
+                <TerminalIcon className="w-4 h-4" />
+                <span>{showConsole ? "Show Visual Plate" : "Open Terminal"}</span>
+              </button>
+            </Magnetic>
           </div>
         </div>
 

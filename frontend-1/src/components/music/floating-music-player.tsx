@@ -239,7 +239,7 @@ export function FloatingMusicPlayer() {
       >
         {isExpanded ? (
           // Expanded Player
-          <div className="bg-surface/95 backdrop-blur-xl rounded-2xl shadow-elevated p-4 animate-fade-in text-foreground">
+          <div className="bg-surface/95 -xl rounded-2xl  p-4 animate-fade-in text-foreground">
             {/* Header with track info & collapse button */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2.5 overflow-hidden">
@@ -375,7 +375,7 @@ export function FloatingMusicPlayer() {
 
                 <button
                   onClick={togglePlay}
-                  className="p-2.5 rounded-full bg-foreground text-background hover:bg-foreground/90 transition-transform active:scale-95 shadow-xs"
+                  className="p-2.5 rounded-full bg-foreground text-background hover:bg-foreground/90 transition-transform active:scale-95 "
                   aria-label={isPlaying ? "Pause music" : "Play music"}
                 >
                   {isPlaying ? (
@@ -406,7 +406,7 @@ export function FloatingMusicPlayer() {
           </div>
         ) : (
           // Collapsed Floating Pill
-          <div className="flex items-center justify-between gap-3 bg-surface/95 backdrop-blur-md rounded-full px-4 py-2 shadow-card-hover transition-colors">
+          <div className="flex items-center justify-between gap-3 bg-surface/95  rounded-full px-4 py-2  transition-colors">
             <button
               onClick={() => setIsExpanded(true)}
               className="flex items-center gap-2 text-left min-w-0"
