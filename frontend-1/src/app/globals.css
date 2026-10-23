@@ -5,25 +5,27 @@
    ======================================== */
 
 @theme inline {
-  /* --- Color Palette (Master Specification: Dark, rich, cinematic) --- */
-  --color-background: #0A0A0F;
-  --color-foreground: #F4F4F6;
+  /* --- Color Palette (Master Specification: #09090D, #12121A, #F5F5F7, #A1A1AA, #8B5CF6, #3B82F6, #EF4444, #2A2A35) --- */
+  --color-background: #09090D;
+  --color-foreground: #F5F5F7;
   --color-surface: #12121A;
   --color-surface-elevated: #181824;
-  --color-muted: #8B8B9A;
-  --color-muted-foreground: #A4A4B5;
-  --color-border: #23232F;
-  --color-border-subtle: #181822;
-  --color-accent: #7C5CFF;
+  --color-muted: #A1A1AA;
+  --color-muted-foreground: #B4B4C0;
+  --color-border: #2A2A35;
+  --color-border-subtle: #1A1A24;
+  --color-accent: #8B5CF6;
+  --color-accent-blue: #3B82F6;
+  --color-accent-red: #EF4444;
   --color-accent-foreground: #FFFFFF;
-  --color-accent-muted: rgba(124, 92, 255, 0.15);
+  --color-accent-muted: rgba(139, 92, 246, 0.15);
   --color-destructive: #EF4444;
   --color-destructive-foreground: #FFFFFF;
 
   /* Admin */
-  --color-admin-bg: #0A0A0F;
+  --color-admin-bg: #09090D;
   --color-admin-sidebar: #12121A;
-  --color-admin-border: #23232F;
+  --color-admin-border: #2A2A35;
 
   /* --- Typography --- */
   --font-sans: "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;

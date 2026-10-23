@@ -27,6 +27,9 @@ import {
   Loader2,
   Lock,
   Music,
+  Calendar,
+  MessageSquare,
+  ArrowUpRight,
 } from "lucide-react";
 import { MediaUploader } from "@/components/admin/media-uploader";
 import type {
@@ -516,17 +519,43 @@ export default function AdminPage() {
               );
             })}
 
-            <div className="pt-2 mt-2 border-t border-border/60">
+            <div className="pt-2 mt-2 border-t border-border/60 space-y-1">
+              <Link
+                href="/admin/timeline"
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-foreground bg-border-subtle/60 hover:bg-border-subtle transition-colors group"
+              >
+                <div className="flex items-center gap-3">
+                  <Calendar className="w-4 h-4 text-accent shrink-0" />
+                  <span className="font-semibold">Timeline Manager</span>
+                </div>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-accent/15 text-accent">
+                  Live
+                </span>
+              </Link>
+
+              <Link
+                href="/admin/comments"
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-foreground bg-border-subtle/60 hover:bg-border-subtle transition-colors group"
+              >
+                <div className="flex items-center gap-3">
+                  <MessageSquare className="w-4 h-4 text-accent-blue shrink-0" />
+                  <span className="font-semibold">Visitor Notes</span>
+                </div>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-accent-blue/15 text-accent-blue">
+                  Notes
+                </span>
+              </Link>
+
               <Link
                 href="/admin/music"
                 className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-foreground bg-border-subtle/60 hover:bg-border-subtle transition-colors group"
               >
                 <div className="flex items-center gap-3">
-                  <Music className="w-4 h-4 text-accent shrink-0" />
+                  <Music className="w-4 h-4 text-accent-red shrink-0" />
                   <span className="font-semibold">Music Library</span>
                 </div>
                 <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-foreground/10 text-foreground">
-                  New
+                  Media
                 </span>
               </Link>
             </div>
@@ -567,22 +596,91 @@ export default function AdminPage() {
                 </div>
               </div>
 
+              {/* Connected Systems & Advanced Controls */}
+              <div>
+                <h3 className="text-sm font-semibold text-foreground mb-3">
+                  Connected Systems &amp; Real-Time Moderation
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <Link
+                    href="/admin/timeline"
+                    className="card p-5 hover:border-accent transition-colors group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-mono font-medium text-accent">Neon DB</span>
+                        <ArrowUpRight className="w-4 h-4 text-muted group-hover:text-accent transition-colors" />
+                      </div>
+                      <h4 className="text-base font-bold text-foreground group-hover:text-accent transition-colors">
+                        Timeline Manager
+                      </h4>
+                      <p className="text-xs text-muted mt-1">
+                        Manage education, internships, awards, and career milestones dynamically.
+                      </p>
+                    </div>
+                    <span className="text-[11px] font-semibold text-foreground/80 mt-4 pt-3 border-t border-border/50">
+                      Open Manager &rarr;
+                    </span>
+                  </Link>
+
+                  <Link
+                    href="/admin/comments"
+                    className="card p-5 hover:border-accent-blue transition-colors group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-mono font-medium text-accent-blue">Guestbook</span>
+                        <ArrowUpRight className="w-4 h-4 text-muted group-hover:text-accent-blue transition-colors" />
+                      </div>
+                      <h4 className="text-base font-bold text-foreground group-hover:text-accent-blue transition-colors">
+                        Visitor Notes
+                      </h4>
+                      <p className="text-xs text-muted mt-1">
+                        Review pending notes, approve public messages, and enforce rate limits.
+                      </p>
+                    </div>
+                    <span className="text-[11px] font-semibold text-foreground/80 mt-4 pt-3 border-t border-border/50">
+                      Moderate Notes &rarr;
+                    </span>
+                  </Link>
+
+                  <Link
+                    href="/admin/music"
+                    className="card p-5 hover:border-accent-red transition-colors group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-mono font-medium text-accent-red">Cloudinary</span>
+                        <ArrowUpRight className="w-4 h-4 text-muted group-hover:text-accent-red transition-colors" />
+                      </div>
+                      <h4 className="text-base font-bold text-foreground group-hover:text-accent-red transition-colors">
+                        Music Library
+                      </h4>
+                      <p className="text-xs text-muted mt-1">
+                        Upload audio tracks, manage the floating dock playlist, and stream audio.
+                      </p>
+                    </div>
+                    <span className="text-[11px] font-semibold text-foreground/80 mt-4 pt-3 border-t border-border/50">
+                      Manage Audio &rarr;
+                    </span>
+                  </Link>
+                </div>
+              </div>
+
               {/* Storage & Cloudinary Status Card */}
               <div className="card p-6 border-l-4 border-l-accent">
                 <h3 className="text-sm font-semibold text-foreground mb-2">
-                  Storage & Deployment Architecture
+                  Storage &amp; Deployment Architecture
                 </h3>
                 <div className="space-y-2 text-xs text-muted">
                   <p>
-                    • <strong>Text Content:</strong> Saved to verified typed JSON records under{" "}
-                    <code className="font-mono bg-border-subtle px-1.5 py-0.5 rounded">/data</code> with atomic file operations and Zod validation.
+                    &bull; <strong>Database:</strong> Connected to Neon Serverless PostgreSQL with pooled queries for timeline entries, visitor guestbook moderation, and contact messages.
                   </p>
                   <p>
-                    • <strong>Media & Cloudinary:</strong> Authenticated server-side uploads. If Cloudinary credentials (
-                    <code className="font-mono">CLOUDINARY_CLOUD_NAME</code>, etc.) are present in <code className="font-mono">.env.local</code>, assets upload directly to Cloudinary; otherwise, local fallback is stored securely in <code className="font-mono">/public/uploads/</code>.
+                    &bull; <strong>Media &amp; Cloudinary:</strong> Authenticated server-side uploads. Media assets upload directly to Cloudinary or secure local fallback storage.
                   </p>
                   <p>
-                    • <strong>Production Note:</strong> In production deployments (e.g. Vercel), local server filesystem writes do not persist across serverless instances; external database or Git-backed CMS should be used for multi-user production persistence.
+                    &bull; <strong>Static Cache &amp; Fallbacks:</strong> Core portfolio JSON files under <code className="font-mono bg-border-subtle px-1.5 py-0.5 rounded">/data</code> provide instant zero-latency fallbacks when database instances cycle.
                   </p>
                 </div>
               </div>

@@ -6,11 +6,11 @@ import { TerminalHero } from "@/components/terminal/terminal-hero";
 import { AboutSection } from "@/components/sections/about-section";
 import { SkillsSection } from "@/components/sections/skills-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
-import { ExperienceSection } from "@/components/sections/experience-section";
-import { EducationSection } from "@/components/sections/education-section";
 import { CertificatesSection } from "@/components/sections/certificates-section";
 import { AchievementsSection } from "@/components/sections/achievements-section";
 import { GithubActivitySection } from "@/components/sections/github-activity-section";
+import { TimelineSection } from "@/components/sections/timeline-section";
+import { VisitorCommentsSection } from "@/components/sections/visitor-comments-section";
 import { ContactSection } from "@/components/sections/contact-section";
 import { FloatingDock } from "@/components/dock/floating-dock";
 import { ResumeModal } from "@/components/ui/resume-modal";
@@ -52,11 +52,8 @@ export default function Home() {
         {/* Projects */}
         <ProjectsSection />
 
-        {/* Experience Timeline */}
-        <ExperienceSection />
-
-        {/* Education */}
-        <EducationSection />
+        {/* Dynamic Career & Education Timeline */}
+        <TimelineSection />
 
         {/* Certificates */}
         <CertificatesSection />
@@ -66,6 +63,9 @@ export default function Home() {
 
         {/* GitHub & Coding Activity */}
         <GithubActivitySection />
+
+        {/* Visitor Notes: HEY THERE! */}
+        <VisitorCommentsSection />
 
         {/* Contact */}
         <ContactSection />

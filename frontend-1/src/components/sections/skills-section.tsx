@@ -6,43 +6,47 @@ import { Sparkles, Terminal } from "lucide-react";
 
 const SKILL_DOMAINS = [
   {
-    name: "Languages & Core",
-    description: "Foundational programming languages and computational problem solving",
+    name: "Full-Stack Engineering",
+    description: "Production web applications, async backend services, and type-safe systems",
+    accent: "text-accent",
     items: [
-      { name: "Python", context: "FastAPI, PyTorch, AST Tracing, Automation" },
-      { name: "Java, C & C++", context: "OOP, Data Structures & Algorithms" },
-      { name: "SQL", context: "PostgreSQL, MySQL, SQLite, Complex Queries" },
-      { name: "TypeScript & JavaScript", context: "Next.js App Router, React, Node.js" },
+      { name: "Next.js & React 19", context: "App Router, SSR, Server Components", project: "Portfolio & RESQ" },
+      { name: "FastAPI & Python", context: "High-throughput async REST endpoints", project: "OneForAll & MediCare" },
+      { name: "TypeScript & JavaScript", context: "Strict contracts, React Native, UI state", project: "MagizhCode" },
+      { name: "REST APIs & WebSockets", context: "Real-time dispatch & Socket.IO streams", project: "RESQ" },
     ],
   },
   {
-    name: "AI, Vision & Agent Protocols",
-    description: "Computer vision, multimodal models, OCR, and agentic integrations",
+    name: "AI & Machine Learning",
+    description: "Computer vision, multimodal LLM pipelines, and Model Context Protocol",
+    accent: "text-accent-blue",
     items: [
-      { name: "Computer Vision & OCR", context: "OpenCV, Document Processing, Inspection" },
-      { name: "LLMs & Multimodal Models", context: "Llama 3.3, Groq, Gemini, Prompt Engineering" },
-      { name: "Model Context Protocol (MCP)", context: "Developer Tooling, Google Sheets MCP" },
-      { name: "AI Automation & Workflows", context: "n8n, Make.com, WebSockets, Live Streaming" },
+      { name: "Computer Vision & OCR", context: "OpenCV, contour detection, damage assessment", project: "Auto-Insurance CV" },
+      { name: "LLMs & Multimodal Models", context: "Groq Llama 3.3 70B, Google Gemini", project: "OneForAll AI" },
+      { name: "Model Context Protocol (MCP)", context: "Tool agents & Google Sheets automation", project: "OneForAll AI" },
+      { name: "Voice & Speech Engines", context: "FasterWhisper, Kokoro TTS, Live Audio", project: "Voice Assistant" },
     ],
   },
   {
-    name: "Backend & Web Architectures",
-    description: "High-performance asynchronous frameworks and responsive interfaces",
+    name: "Infrastructure & Deployment",
+    description: "Containerization, cloud infrastructure, and automated quality gates",
+    accent: "text-foreground",
     items: [
-      { name: "FastAPI, Flask & Django", context: "Modular Python Endpoints & Microservices" },
-      { name: "Next.js & React", context: "Modern App Router, Server Components" },
-      { name: "React Native", context: "Cross-Platform Mobile Application Systems" },
-      { name: "REST APIs & WebSockets", context: "Real-time Event Ingestion & Socket.IO" },
+      { name: "Docker Containerization", context: "Isolated microservice environments", project: "Production Stacks" },
+      { name: "Linux Administration", context: "Systemd services, bash automation, permissions", project: "Server Ops" },
+      { name: "GitHub Actions CI/CD", context: "Automated linting, pytest & quality gates", project: "All Repos" },
+      { name: "Cloud Platforms", context: "Vercel, GCP, DigitalOcean, Supabase", project: "Cloud Deployments" },
     ],
   },
   {
-    name: "Databases, Cloud & DevOps",
-    description: "Distributed data stores, containerization, and automated CI/CD",
+    name: "Data & Streaming Systems",
+    description: "Relational persistence, event-driven streaming, and caching layers",
+    accent: "text-accent-red",
     items: [
-      { name: "PostgreSQL, MongoDB & Redis", context: "Relational Persistence & Token Bucket Caching" },
-      { name: "SQLAlchemy & Supabase", context: "Python ORM, JWT Authentication & RBAC" },
-      { name: "Docker & Linux", context: "Containerized Services & Server Management" },
-      { name: "Git & GitHub Actions", context: "Automated Testing, pytest & CI/CD Gates" },
+      { name: "PostgreSQL & Supabase", context: "Neon serverless DB, relations & auth", project: "Portfolio & RESQ" },
+      { name: "Redis Caching & Limits", context: "Distributed token bucket rate limiting", project: "MediCareAI" },
+      { name: "Real-Time Streaming", context: "Pathway reactive engine & telemetry", project: "Microsoft Finalist" },
+      { name: "SQLAlchemy & ORMs", context: "Schema modeling, migrations, session pooling", project: "MagizhCode" },
     ],
   },
 ];
@@ -88,8 +92,11 @@ export function SkillsSection() {
             <AnimateOnScroll key={domain.name} delay={idx * 60}>
               <div className="p-7 sm:p-8 rounded-xl bg-surface border border-border h-full flex flex-col justify-between hover:border-accent/40 transition-colors  group">
                 <div>
-                  <h3 className="text-xl font-bold text-foreground mb-1 group-hover:text-accent transition-colors">
-                    {domain.name}
+                  <h3 className={`text-xl font-bold text-foreground mb-1 group-hover:${domain.accent} transition-colors flex items-center justify-between`}>
+                    <span>{domain.name}</span>
+                    <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-full bg-border-subtle text-muted">
+                      {domain.items.length} toolchains
+                    </span>
                   </h3>
                   <p className="text-sm text-muted mb-6">
                     {domain.description}
@@ -99,14 +106,23 @@ export function SkillsSection() {
                     {domain.items.map((item) => (
                       <div
                         key={item.name}
-                        className="flex flex-col sm:flex-row sm:items-baseline justify-between p-3 rounded-xl bg-surface-elevated/70 border border-border/60 hover:border-accent/40 transition-colors gap-1.5"
+                        className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-xl bg-surface-elevated/70 border border-border/60 hover:border-accent/40 transition-colors gap-2"
                       >
-                        <span className="text-sm font-semibold text-foreground">
-                          {item.name}
-                        </span>
-                        <span className="text-xs font-mono text-muted">
-                          {item.context}
-                        </span>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-semibold text-foreground">
+                              {item.name}
+                            </span>
+                            {item.project && (
+                              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-border text-foreground/80">
+                                {item.project}
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-xs font-mono text-muted block sm:inline">
+                            {item.context}
+                          </span>
+                        </div>
                       </div>
                     ))}
                   </div>

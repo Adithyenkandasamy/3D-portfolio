@@ -265,18 +265,95 @@ export function ProjectsSection() {
           </div>
         </div>
 
-        {/* 1. PINNED SHOWCASE VIEW */}
+        {/* 1. PINNED SHOWCASE + ARCHIVE GRID VIEW */}
         {viewMode === "showcase" && (
-          <div className="relative space-y-12 pb-24">
-            {projects.map((project, idx) => (
-              <PinnedProjectCard
-                key={project.id}
-                project={project}
-                index={idx}
-                total={projects.length}
-                onSelect={setSelectedProject}
-              />
-            ))}
+          <div className="space-y-16">
+            {/* Flagship Pinned Projects */}
+            <div className="relative space-y-12 pb-8">
+              {projects
+                .filter((p) => p.featured)
+                .map((project, idx, arr) => (
+                  <PinnedProjectCard
+                    key={project.id}
+                    project={project}
+                    index={idx}
+                    total={arr.length}
+                    onSelect={setSelectedProject}
+                  />
+                ))}
+            </div>
+
+            {/* Engineering Archive & Hackathon Deployments */}
+            {projects.some((p) => !p.featured) && (
+              <div className="pt-10 border-t border-border/80">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                  <div>
+                    <span className="text-xs font-mono font-semibold uppercase tracking-wider text-accent-blue">
+                      Engineering Archive &amp; Hackathons
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mt-1">
+                      Specialized Prototypes &amp; Competitive Systems
+                    </h3>
+                  </div>
+                  <p className="text-xs text-muted max-w-md">
+                    Targeted hackathon builds, computer vision models, and low-latency streaming pipelines developed under competitive constraints.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {projects
+                    .filter((p) => !p.featured)
+                    .map((project) => (
+                      <div
+                        key={project.id}
+                        onClick={() => setSelectedProject(project)}
+                        className="p-6 rounded-xl bg-surface border border-border hover:border-accent-blue/50 transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:-translate-y-1"
+                      >
+                        <div>
+                          <div className="flex items-center justify-between gap-2 mb-3">
+                            <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-border-subtle text-foreground/80">
+                              {project.category}
+                            </span>
+                            <ArrowUpRight className="w-4 h-4 text-muted group-hover:text-accent-blue transition-colors" />
+                          </div>
+
+                          <h4 className="text-lg font-bold text-foreground group-hover:text-accent-blue transition-colors mb-2">
+                            {project.title}
+                          </h4>
+
+                          <p className="text-xs text-muted leading-relaxed mb-4 line-clamp-3">
+                            {project.description}
+                          </p>
+
+                          {project.highlights && project.highlights.length > 0 && (
+                            <div className="space-y-1.5 mb-4">
+                              {project.highlights.slice(0, 2).map((h, hIdx) => (
+                                <div key={hIdx} className="text-[11px] text-foreground/80 flex items-start gap-2">
+                                  <span className="text-accent-blue font-mono font-bold">›</span>
+                                  <span className="line-clamp-1">{h}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+
+                        <div>
+                          <div className="flex flex-wrap gap-1.5 pt-4 border-t border-border/50">
+                            {project.tags.slice(0, 4).map((tag) => (
+                              <span
+                                key={tag}
+                                className="px-2 py-0.5 text-[10px] font-mono rounded bg-background border border-border/60 text-foreground/70"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 

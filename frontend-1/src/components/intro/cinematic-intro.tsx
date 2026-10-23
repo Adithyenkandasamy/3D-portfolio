@@ -179,34 +179,27 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
         className="absolute top-0 right-0 bottom-0 w-1/2 bg-[#0A0A0F] border-l border-[#23232F]/50 shadow-[-10px_0_40px_rgba(0,0,0,0.8)]"
       />
 
-      {/* Atmospheric Glow */}
-      <motion.div
-        animate={isSplitting ? { opacity: 0 } : { opacity: 0.35 }}
-        transition={{ duration: 0.4 }}
-        className="pointer-events-none absolute top-1/4 left-1/4 w-[420px] h-[420px] bg-accent/20 rounded-full blur-[140px]"
-      />
-
       {/* Intro Content Container */}
       <motion.div
-        animate={isSplitting ? { opacity: 0, scale: 0.96 } : { opacity: 1, scale: 1 }}
+        animate={isSplitting ? { opacity: 0, scale: 0.98 } : { opacity: 1, scale: 1 }}
         transition={{ duration: 0.45 }}
         className="relative z-10 w-full h-full flex flex-col justify-between p-6 sm:p-12 md:p-16 max-w-7xl mx-auto"
       >
         {/* Top Bar with System indicator and Skip control */}
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-2.5">
-            <span className="relative flex h-2.5 w-2.5">
+            <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
             </span>
             <span className="text-xs font-mono tracking-wider text-muted uppercase">
-              Identity Protocol &bull; 2026
+              adithyen.dev // system runtime
             </span>
           </div>
 
           <button
             onClick={handleProceed}
-            className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-surface/90 hover:bg-surface-elevated text-xs font-mono text-foreground border border-border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-surface hover:bg-surface-elevated text-xs font-mono text-foreground border border-border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             aria-label="Skip introduction"
           >
             <span>Skip</span>
@@ -219,8 +212,8 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
 
         {/* Monumental 3D Perspective Letter Stagger */}
         <div className="my-auto py-8">
-          <div className="inline-flex items-center gap-2 mb-6 px-3 py-1 rounded-full bg-[#12121A] border border-[#23232F] text-xs font-mono text-muted">
-            <Sparkles className="w-3.5 h-3.5 text-accent" />
+          <div className="inline-flex items-center gap-2 mb-6 px-3 py-1 rounded-full bg-surface border border-border text-xs font-mono text-muted">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
             <span>AI/ML &bull; FULL-STACK SYSTEMS</span>
           </div>
 
@@ -252,7 +245,7 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
                       delay: 0.12 + index * 0.055,
                       ease: easeOutExpo,
                     }}
-                    className="inline-block text-[clamp(2.75rem,8vw,7.5rem)] font-bold tracking-tight text-[#F4F4F6] leading-none"
+                    className="inline-block text-[clamp(2.75rem,8vw,7.5rem)] font-bold tracking-tight text-foreground leading-none"
                     style={{ transformStyle: "preserve-3d" }}
                   >
                     {char}
@@ -292,20 +285,28 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
             </div>
           </div>
 
+          {/* Geometric rule line */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ delay: 0.5, duration: 0.6, ease: easeOutExpo }}
+            className="h-[2px] w-32 bg-gradient-to-r from-accent via-accent-blue to-transparent my-4 origin-left"
+          />
+
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.5, ease: easeOutExpo }}
-            className="text-base sm:text-xl text-muted font-normal max-w-xl mt-4"
+            transition={{ delay: 0.65, duration: 0.5, ease: easeOutExpo }}
+            className="text-base sm:text-xl text-muted font-normal max-w-xl"
           >
-            Autonomous models, computer vision architectures, and real-time platforms.
+            AI/ML Engineer &amp; Full-Stack Developer designing and deploying autonomous models, real-time computer vision, and resilient web platforms.
           </motion.p>
         </div>
 
         {/* Real Diagnostics Terminal Panel */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 pt-4 border-t border-[#23232F]/60">
-          <div className="bg-[#12121A] text-[#F4F4F6] rounded-xl p-4 sm:p-5 w-full sm:max-w-md font-mono text-xs border border-[#23232F]">
-            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-[#23232F] text-muted">
+        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 pt-4 border-t border-border">
+          <div className="bg-surface text-foreground rounded-xl p-4 sm:p-5 w-full sm:max-w-md font-mono text-xs border border-border">
+            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border text-muted">
               <TerminalIcon className="w-3.5 h-3.5 text-accent" />
               <span className="font-semibold text-foreground">Verified Preflight Checklist</span>
             </div>

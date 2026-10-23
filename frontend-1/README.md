@@ -35,8 +35,19 @@ A cinematic, typography-led, animation-rich developer portfolio and content mana
 - **Satellite Bubble**: Equalizer animation orbiting the dock only while audio plays and player is collapsed.
 - **Groq AI Assistant**: Llama 3.3 70B grounded strictly in Adithyen's published resume and portfolio facts with prompt-injection defense.
 
-### 6. Protected Admin Dashboard & Media Management
+### 6. Dynamic Education & Career Timeline
+- **Neon PostgreSQL Persistence**: Dedicated `timeline_entries` table with typed schema (category, institution, role, dates, achievements, technologies, order index).
+- **Interactive SVG Drawing Spine**: Progressive scroll-drawn timeline with filterable categories (*All*, *Internships & Work*, *Awards & Hackathons*, *Education*).
+- **Admin Timeline Manager**: Dedicated dashboard at `/admin/timeline` supporting full CRUD, live toggle, and reordering.
+
+### 7. Visitor Notes & Moderation ("HEY THERE!")
+- **Guestbook Interaction**: Public guestbook at `/#comments` encouraging authentic visitor connections.
+- **Privacy & Rate Limiting**: Server-enforced 2-note maximum limit per visitor via signed HMAC cookie (`visitor_comment_id`) and SHA-256 IP hash.
+- **Admin Moderation Portal**: Live moderation at `/admin/comments` allowing one-click review (Approve, Reject, Delete) of pending visitor submissions.
+
+### 8. Protected Admin Dashboard & Media Management
 - Server-authenticated dashboard at `/admin` (HTTP-only signed cookies).
+- Quick-access manager cards for Timeline, Comments, and Music Library.
 - Drag-and-drop / Arrow reordering for Projects, Experience, and Certificates.
 - **Cloudinary Integration**: Signed uploads for media assets and PDF certificates with strict server-side folder restrictions (`portfolio/music/` and `portfolio/certificates/`).
 
@@ -88,7 +99,11 @@ GITHUB_TOKEN="your_github_personal_access_token"
 To initialize the tables in your Neon PostgreSQL database and seed them with verified portfolio data:
 
 ```bash
+# Migrate core portfolio tables & seed initial content
 node --env-file=.env.local src/scripts/migrate-to-neon.mjs
+
+# Migrate timeline_entries and visitor_comments tables
+node --env-file=.env.local src/scripts/migrate-timeline-and-comments.mjs
 ```
 
 ### 4. Running the Development Server

@@ -178,3 +178,255 @@ export async function deleteDbMusicTrack(id: string): Promise<boolean> {
     return false;
   }
 }
+
+/**
+ * ========================================
+ * TIMELINE ENTRIES (Phase 7)
+ * ========================================
+ */
+export interface DbTimelineEntry {
+  id: string;
+  title: string;
+  category: "school" | "college" | "internship" | "employment" | "milestone";
+  institution: string;
+  role: string;
+  start_date: string;
+  end_date: string;
+  is_current: boolean;
+  description: string;
+  responsibilities: string[];
+  achievements: string[];
+  technologies: string[];
+  logo_url?: string;
+  external_link?: string;
+  order_index: number;
+  is_published: boolean;
+  created_at?: string;
+}
+
+export async function getDbTimelineEntries(): Promise<DbTimelineEntry[]> {
+  const sql = getDb();
+  if (!sql) return [];
+
+  try {
+    const rows = await sql`
+      SELECT id, title, category, institution, role, start_date, end_date,
+             is_current, description, responsibilities, achievements,
+             technologies, logo_url, external_link, order_index, is_published, created_at
+      FROM timeline_entries
+      WHERE is_published = true
+      ORDER BY order_index ASC, created_at DESC;
+    `;
+    return rows as unknown as DbTimelineEntry[];
+  } catch (error) {
+    console.error("[Neon DB] Failed to fetch timeline entries:", error);
+    return [];
+  }
+}
+
+export async function getAllDbTimelineEntries(): Promise<DbTimelineEntry[]> {
+  const sql = getDb();
+  if (!sql) return [];
+
+  try {
+    const rows = await sql`
+      SELECT id, title, category, institution, role, start_date, end_date,
+             is_current, description, responsibilities, achievements,
+             technologies, logo_url, external_link, order_index, is_published, created_at
+      FROM timeline_entries
+      ORDER BY order_index ASC, created_at DESC;
+    `;
+    return rows as unknown as DbTimelineEntry[];
+  } catch (error) {
+    console.error("[Neon DB] Failed to fetch all timeline entries:", error);
+    return [];
+  }
+}
+
+export async function saveDbTimelineEntry(entry: DbTimelineEntry): Promise<boolean> {
+  const sql = getDb();
+  if (!sql) return false;
+
+  try {
+    await sql`
+      INSERT INTO timeline_entries (
+        id, title, category, institution, role, start_date, end_date, is_current,
+        description, responsibilities, achievements, technologies, logo_url,
+        external_link, order_index, is_published, created_at
+      )
+      VALUES (
+        ${entry.id}, ${entry.title}, ${entry.category}, ${entry.institution},
+        ${entry.role}, ${entry.start_date}, ${entry.end_date}, ${entry.is_current},
+        ${entry.description}, ${JSON.stringify(entry.responsibilities || [])},
+        ${JSON.stringify(entry.achievements || [])}, ${JSON.stringify(entry.technologies || [])},
+        ${entry.logo_url || null}, ${entry.external_link || null}, ${entry.order_index ?? 0},
+        ${entry.is_published ?? true}, NOW()
+      )
+      ON CONFLICT (id) DO UPDATE SET
+        title = EXCLUDED.title,
+        category = EXCLUDED.category,
+        institution = EXCLUDED.institution,
+        role = EXCLUDED.role,
+        start_date = EXCLUDED.start_date,
+        end_date = EXCLUDED.end_date,
+        is_current = EXCLUDED.is_current,
+        description = EXCLUDED.description,
+        responsibilities = EXCLUDED.responsibilities,
+        achievements = EXCLUDED.achievements,
+        technologies = EXCLUDED.technologies,
+        logo_url = EXCLUDED.logo_url,
+        external_link = EXCLUDED.external_link,
+        order_index = EXCLUDED.order_index,
+        is_published = EXCLUDED.is_published;
+    `;
+    return true;
+  } catch (error) {
+    console.error("[Neon DB] Failed to save timeline entry:", error);
+    return false;
+  }
+}
+
+export async function deleteDbTimelineEntry(id: string): Promise<boolean> {
+  const sql = getDb();
+  if (!sql) return false;
+
+  try {
+    await sql`
+      DELETE FROM timeline_entries WHERE id = ${id};
+    `;
+    return true;
+  } catch (error) {
+    console.error(`[Neon DB] Failed to delete timeline entry ${id}:`, error);
+    return false;
+  }
+}
+
+/**
+ * ========================================
+ * VISITOR COMMENTS (Phase 10: "HEY THERE!")
+ * ========================================
+ */
+export interface DbVisitorComment {
+  id: number;
+  name: string;
+  message: string;
+  visitor_id: string;
+  ip_hash: string;
+  status: "pending" | "approved" | "rejected";
+  created_at: string;
+  reviewed_at?: string;
+}
+
+export async function getDbApprovedComments(): Promise<Omit<DbVisitorComment, "visitor_id" | "ip_hash">[]> {
+  const sql = getDb();
+  if (!sql) return [];
+
+  try {
+    const rows = await sql`
+      SELECT id, name, message, status, created_at
+      FROM visitor_comments
+      WHERE status = 'approved'
+      ORDER BY created_at DESC
+      LIMIT 100;
+    `;
+    return rows as unknown as Omit<DbVisitorComment, "visitor_id" | "ip_hash">[];
+  } catch (error) {
+    console.error("[Neon DB] Failed to fetch approved comments:", error);
+    return [];
+  }
+}
+
+export async function getAllDbComments(statusFilter?: "pending" | "approved" | "rejected"): Promise<DbVisitorComment[]> {
+  const sql = getDb();
+  if (!sql) return [];
+
+  try {
+    const rows = statusFilter
+      ? await sql`
+          SELECT id, name, message, visitor_id, ip_hash, status, created_at, reviewed_at
+          FROM visitor_comments
+          WHERE status = ${statusFilter}
+          ORDER BY created_at DESC;
+        `
+      : await sql`
+          SELECT id, name, message, visitor_id, ip_hash, status, created_at, reviewed_at
+          FROM visitor_comments
+          ORDER BY created_at DESC;
+        `;
+    return rows as unknown as DbVisitorComment[];
+  } catch (error) {
+    console.error("[Neon DB] Failed to fetch comments:", error);
+    return [];
+  }
+}
+
+export async function getVisitorCommentCount(visitorId: string, ipHash: string): Promise<number> {
+  const sql = getDb();
+  if (!sql) return 0;
+
+  try {
+    const rows = await sql`
+      SELECT COUNT(*)::int as count
+      FROM visitor_comments
+      WHERE visitor_id = ${visitorId} OR ip_hash = ${ipHash};
+    `;
+    return rows && rows[0] ? (rows[0].count as number) : 0;
+  } catch (error) {
+    console.error("[Neon DB] Failed to count visitor comments:", error);
+    return 0;
+  }
+}
+
+export async function createVisitorComment(data: {
+  name: string;
+  message: string;
+  visitorId: string;
+  ipHash: string;
+}): Promise<boolean> {
+  const sql = getDb();
+  if (!sql) return false;
+
+  try {
+    await sql`
+      INSERT INTO visitor_comments (name, message, visitor_id, ip_hash, status, created_at)
+      VALUES (${data.name}, ${data.message}, ${data.visitorId}, ${data.ipHash}, 'pending', NOW());
+    `;
+    return true;
+  } catch (error) {
+    console.error("[Neon DB] Failed to create visitor comment:", error);
+    return false;
+  }
+}
+
+export async function updateCommentStatus(id: number, status: "approved" | "rejected"): Promise<boolean> {
+  const sql = getDb();
+  if (!sql) return false;
+
+  try {
+    await sql`
+      UPDATE visitor_comments
+      SET status = ${status}, reviewed_at = NOW()
+      WHERE id = ${id};
+    `;
+    return true;
+  } catch (error) {
+    console.error(`[Neon DB] Failed to update comment status for ${id}:`, error);
+    return false;
+  }
+}
+
+export async function deleteVisitorComment(id: number): Promise<boolean> {
+  const sql = getDb();
+  if (!sql) return false;
+
+  try {
+    await sql`
+      DELETE FROM visitor_comments WHERE id = ${id};
+    `;
+    return true;
+  } catch (error) {
+    console.error(`[Neon DB] Failed to delete comment ${id}:`, error);
+    return false;
+  }
+}
+

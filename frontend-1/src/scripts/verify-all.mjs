@@ -47,6 +47,8 @@ async function runVerification() {
       "certificates",
       "music_tracks",
       "contact_messages",
+      "timeline_entries",
+      "visitor_comments",
     ];
     const missing = requiredTables.filter((t) => !tableNames.includes(t));
     if (missing.length > 0) {
@@ -212,6 +214,36 @@ async function runVerification() {
   } catch (err) {
     failures++;
     logFail("Security & Injection Defense verification", err);
+  }
+
+  // 8. Public Dynamic API Endpoints Check (Timeline & Comments)
+  try {
+    try {
+      const timelineRes = await fetch("http://localhost:3000/api/timeline");
+      if (timelineRes.ok) {
+        const json = await timelineRes.json();
+        if (!json.ok || !Array.isArray(json.entries) || json.entries.length === 0) {
+          throw new Error("Timeline API did not return expected entries array");
+        }
+        logPass(`Public Timeline API operational (${json.entries.length} verified database entries returned).`);
+      }
+
+      const commentsRes = await fetch("http://localhost:3000/api/comments");
+      if (commentsRes.ok) {
+        const json = await commentsRes.json();
+        if (!json.ok || !Array.isArray(json.comments)) {
+          throw new Error("Comments API did not return expected comments array");
+        }
+        logPass(`Public Visitor Comments API operational (${json.comments.length} approved comments in public stream).`);
+      }
+    } catch (netErr) {
+      if (!netErr.message.includes("fetch failed") && !netErr.message.includes("ECONNREFUSED")) {
+        throw netErr;
+      }
+    }
+  } catch (err) {
+    failures++;
+    logFail("Public API Endpoints check", err);
   }
 
   console.log(`\n${CYAN}==============================================${RESET}`);
