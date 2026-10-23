@@ -215,19 +215,19 @@ export function TerminalHero() {
   return (
     <section
       id="hero"
-      className="min-h-[92svh] flex flex-col justify-between max-w-7xl mx-auto w-full px-6 sm:px-10 lg:px-16 pt-28 pb-16"
+      className="hero-section relative flex flex-col justify-start max-w-7xl mx-auto w-full px-6 sm:px-10 lg:px-16"
     >
       {/* Monumental Headline Block */}
-      <div className="my-6 md:my-10 space-y-4">
-        <h1 className="text-[clamp(3.5rem,11.5vw,9.5rem)] font-bold tracking-tight text-foreground leading-[0.9] select-none break-words cursor-default">
+      <div className="mb-8 md:mb-10 lg:mb-12 space-y-4">
+        <h1 className="text-[clamp(3.25rem,10.5vw,8.5rem)] font-bold tracking-tight text-foreground leading-[0.95] select-none break-words cursor-default">
           <ScrambleText text="ADITHYEN K" />
         </h1>
         <p className="text-xl sm:text-2xl md:text-3xl font-medium text-foreground max-w-4xl leading-snug">
           AI/ML Engineer &amp; Full-Stack Developer designing and deploying autonomous models, real-time computer vision, and resilient web platforms.
         </p>
-        <div className="flex flex-wrap items-center gap-4 text-sm text-muted pt-2">
+        <div className="flex flex-wrap items-center gap-4 text-sm text-muted pt-1">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-accent" />
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
             <span className="font-medium text-foreground">Available for engineering roles</span>
           </div>
           <span>&bull;</span>
@@ -236,14 +236,36 @@ export function TerminalHero() {
       </div>
 
       {/* Bottom Hero Split: Actions + Integrated Console & Architectural Visual */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start lg:items-center">
         {/* Left Column: Actions & Core Claims */}
-        <div className="lg:col-span-5 space-y-6">
-          <p className="text-base text-foreground/90 leading-relaxed">
-            Building scalable backend architectures, real-time systems, and practical AI solutions. Specializing in Python, FastAPI, Next.js, Computer Vision, and MCP agent workflows.
+        <div className="lg:col-span-5 space-y-5">
+          <p className="text-lg sm:text-xl font-medium text-foreground leading-relaxed">
+            Building scalable backend architectures, real-time computer vision systems, and practical AI solutions.
           </p>
 
-          <div className="flex flex-wrap items-center gap-3 pt-1">
+          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+            Specialized in turning complex neural networks and MCP agent protocols into high-throughput, production-ready software using Python, FastAPI, PostgreSQL, and Next.js.
+          </p>
+
+          {/* Key Engineering Credentials */}
+          <div className="grid grid-cols-2 gap-3 pt-0.5">
+            <div className="p-3 rounded-xl bg-surface/80 border border-border/60">
+              <span className="text-xs text-muted block mb-0.5">Hackathon Honors</span>
+              <span className="text-xs sm:text-sm font-semibold text-foreground flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                1st Place &bull; Cryptora&apos;26
+              </span>
+            </div>
+            <div className="p-3 rounded-xl bg-surface/80 border border-border/60">
+              <span className="text-xs text-muted block mb-0.5">Core Toolchain</span>
+              <span className="text-xs sm:text-sm font-semibold text-foreground flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                FastAPI &bull; CV &bull; LLM
+              </span>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 pt-2">
             <Magnetic strength={0.28}>
               <a
                 href="#projects"
@@ -288,15 +310,17 @@ export function TerminalHero() {
             <div data-ui="terminal" className="w-full rounded-2xl bg-[#181716] text-[#e8e6e3] overflow-hidden">
               {/* Terminal Top bar */}
               <div className="flex items-center justify-between px-4 py-3 bg-[#242220] text-sm select-none">
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
-                  <span className="text-[#c2beb6] ml-2 font-medium">adithyen@console ~ %</span>
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+                  </div>
+                  <span className="text-[#c2beb6] ml-2 font-medium truncate text-xs sm:text-sm">adithyen@console ~ %</span>
                 </div>
                 <button
                   onClick={replay}
-                  className="p-1 text-[#c2beb6] hover:text-white transition-colors"
+                  className="p-1 text-[#c2beb6] hover:text-white transition-colors shrink-0 ml-2"
                   title="Replay intro output"
                   aria-label="Replay intro output"
                 >
@@ -307,7 +331,7 @@ export function TerminalHero() {
               {/* Terminal Body */}
               <pre
                 ref={bodyRef}
-                className="p-6 font-mono text-sm leading-relaxed max-h-72 sm:max-h-80 overflow-y-auto space-y-1.5"
+                className="p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed max-h-72 sm:max-h-80 overflow-y-auto overflow-x-hidden space-y-1.5"
                 onClick={() => inputRef.current?.focus()}
                 role="log"
                 aria-live="polite"

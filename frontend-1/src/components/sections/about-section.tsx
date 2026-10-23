@@ -66,7 +66,7 @@ export function AboutSection() {
   const words = STATEMENT.split(" ");
 
   return (
-    <section id="about" className="py-24 sm:py-32 px-6 sm:px-10 lg:px-16 scroll-mt-20">
+    <section id="about" className="pt-10 sm:pt-14 lg:pt-16 pb-24 sm:pb-32 px-6 sm:px-10 lg:px-16 scroll-mt-20">
       <div className="max-w-7xl mx-auto">
         <SectionHeader
           title="Engineering intelligence at scale."

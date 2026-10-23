@@ -67,6 +67,26 @@
   }
 }
 
+/* Hero section spacing dynamically calculated from navbar height */
+.hero-section {
+  padding-top: calc(var(--navbar-height) + 2rem);
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 640px) {
+  .hero-section {
+    padding-top: calc(var(--navbar-height) + 2.5rem);
+    padding-bottom: 3.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-section {
+    padding-top: calc(var(--navbar-height) + 3.25rem);
+    padding-bottom: 4rem;
+  }
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--navbar-height) + 1.25rem);
