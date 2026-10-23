@@ -3,6 +3,7 @@ import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 import fs from "fs/promises";
 import path from "path";
 import crypto from "crypto";
+import { saveDbMusicTrack, deleteDbMusicTrack } from "@/lib/db";
 
 const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
 const apiKey = process.env.CLOUDINARY_API_KEY;
@@ -287,7 +288,7 @@ export async function uploadMusicAsset(file: File): Promise<MusicAsset> {
             .replace(/[_-]/g, " ")
             .replace(/\b\w/g, (c) => c.toUpperCase());
 
-          resolve({
+          const asset: MusicAsset = {
             id: result.asset_id || result.public_id,
             publicId: result.public_id,
             filename,
@@ -299,7 +300,19 @@ export async function uploadMusicAsset(file: File): Promise<MusicAsset> {
             createdAt: result.created_at,
             provider: "cloudinary",
             resourceType: "video",
-          });
+          };
+
+          // Record in Neon Postgres database
+          saveDbMusicTrack({
+            id: asset.publicId,
+            title: asset.title,
+            filename: asset.filename,
+            url: asset.url,
+            duration: asset.duration,
+            format: asset.format,
+          }).catch((e) => console.warn("[Neon DB] Music track sync warning:", e));
+
+          resolve(asset);
         }
       );
 
@@ -324,7 +337,7 @@ export async function uploadMusicAsset(file: File): Promise<MusicAsset> {
 
   const cleanTitle = sanitizedBase.replace(/[_-]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-  return {
+  const localAsset: MusicAsset = {
     id: `local_music_${localFileName}`,
     publicId: `portfolio/music/local_${localFileName}`,
     filename: file.name,
@@ -336,6 +349,16 @@ export async function uploadMusicAsset(file: File): Promise<MusicAsset> {
     provider: "local",
     resourceType: "video",
   };
+
+  saveDbMusicTrack({
+    id: localAsset.publicId,
+    title: localAsset.title,
+    filename: localAsset.filename,
+    url: localAsset.url,
+    format: localAsset.format,
+  }).catch((e) => console.warn("[Neon DB] Music track sync warning:", e));
+
+  return localAsset;
 }
 
 /**
@@ -381,6 +404,9 @@ export async function deleteMusicAsset(publicId: string): Promise<void> {
       }
     }
   }
+
+  // Delete from Neon Postgres database
+  await deleteDbMusicTrack(publicId).catch((e) => console.warn("[Neon DB] Music track delete warning:", e));
 
   invalidateMusicCache();
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface SectionHeaderProps {
@@ -12,46 +11,31 @@ interface SectionHeaderProps {
 }
 
 export function SectionHeader({
-  label,
   title,
   description,
-  align = "center",
+  align = "left",
   className,
 }: SectionHeaderProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div
-      ref={ref}
       className={cn(
-        "section-header",
-        align === "center" && "text-center",
-        visible ? "animate-fade-in-up" : "opacity-0",
+        "section-header mb-10 md:mb-14",
+        align === "center" && "text-center mx-auto",
         className
       )}
     >
-      {label && (
-        <span className="badge-accent mb-3 inline-block">{label}</span>
-      )}
-      <h2 className="heading-lg text-foreground">{title}</h2>
+      <h2 className="relative z-10 text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-[1.08]">
+        {title}
+      </h2>
       {description && (
-        <p className="body-lg mt-3 max-w-2xl mx-auto">{description}</p>
+        <p
+          className={cn(
+            "text-base md:text-lg text-foreground/90 mt-3 leading-relaxed max-w-2xl",
+            align === "center" && "mx-auto"
+          )}
+        >
+          {description}
+        </p>
       )}
     </div>
   );

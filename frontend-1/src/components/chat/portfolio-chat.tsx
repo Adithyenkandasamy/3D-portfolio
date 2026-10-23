@@ -147,7 +147,7 @@ export function PortfolioChat() {
   return (
     <>
       {/* Floating Chat Trigger Button (Bottom-Left) */}
-      <div className="fixed bottom-6 left-6 z-40">
+      <div className="fixed bottom-18 left-4 sm:bottom-6 sm:left-6 z-40">
         {!isOpen ? (
           <button
             onClick={() => setIsOpen(true)}
@@ -164,7 +164,7 @@ export function PortfolioChat() {
 
       {/* Floating Chat Modal Window */}
       {isOpen && (
-        <div className="fixed bottom-6 left-6 z-50 w-[calc(100vw-3rem)] sm:w-96 max-h-[80vh] flex flex-col bg-surface border border-border rounded-2xl shadow-float overflow-hidden animate-fade-in text-foreground">
+        <div data-ui="chat-assistant" className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 w-[calc(100vw-2rem)] sm:w-96 max-h-[80vh] flex flex-col bg-surface rounded-2xl shadow-float overflow-hidden animate-fade-in text-foreground">
           {/* Header */}
           <div className="px-4 py-3 bg-surface border-b border-border flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2.5">

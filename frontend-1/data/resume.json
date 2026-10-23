@@ -4,10 +4,11 @@
   "filePath": "/resume.pdf",
   "fileName": "Adithyen_K_Resume.pdf",
   "lastUpdated": "October 2026",
-  "summary": "Specialized in AI/ML solutions (Computer Vision, LLMs, Speech AI) and robust full-stack engineering (FastAPI, Next.js, React). Proven track record of delivering real-time interactive applications.",
+  "summary": "Computer Science and Engineering student with internship experience in AI/ML and software development. Experienced in building full-stack applications, real-time systems, AI-powered automation, computer vision, OCR, and LLM integrations using Python, FastAPI, React, and Next.js. Interested in scalable backend engineering, developer tools, and practical AI solutions.",
   "coreHighlights": [
-    "Experienced in building sub-200ms voice conversational AI agents with WebSockets",
-    "Internships at SNS Square Hub and Magizh Technologies in AI/ML and software engineering",
-    "Strong foundation in Computer Science, Data Structures, and System Architecture"
+    "Winner of Cryptora’26 Hackathon (Emergency coordination with real-time hospital matching & AI triage)",
+    "National Finalist at Microsoft Bengaluru (Code Cubicle 5.0 with real-time Pathway streaming pipeline)",
+    "Internships at SNS Square Hub (Next.js/FastAPI) and Magizh Technologies (AI/ML/OpenCV)",
+    "Engineered OneForAll AI (Google Sheets MCP assistant), MagizhCode DSA platform, and MediCareAI"
   ]
 }

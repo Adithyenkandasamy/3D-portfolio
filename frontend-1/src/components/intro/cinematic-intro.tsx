@@ -38,6 +38,8 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
       const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
       if (mediaQuery.matches) {
         setIsReducedMotion(true);
+        onComplete();
+        return;
       }
       setSessionChecked(true);
     }, 0);
@@ -148,15 +150,15 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
       {/* Top Header info */}
       <div className="flex items-center justify-between w-full max-w-7xl mx-auto">
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-mono text-xs text-muted tracking-wider uppercase">
-            Interactive Experience / v1.0
+          <div className="w-2.5 h-2.5 rounded-full bg-accent" />
+          <span className="text-xs text-muted font-medium">
+            Portfolio System Initialization
           </span>
         </div>
 
         <button
           onClick={handleProceed}
-          className="group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-surface text-xs font-mono text-muted hover:text-foreground hover:border-foreground/30 transition-all duration-200"
+          className="group inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-surface text-xs font-semibold text-foreground hover:bg-surface-elevated transition-colors"
           aria-label="Skip introduction"
         >
           <span>Skip Intro</span>
@@ -215,9 +217,9 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
                       setLettersSettled(true);
                     }
                   }}
-                  className="letter-3d-block w-10 h-12 sm:w-14 sm:h-16 md:w-16 md:h-20 bg-gradient-to-b from-[#FFFFFF] to-[#ECECE8] rounded-xl border border-[#D5D5CF] text-foreground font-bold text-2xl sm:text-4xl md:text-5xl flex items-center justify-center cursor-default"
+                  className="letter-3d-block w-10 h-12 sm:w-14 sm:h-16 md:w-16 md:h-20 bg-surface rounded-xl border border-border text-foreground font-bold text-2xl sm:text-4xl md:text-5xl flex items-center justify-center cursor-default"
                 >
-                  <span className="drop-shadow-sm">{char}</span>
+                  <span>{char}</span>
                 </motion.div>
               ))}
             </div>
@@ -252,9 +254,9 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
                     delay: 0.15 + (firstName.length + index) * 0.07,
                     ease: [0.2, 0.9, 0.3, 1.1],
                   }}
-                  className="letter-3d-block w-10 h-12 sm:w-14 sm:h-16 md:w-16 md:h-20 bg-gradient-to-b from-[#FFFFFF] to-[#ECECE8] rounded-xl border border-[#D5D5CF] text-foreground font-bold text-2xl sm:text-4xl md:text-5xl flex items-center justify-center cursor-default"
+                  className="letter-3d-block w-10 h-12 sm:w-14 sm:h-16 md:w-16 md:h-20 bg-surface rounded-xl border border-border text-foreground font-bold text-2xl sm:text-4xl md:text-5xl flex items-center justify-center cursor-default"
                 >
-                  <span className="drop-shadow-sm">{char}</span>
+                  <span>{char}</span>
                 </motion.div>
               ))}
             </div>
@@ -283,12 +285,12 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
       </div>
 
       {/* Bottom Loading Status & Enter Action */}
-      <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-end justify-between gap-6 pt-4 border-t border-border/80">
+      <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-end justify-between gap-6 pt-4">
         {/* Terminal Status Panel */}
-        <div className="bg-[#1C1C1E] text-[#E5E5EA] rounded-xl p-4 sm:p-5 w-full md:max-w-xl font-mono text-xs shadow-lg border border-neutral-800">
+        <div className="bg-[#1C1C1E] text-[#E5E5EA] rounded-xl p-4 sm:p-5 w-full md:max-w-xl font-mono text-xs border border-neutral-800">
           <div className="flex items-center gap-2 mb-3 pb-2 border-b border-neutral-800 text-neutral-400">
             <TerminalIcon className="w-3.5 h-3.5 text-accent" />
-            <span className="uppercase tracking-wider font-semibold">System Diagnostics</span>
+            <span className="font-semibold">System Diagnostics</span>
           </div>
 
           <div className="space-y-1.5">

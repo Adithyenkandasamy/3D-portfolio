@@ -4,16 +4,16 @@
     "role": "Software Intern",
     "organization": "SNS Square Hub",
     "location": "Coimbatore, Tamil Nadu",
-    "startDate": "February 2026",
-    "endDate": "April 2026",
+    "startDate": "Feb. 2026",
+    "endDate": "Apr. 2026",
     "isCurrent": true,
-    "description": "Architected and delivered scalable web applications and AI workflow integrations focusing on clean system architecture, API reliability, and modern full-stack performance.",
+    "description": "Engineered web applications and intelligent enterprise workflows focusing on API design, application architecture, and performance.",
     "highlights": [
-      "Developed high-throughput web applications using Next.js and FastAPI, emphasizing modular design and API efficiency.",
-      "Engineered intelligent document extraction solutions combining Computer Vision, OCR, and multimodal LLMs for automated enterprise pipelines.",
-      "Implemented prompt engineering techniques, tokenization budgeting, and model orchestration in production-ready software systems."
+      "Developed web applications using Next.js and FastAPI, focusing on API design, application architecture, and performance.",
+      "Integrated AI, computer vision, OCR, and multimodal models into document-processing and automation workflows.",
+      "Applied prompt engineering and LLM integration techniques to develop practical software solutions."
     ],
-    "technologies": ["Next.js", "FastAPI", "Python", "Computer Vision", "OCR", "Multimodal LLMs", "TypeScript"]
+    "technologies": ["Next.js", "FastAPI", "Python", "Computer Vision", "OCR", "Multimodal Models", "React", "TypeScript"]
   },
   {
     "id": "magizh-tech",
@@ -23,12 +23,12 @@
     "startDate": "July 2025",
     "endDate": "July 2025",
     "isCurrent": false,
-    "description": "Implemented and deployed custom computer vision and NLP models into lightweight web services, focusing on inference optimization and practical business automation.",
+    "description": "Developed and integrated computer vision and NLP models into Python-driven production services.",
     "highlights": [
-      "Trained and integrated tailored machine learning classifiers into Python services using Flask and FastAPI endpoints.",
-      "Engineered computer vision pipelines for real-world automated visual inspection and object recognition.",
-      "Benchmark-tested and optimized model inference speeds to ensure responsive real-time serving."
+      "Integrated AI/ML models into Python applications using Flask and FastAPI.",
+      "Developed computer vision and NLP solutions for business applications, supporting model optimization and deployment.",
+      "Collaborated on practical model serving, latency reduction, and software pipeline integration."
     ],
-    "technologies": ["Python", "FastAPI", "Flask", "OpenCV", "NLP", "Machine Learning", "Docker"]
+    "technologies": ["Python", "Flask", "FastAPI", "OpenCV", "NLP", "Machine Learning", "Model Deployment"]
   }
 ]

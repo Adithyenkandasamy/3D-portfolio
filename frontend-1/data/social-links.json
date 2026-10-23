@@ -3,21 +3,28 @@
     "platform": "GitHub",
     "username": "Adithyenkandasamy",
     "url": "https://github.com/Adithyenkandasamy",
-    "description": "Open source code repositories, AI models, and web applications",
+    "description": "Open-source software, AI systems, and project repositories",
     "icon": "github"
   },
   {
     "platform": "LinkedIn",
     "username": "adithyen-k",
     "url": "https://www.linkedin.com/in/adithyen-k",
-    "description": "Professional network, experience updates, and articles",
+    "description": "Professional engineering background, updates, and network",
     "icon": "linkedin"
   },
   {
+    "platform": "LeetCode",
+    "username": "Adithyenkandasamy",
+    "url": "https://leetcode.com/u/Adithyenkandasamy",
+    "description": "Data Structures, Algorithms, and competitive problem solving",
+    "icon": "code"
+  },
+  {
     "platform": "Email",
-    "username": "adithyen.k@example.com",
-    "url": "mailto:adithyen.k@example.com",
-    "description": "Direct communication for opportunities and consulting",
+    "username": "adithyen1@gmail.com",
+    "url": "mailto:adithyen1@gmail.com",
+    "description": "Direct communication for software engineering and AI/ML opportunities",
     "icon": "mail"
   }
 ]

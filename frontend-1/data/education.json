@@ -1,19 +1,35 @@
 [
   {
-    "id": "undergraduate",
-    "degree": "Bachelor of Engineering (B.E.) in Computer Science & Engineering",
-    "institution": "Anna University Affiliated Institution",
-    "location": "Tamil Nadu, India",
-    "startDate": "2022",
-    "endDate": "2026",
-    "status": "Final Year Undergraduate",
-    "description": "Core focus on Artificial Intelligence, Machine Learning, Data Structures & Algorithms, Operating Systems, Database Management Systems, and Distributed Computing.",
+    "id": "sns-college-technology",
+    "degree": "Bachelor of Engineering (B.E.) in Computer Science and Engineering",
+    "institution": "SNS College of Technology",
+    "location": "Coimbatore, Tamil Nadu",
+    "startDate": "Sep. 2024",
+    "endDate": "Present",
+    "status": "Undergraduate (CGPA: 7.31)",
+    "description": "Pursuing Bachelor of Engineering in Computer Science and Engineering with core focus on software engineering, distributed systems, and AI/ML.",
     "courses": [
-      "Machine Learning & Pattern Recognition",
-      "Design and Analysis of Algorithms",
-      "Full-Stack Web Architectures",
-      "Deep Learning & Computer Vision",
-      "Database Management Systems"
+      "Data Structures & Algorithms (DSA)",
+      "Database Management Systems (DBMS)",
+      "Operating Systems & Linux Internals",
+      "Object-Oriented Programming (OOP)",
+      "Design and Analysis of Algorithms"
+    ]
+  },
+  {
+    "id": "komarasamy-gounder-hss",
+    "degree": "Higher Secondary Certificate – Computer Science",
+    "institution": "Komarasamy Gounder Matriculation Higher Secondary School",
+    "location": "Gobichettipalayam, Tamil Nadu",
+    "startDate": "Jun. 2022",
+    "endDate": "May 2024",
+    "status": "Completed (77.3%)",
+    "description": "Completed higher secondary curriculum with primary academic emphasis in Computer Science and Mathematics.",
+    "courses": [
+      "Computer Science & Python",
+      "Advanced Mathematics",
+      "Physics",
+      "Chemistry"
     ]
   }
 ]

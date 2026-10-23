@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-17T22:00:00.000Z",
+  "lastUpdated": "2026-10-23T12:00:00.000Z",
   "platforms": [
     {
       "id": "leetcode",
@@ -15,35 +15,35 @@
         "ranking": "Top 18%",
         "acceptanceRate": "64.2%"
       },
-      "badges": ["50 Days Badge 2025", "Binary Search Specialist"],
+      "badges": ["50 Days Badge 2026", "Binary Search Specialist"],
       "verified": true
     },
     {
-      "id": "neetcode",
-      "platform": "NeetCode",
-      "username": "Adithyen K",
-      "profileUrl": "https://neetcode.io",
+      "id": "hackerrank",
+      "platform": "HackerRank",
+      "username": "adithyen1",
+      "profileUrl": "https://www.hackerrank.com",
       "source": "verified_entry",
       "stats": {
-        "tracksCompleted": "NeetCode 150 (Core Complete)",
-        "focusAreas": "Trees, Dynamic Programming, Graphs, Backtracking",
-        "consistencyStreak": "Active Practice"
+        "problemSolvingRating": 500,
+        "pythonCertified": "Verified",
+        "domainProficiency": "Algorithms & Python"
       },
-      "badges": ["Data Structures Mastery"],
+      "badges": ["Problem Solving (Rating: 500)", "Python Certified"],
       "verified": true
     },
     {
-      "id": "coding-ninjas",
-      "platform": "Coding Ninjas",
-      "username": "Adithyen K",
-      "profileUrl": "https://www.naukri.com/code360",
+      "id": "codechef",
+      "platform": "CodeChef",
+      "username": "adithyen_k",
+      "profileUrl": "https://www.codechef.com",
       "source": "verified_entry",
       "stats": {
-        "problemScore": "Level 6 Practitioner",
-        "domainProficiency": "Python & Algorithms",
-        "accuracy": "89%"
+        "role": "Tutor / Mentor",
+        "recognition": "DSA Instruction",
+        "domainProficiency": "Competitive Programming"
       },
-      "badges": ["Specialist in DSA"],
+      "badges": ["Tutor & Mentor Recognition", "Competitive DSA"],
       "verified": true
     }
   ]

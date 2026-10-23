@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { cn } from "@/lib/utils";
 import {
   Play,
   Pause,
@@ -229,10 +230,16 @@ export function FloatingMusicPlayer() {
       />
 
       {/* Floating container positioned at bottom right */}
-      <div className="fixed bottom-6 right-6 z-40 max-w-sm w-[calc(100vw-3rem)] sm:w-88 select-none">
+      <div
+        data-ui="music-player"
+        className={cn(
+          "fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 select-none",
+          isExpanded ? "max-w-sm w-[calc(100vw-2rem)] sm:w-88" : "w-auto"
+        )}
+      >
         {isExpanded ? (
           // Expanded Player
-          <div className="bg-surface/95 backdrop-blur-xl border border-border rounded-2xl shadow-elevated p-4 animate-fade-in text-foreground">
+          <div className="bg-surface/95 backdrop-blur-xl rounded-2xl shadow-elevated p-4 animate-fade-in text-foreground">
             {/* Header with track info & collapse button */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2.5 overflow-hidden">
@@ -399,7 +406,7 @@ export function FloatingMusicPlayer() {
           </div>
         ) : (
           // Collapsed Floating Pill
-          <div className="flex items-center justify-between gap-3 bg-surface/90 backdrop-blur-md border border-border rounded-full px-3.5 py-2 shadow-card-hover hover:border-foreground/30 transition-all duration-200">
+          <div className="flex items-center justify-between gap-3 bg-surface/95 backdrop-blur-md rounded-full px-4 py-2 shadow-card-hover transition-colors">
             <button
               onClick={() => setIsExpanded(true)}
               className="flex items-center gap-2 text-left min-w-0"
@@ -408,18 +415,18 @@ export function FloatingMusicPlayer() {
               {/* Dynamic waveform visualizer bars when playing */}
               <div className="flex items-center gap-0.5 h-4 shrink-0">
                 <span
-                  className={`w-0.5 bg-foreground rounded-full transition-all ${
-                    isPlaying ? "h-3.5 animate-pulse" : "h-1.5"
+                  className={`w-0.5 bg-foreground rounded-full transition-all duration-300 ${
+                    isPlaying ? "h-3.5" : "h-1.5"
                   }`}
                 />
                 <span
-                  className={`w-0.5 bg-accent rounded-full transition-all ${
-                    isPlaying ? "h-4 animate-[pulse_0.7s_infinite]" : "h-2"
+                  className={`w-0.5 bg-accent rounded-full transition-all duration-300 ${
+                    isPlaying ? "h-4" : "h-2"
                   }`}
                 />
                 <span
-                  className={`w-0.5 bg-foreground rounded-full transition-all ${
-                    isPlaying ? "h-2.5 animate-[pulse_0.9s_infinite]" : "h-1"
+                  className={`w-0.5 bg-foreground rounded-full transition-all duration-300 ${
+                    isPlaying ? "h-2.5" : "h-1"
                   }`}
                 />
               </div>

@@ -17,7 +17,7 @@ export function AnimateOnScroll({
   animation = "fade-in-up",
 }: AnimateOnScrollProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -44,7 +44,7 @@ export function AnimateOnScroll({
     <div
       ref={ref}
       className={cn(
-        visible ? animationClass : "opacity-0",
+        visible ? animationClass : "opacity-0 motion-reduce:opacity-100",
         className
       )}
       style={{ animationDelay: visible ? `${delay}ms` : undefined }}

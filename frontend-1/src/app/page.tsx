@@ -34,13 +34,8 @@ export default function Home() {
 
   return (
     <>
-      {/* 1. Cinematic 3D Block Letter Intro Overlay */}
-      {!introFinished && (
-        <CinematicIntro onComplete={() => setIntroFinished(true)} />
-      )}
-
-      {/* 2. Main Portfolio Flow */}
-      <div className={introFinished ? "opacity-100 transition-opacity duration-700" : "opacity-0"}>
+      {/* Main Portfolio Flow */}
+      <main className="w-full">
         {/* Hero with interactive terminal */}
         <TerminalHero />
 
@@ -70,7 +65,7 @@ export default function Home() {
 
         {/* Contact */}
         <ContactSection />
-      </div>
+      </main>
 
       {/* Floating Functional Music Player (Bottom-Right) */}
       <FloatingMusicPlayer />

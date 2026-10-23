@@ -2,48 +2,60 @@
   "categories": [
     {
       "name": "Languages & Core",
-      "description": "Primary programming languages and computational foundations",
+      "description": "Foundational programming languages and algorithmic problem solving",
       "skills": [
-        { "name": "Python", "level": "Advanced", "category": "Backend & AI" },
-        { "name": "TypeScript", "level": "Proficient", "category": "Frontend & Full-Stack" },
-        { "name": "JavaScript (ES6+)", "level": "Advanced", "category": "Full-Stack" },
-        { "name": "SQL", "level": "Intermediate", "category": "Data & Queries" },
-        { "name": "HTML5 & Modern CSS", "level": "Advanced", "category": "UI Systems" }
+        { "name": "Python", "level": "Advanced", "category": "Languages" },
+        { "name": "Java", "level": "Proficient", "category": "Languages" },
+        { "name": "C & C++", "level": "Proficient", "category": "Languages" },
+        { "name": "SQL", "level": "Advanced", "category": "Data & Queries" },
+        { "name": "TypeScript & JavaScript", "level": "Advanced", "category": "Web Core" }
       ]
     },
     {
-      "name": "AI & Machine Learning",
-      "description": "Computer vision, deep neural networks, and LLM integrations",
+      "name": "Backend & Web Systems",
+      "description": "High-performance APIs, asynchronous frameworks, and modern web applications",
+      "skills": [
+        { "name": "FastAPI", "level": "Advanced", "category": "Python Backend" },
+        { "name": "Flask & Django", "level": "Proficient", "category": "Python Frameworks" },
+        { "name": "Next.js (App Router)", "level": "Advanced", "category": "Full-Stack" },
+        { "name": "React & React Native", "level": "Advanced", "category": "Frontend & Mobile" },
+        { "name": "REST APIs & WebSockets", "level": "Advanced", "category": "Protocols & Streams" },
+        { "name": "Tailwind CSS", "level": "Advanced", "category": "Design Systems" }
+      ]
+    },
+    {
+      "name": "Databases & Persistence",
+      "description": "Relational, document, in-memory, and BaaS database engines",
+      "skills": [
+        { "name": "PostgreSQL & MySQL", "level": "Advanced", "category": "Relational Databases" },
+        { "name": "MongoDB", "level": "Proficient", "category": "Document Stores" },
+        { "name": "Redis", "level": "Proficient", "category": "In-Memory Caching" },
+        { "name": "SQLAlchemy", "level": "Advanced", "category": "Python ORM" },
+        { "name": "Supabase & SQLite", "level": "Proficient", "category": "Cloud & Embedded Data" }
+      ]
+    },
+    {
+      "name": "AI, ML & Agent Protocols",
+      "description": "Computer vision pipelines, large language models, OCR, and agentic workflows",
       "skills": [
         { "name": "Computer Vision (OpenCV)", "level": "Advanced", "category": "Vision Systems" },
-        { "name": "TensorFlow / Keras", "level": "Intermediate", "category": "Deep Learning" },
-        { "name": "LLM Orchestration & Prompting", "level": "Advanced", "category": "Generative AI" },
-        { "name": "FasterWhisper & Kokoro TTS", "level": "Proficient", "category": "Audio AI" },
-        { "name": "OCR & Document AI", "level": "Proficient", "category": "Document Pipelines" },
-        { "name": "Model Context Protocol (MCP)", "level": "Advanced", "category": "Agent Protocols" }
+        { "name": "OCR & Document Processing", "level": "Advanced", "category": "Document AI" },
+        { "name": "LLMs & Multimodal Models", "level": "Advanced", "category": "Generative AI" },
+        { "name": "Model Context Protocol (MCP)", "level": "Advanced", "category": "Agent Protocols" },
+        { "name": "Prompt Engineering", "level": "Advanced", "category": "LLM Optimization" },
+        { "name": "AI Automation (n8n, Make.com)", "level": "Proficient", "category": "Workflow Automation" }
       ]
     },
     {
-      "name": "Frontend & Interactive 3D",
-      "description": "Component architecture, reactive state, and visual experiences",
+      "name": "Cloud, DevOps & Concepts",
+      "description": "Containerization, CI/CD, testing, and production engineering practices",
       "skills": [
-        { "name": "React 19", "level": "Advanced", "category": "Component Architecture" },
-        { "name": "Next.js (App Router)", "level": "Advanced", "category": "Full-Stack Framework" },
-        { "name": "Tailwind CSS & shadcn/ui", "level": "Advanced", "category": "Design Systems" },
-        { "name": "Three.js & React Three Fiber", "level": "Intermediate", "category": "3D Canvas" },
-        { "name": "Motion for React", "level": "Advanced", "category": "Micro-interactions" }
-      ]
-    },
-    {
-      "name": "Backend & Cloud Services",
-      "description": "High-throughput APIs, asynchronous workers, and database layer",
-      "skills": [
-        { "name": "FastAPI", "level": "Advanced", "category": "Async Python APIs" },
-        { "name": "Flask", "level": "Proficient", "category": "Microservices" },
-        { "name": "Node.js & Express", "level": "Proficient", "category": "Server Runtime" },
-        { "name": "WebSockets", "level": "Proficient", "category": "Real-time Streams" },
-        { "name": "PostgreSQL & MongoDB", "level": "Intermediate", "category": "Persistence" },
-        { "name": "Docker & Git", "level": "Proficient", "category": "DevOps & Versioning" }
+        { "name": "Docker", "level": "Proficient", "category": "Containers" },
+        { "name": "Git & GitHub Actions", "level": "Advanced", "category": "CI/CD & Versioning" },
+        { "name": "GCP, DigitalOcean & Linux", "level": "Proficient", "category": "Cloud & Infrastructure" },
+        { "name": "JWT, RBAC & Security", "level": "Advanced", "category": "Auth & Access Control" },
+        { "name": "pytest & Selenium", "level": "Proficient", "category": "Testing & QA" },
+        { "name": "DSA & System Design", "level": "Advanced", "category": "Core Engineering" }
       ]
     }
   ]

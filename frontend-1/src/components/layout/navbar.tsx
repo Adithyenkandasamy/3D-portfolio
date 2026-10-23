@@ -35,9 +35,9 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-[60] transition-colors duration-200",
         scrolled
-          ? "bg-surface/80 backdrop-blur-xl border-b border-border shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+          ? "bg-surface/95 backdrop-blur-md"
           : "bg-transparent"
       )}
     >
@@ -52,7 +52,7 @@ export function Navbar() {
             <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
               <Terminal className="w-4 h-4 text-background" strokeWidth={2.5} />
             </div>
-            <span className="text-[0.9375rem] font-semibold tracking-tight hidden sm:block">
+            <span className="text-sm font-semibold tracking-tight hidden sm:block">
               adithyen<span className="text-accent">.</span>dev
             </span>
           </Link>
@@ -94,7 +94,6 @@ export function Navbar() {
             >
               <LinkedinIcon className="w-[18px] h-[18px]" />
             </a>
-            <div className="w-px h-5 bg-border mx-1" />
             <Link
               href="#resume"
               className={cn(
@@ -123,7 +122,7 @@ export function Navbar() {
         {/* Mobile Nav */}
         <div
           className={cn(
-            "md:hidden overflow-hidden transition-all duration-300",
+            "md:hidden overflow-hidden transition-[max-height,padding] duration-300",
             isOpen ? "max-h-96 pb-4" : "max-h-0"
           )}
         >
@@ -133,12 +132,12 @@ export function Navbar() {
                 key={link.label}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="px-3 py-2.5 text-sm font-medium text-muted hover:text-foreground hover:bg-border-subtle rounded-lg transition-colors"
+                className="px-3 py-2.5 text-sm font-medium text-muted hover:text-foreground hover:bg-surface-elevated rounded-lg transition-colors"
               >
                 {link.label}
               </Link>
             ))}
-            <div className="flex items-center gap-2 px-3 pt-2 mt-1 border-t border-border">
+            <div className="flex items-center gap-2 px-3 pt-3 mt-1">
               <a
                 href="https://github.com/Adithyenkandasamy"
                 target="_blank"

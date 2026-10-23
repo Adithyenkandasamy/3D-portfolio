@@ -2,6 +2,7 @@ import "server-only";
 import fs from "fs/promises";
 import path from "path";
 import { z } from "zod";
+import { getDbContent, setDbContent } from "@/lib/db";
 import {
   ProfileSchema,
   ProjectSchema,
@@ -59,10 +60,24 @@ async function acquireLock(filePath: string): Promise<() => void> {
   return unlock;
 }
 
+function getSectionKeyFromFileName(fileName: string): string {
+  return fileName.replace(".json", "").replace(/-/g, "_");
+}
+
 /**
- * Safely reads and parses JSON from the /data directory
+ * Reads from Neon PostgreSQL with fallback to local /data directory
  */
 export async function readDataFile<T>(fileName: string): Promise<T> {
+  const sectionKey = getSectionKeyFromFileName(fileName);
+  try {
+    const dbContent = await getDbContent<T>(sectionKey);
+    if (dbContent !== null && dbContent !== undefined) {
+      return dbContent;
+    }
+  } catch {
+    // Fall back to local file
+  }
+
   const filePath = path.join(DATA_DIR, fileName);
   try {
     const raw = await fs.readFile(filePath, "utf-8");
@@ -74,7 +89,7 @@ export async function readDataFile<T>(fileName: string): Promise<T> {
 }
 
 /**
- * Safely and atomically writes JSON to the /data directory with validation and locking
+ * Safely and atomically writes JSON to both Neon PostgreSQL and /data directory
  */
 export async function writeDataFile<T>(
   fileName: string,
@@ -92,20 +107,26 @@ export async function writeDataFile<T>(
     }
   }
 
+  // 2. Persist to Neon PostgreSQL
+  const sectionKey = getSectionKeyFromFileName(fileName);
+  setDbContent(sectionKey, data).catch((err) => {
+    console.error(`[Neon DB Sync Error] Failed to update ${sectionKey}:`, err);
+  });
+
   const filePath = path.join(DATA_DIR, fileName);
   const tempPath = path.join(DATA_DIR, `${fileName}.${Date.now()}.tmp`);
 
-  // 2. Acquire lock for atomic operation
+  // 3. Acquire lock for atomic operation
   const unlock = await acquireLock(filePath);
 
   try {
-    // 3. Serialize with formatting
+    // 4. Serialize with formatting
     const serialized = JSON.stringify(data, null, 2);
 
-    // 4. Write to temporary file first
+    // 5. Write to temporary file first
     await fs.writeFile(tempPath, serialized, "utf-8");
 
-    // 5. Atomic rename to target file
+    // 6. Atomic rename to target file
     await fs.rename(tempPath, filePath);
   } catch (err) {
     // Clean up temp file on failure

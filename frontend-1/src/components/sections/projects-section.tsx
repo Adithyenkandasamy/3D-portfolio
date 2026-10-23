@@ -1,114 +1,129 @@
 "use client";
 
+import Image from "next/image";
 import { SectionHeader } from "@/components/ui/section-header";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 import { ExternalLink } from "lucide-react";
 import { GithubIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
-/* Will be fetched from DB in Phase 2+ */
 const FEATURED_PROJECTS = [
   {
-    title: "Real-Time Voice Chat Web App",
+    title: "RESQ – Emergency Coordination",
+    metric: "Cryptora’26 Winner",
+    image: "/images/editorial/cybernetics-library-book-scanner.jpg",
     description:
-      "AI-powered voice chat using Ollama, FasterWhisper & Kokoro with WebSocket — achieved <200ms latency with 95% accuracy.",
-    techStack: ["Python", "WebSocket", "Ollama", "FastAPI"],
+      "Hackathon-winning emergency platform connecting response crews, hospitals, and dispatchers via real-time coordination, concurrency-safe bed reservations, and AI triage handovers.",
+    techStack: ["FastAPI", "React", "PostgreSQL", "Socket.IO", "Groq AI"],
     githubUrl: "https://github.com/Adithyenkandasamy",
-    category: "AI/ML",
+    category: "Real-Time & AI Systems",
   },
   {
-    title: "Hand Gesture Control System",
+    title: "OneForAll AI – Inventory Intelligence Service",
+    metric: "Google Sheets MCP",
+    image: "/images/editorial/cybernetics-library-unknown-sittable-objects.jpg",
     description:
-      "Computer vision system using OpenCV and ML for touchless human-computer interaction via gesture recognition. Recognized 10+ gestures with 92% accuracy.",
-    techStack: ["Python", "OpenCV", "TensorFlow", "ML"],
+      "AI backend using Model Context Protocol (MCP) to turn Google Sheets into an intelligent inventory assistant with proactive procurement insights and stock risk alerts via Llama 3.3 70B.",
+    techStack: ["FastAPI", "Python", "Groq (Llama 3.3)", "MCP", "Supabase"],
     githubUrl: "https://github.com/Adithyenkandasamy",
-    category: "Computer Vision",
+    category: "Agent Protocols & MCP",
   },
   {
-    title: "JARVIS-MARK_1",
+    title: "MagizhCode – DSA Learning Platform",
+    metric: "AST Execution Engine",
+    image: "/images/editorial/mount-pleasant-radio-telescope.jpg",
     description:
-      "Personal AI assistant prototype showcasing automation and AI integrations — voice commands, task execution, and smart responses.",
-    techStack: ["Python", "AI", "Automation", "NLP"],
-    githubUrl: "https://github.com/Adithyenkandasamy",
-    category: "AI Assistant",
-  },
-  {
-    title: "MCP Server",
-    description:
-      "Implemented a stdio-based MCP server in Python, exposing custom tools for LLMs through Claude Desktop.",
-    techStack: ["Python", "MCP", "Claude", "LLM"],
+      "Full-stack DSA learning platform with structured roadmaps, progress tracking, and a custom Python execution engine using AST validation and sys.settrace for dynamic code visualization.",
+    techStack: ["FastAPI", "React", "TypeScript", "SQLAlchemy", "Python"],
     githubUrl: "https://github.com/Adithyenkandasamy",
     category: "Developer Tools",
+  },
+  {
+    title: "MediCareAI / MediGuide AI",
+    metric: "Clinical LLM Analysis",
+    image: "/images/editorial/griffith-observatory-2006-architecture-closeup.jpg",
+    description:
+      "Intelligent healthcare assistant featuring LLM conversational analysis, Redis token-bucket rate limiting, symptom pre-screening, and automated Google Calendar scheduling.",
+    techStack: ["FastAPI", "React", "Gemini", "MongoDB", "Redis"],
+    githubUrl: "https://github.com/Adithyenkandasamy",
+    category: "Healthcare & AI",
   },
 ];
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="section">
-      <div className="container-wide">
+    <section id="projects" className="py-24 sm:py-32 px-6 sm:px-10 lg:px-16">
+      <div className="max-w-7xl mx-auto">
         <SectionHeader
-          label="Projects"
-          title="Featured work"
-          description="A selection of projects that showcase my skills and interests."
+          title="Selected production projects and research."
+          description="System architectures, computer vision models, and full-stack software built for speed and reliability."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {FEATURED_PROJECTS.map((project, i) => (
-            <AnimateOnScroll key={project.title} delay={i * 80}>
-              <div className="card card-interactive p-6 h-full flex flex-col">
-                {/* Category */}
-                <span className="badge-accent self-start mb-3">
-                  {project.category}
-                </span>
+            <AnimateOnScroll key={project.title} delay={i * 70}>
+              <div className="p-7 rounded-2xl bg-surface h-full flex flex-col justify-between hover:bg-surface-elevated transition-colors group">
+                <div>
+                  <div className="relative rounded-xl overflow-hidden aspect-[16/10] mb-6 bg-surface-elevated">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover grayscale contrast-105 group-hover:scale-[1.02] transition-transform duration-500"
+                    />
+                  </div>
 
-                {/* Title */}
-                <h3 className="heading-sm text-foreground mb-2">
-                  {project.title}
-                </h3>
-
-                {/* Description */}
-                <p className="body-sm flex-1 mb-4">{project.description}</p>
-
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-0.5 text-xs font-medium text-muted bg-border-subtle rounded-md"
-                    >
-                      {tech}
+                  <div className="flex items-center justify-between text-sm text-muted mb-3 font-medium">
+                    <span>{project.category}</span>
+                    <span className="text-foreground font-semibold px-2.5 py-0.5 rounded bg-background">
+                      {project.metric}
                     </span>
-                  ))}
+                  </div>
+
+                  <h3 className="text-2xl font-bold text-foreground mb-3 leading-snug">
+                    {project.title}
+                  </h3>
+
+                  <p className="text-base text-foreground/90 leading-relaxed mb-6">
+                    {project.description}
+                  </p>
                 </div>
 
-                {/* Links */}
-                <div className="flex items-center gap-3 pt-3 border-t border-border">
-                  {project.githubUrl && (
+                <div>
+                  <div className="flex flex-wrap gap-1.5 mb-6">
+                    {project.techStack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1 text-xs font-medium text-foreground bg-background rounded"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center justify-between pt-4 text-sm">
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-muted hover:text-foreground font-medium transition-colors"
+                      >
+                        <GithubIcon className="w-4 h-4" />
+                        <span>Source Code</span>
+                      </a>
+                    )}
                     <a
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={cn(
-                        "inline-flex items-center gap-1.5 text-sm text-muted",
-                        "hover:text-foreground transition-colors"
-                      )}
+                      className="inline-flex items-center gap-1 text-foreground font-semibold hover:text-accent transition-colors ml-auto"
                     >
-                      <GithubIcon className="w-4 h-4" />
-                      Source
+                      <span>Explore Repository</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
                     </a>
-                  )}
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                      "inline-flex items-center gap-1.5 text-sm text-muted",
-                      "hover:text-foreground transition-colors ml-auto"
-                    )}
-                  >
-                    View
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
+                  </div>
                 </div>
               </div>
             </AnimateOnScroll>

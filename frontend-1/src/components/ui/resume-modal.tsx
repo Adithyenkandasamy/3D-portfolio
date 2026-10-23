@@ -29,11 +29,11 @@ export function ResumeModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/30 backdrop-blur-sm animate-fade-in">
-      <div className="bg-surface border border-border rounded-2xl shadow-elevated w-full max-w-lg p-6 sm:p-8 relative">
+    <div data-ui="modal" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/30 backdrop-blur-sm animate-fade-in">
+      <div className="bg-surface rounded-2xl shadow-elevated w-full max-w-lg p-6 sm:p-8 relative">
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-lg text-muted hover:text-foreground hover:bg-border-subtle transition-colors"
+          className="absolute top-5 right-5 p-2 rounded-lg text-muted hover:text-foreground hover:bg-surface-elevated transition-colors"
           aria-label="Close modal"
         >
           <X className="w-4 h-4" />
@@ -44,15 +44,15 @@ export function ResumeModal({
             <FileDown className="w-5 h-5 text-accent" />
           </div>
           <div>
-            <h3 className="heading-sm text-foreground">{resume.name} — Resume</h3>
-            <p className="text-xs text-muted font-mono">Last updated: {resume.lastUpdated}</p>
+            <h3 className="heading-sm text-foreground">{resume.name}</h3>
+            <p className="text-xs text-muted">Last updated: {resume.lastUpdated}</p>
           </div>
         </div>
 
         <p className="body-sm mb-6 text-foreground/80">{resume.summary}</p>
 
         <div className="space-y-2 mb-6">
-          <h4 className="text-xs font-semibold uppercase tracking-wider text-muted">
+          <h4 className="text-sm font-semibold text-foreground mb-2">
             Core Competency Highlights
           </h4>
           {resume.coreHighlights.map((highlight, index) => (

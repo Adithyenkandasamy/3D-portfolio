@@ -1,170 +1,174 @@
 [
   {
-    "id": "voice-chat-ai",
-    "title": "Real-Time Voice Chat Web App",
-    "description": "AI-powered conversational voice web application utilizing Ollama, FasterWhisper, and Kokoro TTS connected via WebSockets. Achieved ultra-low latency (<200ms) with high speech recognition accuracy.",
-    "category": "AI & Systems",
+    "id": "resq-emergency",
+    "title": "RESQ – Emergency Response Coordination System",
+    "description": "Hackathon-winning emergency platform connecting crews, hospitals, and dispatchers via real-time coordination, concurrency-safe bed reservations, and AI triage handovers.",
+    "category": "Real-Time & AI Systems",
     "featured": true,
-    "tags": [
-      "Python",
-      "Ollama",
-      "FasterWhisper",
-      "Kokoro TTS",
-      "WebSockets",
-      "FastAPI"
-    ],
-    "githubUrl": "https://github.com/Adithyenkandasamy",
-    "liveUrl": "https://github.com/Adithyenkandasamy",
-    "highlights": [
-      "Sub-200ms round-trip latency using WebSocket streaming",
-      "Integrated local LLM inference via Ollama",
-      "Robust speech-to-text pipeline with FasterWhisper"
-    ]
-  },
-  {
-    "id": "gesture-control",
-    "title": "Hand Gesture Control System",
-    "description": "Touchless human-computer interaction system leveraging OpenCV and machine learning classifiers to control digital interfaces through hand gestures with 92% classification accuracy.",
-    "category": "Computer Vision",
-    "featured": true,
-    "tags": [
-      "Python",
-      "OpenCV",
-      "MediaPipe",
-      "NumPy",
-      "Scikit-Learn"
-    ],
-    "githubUrl": "https://github.com/Adithyenkandasamy",
-    "liveUrl": "https://github.com/Adithyenkandasamy",
-    "highlights": [
-      "Real-time landmark tracking across 21 hand joints",
-      "10+ distinct gesture recognition routines",
-      "Optimized for 60 FPS processing on standard webcams"
-    ]
-  },
-  {
-    "id": "image-classification",
-    "title": "Image Classification System",
-    "description": "Convolutional Neural Network web system built with TensorFlow and Flask providing high-speed image analysis and multi-class object recognition.",
-    "category": "Deep Learning",
-    "featured": false,
-    "tags": [
-      "Python",
-      "TensorFlow",
-      "Keras",
-      "Flask",
-      "Computer Vision"
-    ],
-    "githubUrl": "https://github.com/Adithyenkandasamy",
-    "liveUrl": "https://github.com/Adithyenkandasamy",
-    "highlights": [
-      "Custom CNN trained with data augmentation pipelines",
-      "Lightweight Flask inference API with batching support",
-      "Interactive prediction confidence scoring display"
-    ]
-  },
-  {
-    "id": "mcp-server",
-    "title": "Model Context Protocol (MCP) Server",
-    "description": "Production stdio-based MCP server implementation in Python, exposing custom developer tools, local file exploration, and shell executors directly to Claude Desktop and LLM agents.",
-    "category": "AI Tools & Infrastructure",
-    "featured": true,
-    "tags": [
-      "Python",
-      "MCP Protocol",
-      "LLM Tooling",
-      "Claude",
-      "AsyncIO"
-    ],
-    "githubUrl": "https://github.com/Adithyenkandasamy",
-    "liveUrl": "https://github.com/Adithyenkandasamy",
-    "highlights": [
-      "Standardized Model Context Protocol compliance",
-      "Sandboxed command execution and schema validation",
-      "Seamless integration with Anthropic Claude Desktop"
-    ]
-  },
-  {
-    "id": "jarvis-assistant",
-    "title": "JARVIS-MARK_1 AI Assistant",
-    "description": "Personal AI desktop automation assistant with voice command recognition, task orchestration, system monitoring, and automated workflow triggers.",
-    "category": "AI & Systems",
-    "featured": false,
-    "tags": [
-      "Python",
-      "SpeechRecognition",
-      "PyTTSx3",
-      "Automation",
-      "NLP"
-    ],
-    "githubUrl": "https://github.com/Adithyenkandasamy",
-    "liveUrl": "https://github.com/Adithyenkandasamy",
-    "highlights": [
-      "Multi-intent voice command routing",
-      "Desktop application and window management routines",
-      "Natural conversational feedback loop"
-    ]
-  },
-  {
-    "id": "quiz-app",
-    "title": "Interactive Quiz Application",
-    "description": "Full-stack real-time quiz platform featuring FastAPI backend, JWT authentication, persistent scoring, and dynamic question banks with adaptive difficulty.",
-    "category": "Full Stack",
-    "featured": false,
     "tags": [
       "FastAPI",
       "React",
       "PostgreSQL",
-      "Tailwind CSS",
-      "TypeScript"
+      "Socket.IO",
+      "Groq AI",
+      "Python"
     ],
     "githubUrl": "https://github.com/Adithyenkandasamy",
     "liveUrl": "https://github.com/Adithyenkandasamy",
     "highlights": [
-      "Asynchronous REST API built with FastAPI",
-      "Secure JWT token-based authentication session flow",
-      "Clean responsive client with instant question validation"
+      "Developed a hackathon-winning emergency platform connecting crews, hospitals, and dispatchers via real-time coordination",
+      "Implemented hospital matching, concurrency-safe bed reservations, AI-assisted clinical handovers, and live tracking",
+      "Integrated Groq AI for intelligent clinical triage summaries and rapid dispatch decisions"
     ]
   },
   {
-    "id": "linkedin-automation",
-    "title": "LinkedIn Content Automation",
-    "description": "Automated technical content pipeline utilizing n8n, Make.com, and generative AI APIs to draft, format, and schedule developer updates.",
-    "category": "Automation & DevOps",
-    "featured": false,
+    "id": "oneforall-ai",
+    "title": "OneForAll AI – Inventory Intelligence Service",
+    "description": "AI backend using Model Context Protocol (MCP) to turn Google Sheets into an intelligent inventory assistant with stock risk detection and automated procurement insights.",
+    "category": "Agent Protocols & MCP",
+    "featured": true,
     "tags": [
-      "n8n",
-      "Make.com",
-      "REST APIs",
-      "LLM Prompts",
-      "Automation"
+      "FastAPI",
+      "Python",
+      "Groq (Llama 3.3 70B)",
+      "Google Sheets MCP",
+      "Supabase",
+      "JWT"
     ],
     "githubUrl": "https://github.com/Adithyenkandasamy",
     "liveUrl": "https://github.com/Adithyenkandasamy",
     "highlights": [
-      "Webhook-driven workflow triggering on Git repository commits",
-      "Multi-stage content review and social posting",
-      "Zero-maintenance cloud workflow orchestration"
+      "Built an AI backend using Model Context Protocol (MCP) to turn Google Sheets into an intelligent inventory assistant",
+      "Integrated Llama 3.3 70B via Groq API for natural language queries, stock risk detection, and proactive procurement insights",
+      "Implemented Supabase for JWT authentication, audit logs, and analysis history across multi-tenant environments"
     ]
   },
   {
-    "id": "subscription-manager",
-    "title": "Subscription Manager Mobile App",
-    "description": "Cross-platform mobile application developed with React Native and TypeScript for monitoring recurring software subscriptions, payment cycles, and monthly expenditure alerts.",
-    "category": "Mobile & Apps",
-    "featured": false,
+    "id": "magizhcode-dsa",
+    "title": "MagizhCode – DSA Learning Platform",
+    "description": "Full-stack DSA platform with structured learning roadmaps, progress tracking, and an in-house Python execution engine for dynamic code visualization.",
+    "category": "Developer Tools",
+    "featured": true,
     "tags": [
-      "React Native",
+      "FastAPI",
+      "React",
       "TypeScript",
-      "AsyncStorage",
-      "Mobile UI"
+      "SQLAlchemy",
+      "Python",
+      "AST Engine"
     ],
     "githubUrl": "https://github.com/Adithyenkandasamy",
     "liveUrl": "https://github.com/Adithyenkandasamy",
     "highlights": [
-      "Intuitive expense dashboard with category breakdown",
-      "Local notifications for upcoming renewal billing dates",
-      "Offline-first state persistence architecture"
+      "Built a DSA learning platform with structured roadmaps, progress tracking, and interactive code visualization",
+      "Developed a Python execution engine using AST validation and sys.settrace for dynamic execution tracing",
+      "Architected responsive TypeScript client with step-by-step memory and stack frame inspection"
+    ]
+  },
+  {
+    "id": "medicare-ai",
+    "title": "MediCareAI / MediGuide AI",
+    "description": "AI medical assistant with LLM conversational analysis, Redis rate limiting, and automated appointment integration via Google Calendar API.",
+    "category": "Healthcare & AI",
+    "featured": true,
+    "tags": [
+      "FastAPI",
+      "React",
+      "Gemini",
+      "MongoDB",
+      "Redis",
+      "Google Calendar API"
+    ],
+    "githubUrl": "https://github.com/Adithyenkandasamy",
+    "liveUrl": "https://github.com/Adithyenkandasamy",
+    "highlights": [
+      "Built an AI medical assistant with LLM conversational analysis, Redis rate limiting, and Google Calendar API",
+      "Implemented conversational state retention and intelligent symptom pre-screening workflows",
+      "Enforced distributed token bucket rate limiting via Redis to maintain API reliability"
+    ]
+  },
+  {
+    "id": "satellite-thermal",
+    "title": "Satellite Thermal Anomaly Detector (Dev Jams '26)",
+    "description": "48-hour hackathon project at VIT Vellore utilizing NASA open APIs and geospatial imagery to detect ground thermal anomalies and environmental shifts.",
+    "category": "Geospatial & Hackathon",
+    "featured": false,
+    "tags": [
+      "Python",
+      "NASA Open APIs",
+      "Thermal Analysis",
+      "FastAPI",
+      "Data Science"
+    ],
+    "githubUrl": "https://github.com/Adithyenkandasamy",
+    "liveUrl": "https://github.com/Adithyenkandasamy",
+    "highlights": [
+      "Built during Dev Jams '26 48-Hour Hackathon at VIT Vellore",
+      "Processed multi-spectral thermal data feeds directly from NASA APIs",
+      "Computed regional thermal variance indices for anomaly alerts"
+    ]
+  },
+  {
+    "id": "auto-insurance-cv",
+    "title": "Automated Vehicle Damage Assessment (VISA / IIT Madras)",
+    "description": "AI/ML computer vision system developed for the VISA / IIT Madras Hackathon to inspect vehicle exterior damage and calculate automated claims confidence.",
+    "category": "Computer Vision",
+    "featured": false,
+    "tags": [
+      "Computer Vision",
+      "OpenCV",
+      "FastAPI",
+      "Python",
+      "AI/ML"
+    ],
+    "githubUrl": "https://github.com/Adithyenkandasamy",
+    "liveUrl": "https://github.com/Adithyenkandasamy",
+    "highlights": [
+      "Presented in AI/ML Track at VISA / IIT Madras Hackathon",
+      "Automated inspection of vehicle panels using contour and damage segmentation",
+      "Generated structured damage reports for streamlined claim processing"
+    ]
+  },
+  {
+    "id": "vscode-learning-agent",
+    "title": "VS Code Learning Agent Extension (BIT Hackathon)",
+    "description": "AI developer learning agent extension for Visual Studio Code featuring contextual code chunking, concept explanation, and interactive tutoring.",
+    "category": "Developer Tools",
+    "featured": false,
+    "tags": [
+      "VS Code Extension",
+      "TypeScript",
+      "Python",
+      "LLMs",
+      "Context Chunking"
+    ],
+    "githubUrl": "https://github.com/Adithyenkandasamy",
+    "liveUrl": "https://github.com/Adithyenkandasamy",
+    "highlights": [
+      "Built for the BIT Hackathon at Bannari Amman Institute of Technology",
+      "Engineered intelligent AST-based contextual code chunking",
+      "Provides zero-latency explanations directly inside the editor sidebar"
+    ]
+  },
+  {
+    "id": "streaming-pipeline-pathway",
+    "title": "Real-Time Streaming Pipeline (Microsoft Code Cubicle 5.0)",
+    "description": "National finalist project built at Microsoft Bengaluru using Pathway engine for low-latency event-driven data ingestion and streaming analytics.",
+    "category": "Data Engineering",
+    "featured": false,
+    "tags": [
+      "Pathway",
+      "Python",
+      "Streaming",
+      "WebSockets",
+      "Real-Time Data"
+    ],
+    "githubUrl": "https://github.com/Adithyenkandasamy",
+    "liveUrl": "https://github.com/Adithyenkandasamy",
+    "highlights": [
+      "Selected among top 250 students nationwide for Microsoft Bengaluru finals",
+      "Engineered streaming event pipeline with Pathway reactive framework",
+      "Handled high-throughput real-time updates with sub-millisecond dispatch"
     ]
   }
 ]
