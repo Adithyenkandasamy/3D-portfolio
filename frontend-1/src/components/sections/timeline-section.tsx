@@ -176,7 +176,7 @@ export function TimelineSection() {
   return (
     <section
       id="timeline"
-      className="py-24 sm:py-32 px-6 sm:px-10 lg:px-16 bg-surface/30 scroll-mt-20 border-y border-border relative"
+      className="py-16 sm:py-24 px-6 sm:px-10 lg:px-16 bg-surface/30 scroll-mt-20 border-y border-border relative"
     >
       <div id="experience" className="absolute -top-20" aria-hidden="true" />
       <div className="max-w-7xl mx-auto">
@@ -255,11 +255,11 @@ export function TimelineSection() {
                       isEven ? "justify-end text-right" : "justify-start text-left"
                     }`}
                   >
-                    <div className="inline-flex items-center gap-2 text-xs font-mono font-medium text-muted">
+                    <div className="inline-flex items-center gap-2 text-xs font-medium text-muted">
                       <Calendar className="w-3.5 h-3.5" />
                       <span>{entry.start_date} – {entry.end_date}</span>
                       {entry.is_current && (
-                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[11px] font-semibold">
+                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold">
                           Active
                         </span>
                       )}
@@ -268,19 +268,15 @@ export function TimelineSection() {
 
                   {/* Content Card */}
                   <div className="w-full sm:w-1/2 pl-12 sm:pl-0 sm:px-8">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-80px" }}
-                      transition={{ duration: 0.5 }}
+                    <div
                       className="p-6 sm:p-7 rounded-2xl bg-surface border border-border hover:border-border/80 transition-colors"
                     >
                       {/* Mobile Date Header */}
-                      <div className="flex sm:hidden items-center gap-2 text-xs font-mono text-muted mb-3">
+                      <div className="flex sm:hidden items-center gap-2 text-xs font-medium text-muted mb-3">
                         <Calendar className="w-3.5 h-3.5" />
                         <span>{entry.start_date} – {entry.end_date}</span>
                         {entry.is_current && (
-                          <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[11px] font-semibold">
+                          <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold">
                             Active
                           </span>
                         )}
@@ -298,7 +294,7 @@ export function TimelineSection() {
                         </div>
 
                         <span
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold uppercase tracking-wider border ${badgeColor}`}
+                          className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold capitalize border ${badgeColor}`}
                         >
                           {entry.category}
                         </span>
@@ -327,7 +323,7 @@ export function TimelineSection() {
                           {entry.technologies.map((tech) => (
                             <span
                               key={tech}
-                              className="px-2.5 py-1 rounded-md bg-surface-elevated text-xs font-mono text-muted border border-border-subtle"
+                              className="px-2.5 py-1 rounded-md bg-surface-elevated text-xs font-medium text-muted border border-border-subtle"
                             >
                               {tech}
                             </span>
@@ -349,7 +345,7 @@ export function TimelineSection() {
                           </a>
                         </div>
                       )}
-                    </motion.div>
+                    </div>
                   </div>
                 </div>
               );

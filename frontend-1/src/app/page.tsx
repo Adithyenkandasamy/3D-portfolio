@@ -39,7 +39,7 @@ export default function Home() {
       )}
 
       {/* Main Portfolio Flow */}
-      <main className="w-full">
+      <div className="w-full">
         {/* Hero with interactive terminal */}
         <TerminalHero />
 
@@ -69,7 +69,7 @@ export default function Home() {
 
         {/* Contact */}
         <ContactSection />
-      </main>
+      </div>
 
       {/* Unified Floating Dock (AI Assistant + Music Player) */}
       <FloatingDock />

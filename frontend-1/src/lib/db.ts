@@ -164,6 +164,41 @@ export async function saveDbMusicTrack(track: {
   }
 }
 
+export async function updateDbMusicTrackTitle(id: string, title: string): Promise<boolean> {
+  const sql = getDb();
+  if (!sql) return false;
+
+  try {
+    await sql`
+      UPDATE music_tracks
+      SET title = ${title}
+      WHERE id = ${id};
+    `;
+    return true;
+  } catch (error) {
+    console.error(`[Neon DB] Failed to update music track title for ${id}:`, error);
+    return false;
+  }
+}
+
+export async function getDbMusicTrackById(id: string): Promise<DbMusicTrack | null> {
+  const sql = getDb();
+  if (!sql) return null;
+
+  try {
+    const rows = await sql`
+      SELECT id, title, filename, url, duration, format, is_favorite, order_index, created_at
+      FROM music_tracks
+      WHERE id = ${id}
+      LIMIT 1;
+    `;
+    return ((rows && rows[0]) as unknown as DbMusicTrack) || null;
+  } catch (error) {
+    console.error(`[Neon DB] Failed to fetch music track by id ${id}:`, error);
+    return null;
+  }
+}
+
 export async function deleteDbMusicTrack(id: string): Promise<boolean> {
   const sql = getDb();
   if (!sql) return false;

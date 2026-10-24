@@ -94,7 +94,7 @@ export function SkillsSection() {
                 <div>
                   <h3 className={`text-xl font-bold text-foreground mb-1 group-hover:${domain.accent} transition-colors flex items-center justify-between`}>
                     <span>{domain.name}</span>
-                    <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-full bg-border-subtle text-muted">
+                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-border-subtle text-muted">
                       {domain.items.length} toolchains
                     </span>
                   </h3>
@@ -114,12 +114,12 @@ export function SkillsSection() {
                               {item.name}
                             </span>
                             {item.project && (
-                              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-border text-foreground/80">
+                              <span className="text-[10px] font-medium px-1.5 py-0.2 rounded bg-border text-foreground/80">
                                 {item.project}
                               </span>
                             )}
                           </div>
-                          <span className="text-xs font-mono text-muted block sm:inline">
+                          <span className="text-xs font-normal text-muted block sm:inline">
                             {item.context}
                           </span>
                         </div>
@@ -135,11 +135,11 @@ export function SkillsSection() {
         {/* Opposing Infinite Marquee Rows */}
         <div className="space-y-4 pt-6 border-t border-border/60 relative overflow-hidden">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-mono uppercase tracking-wider text-muted flex items-center gap-2">
+            <span className="text-xs font-semibold text-muted flex items-center gap-2">
               <Terminal className="w-3.5 h-3.5 text-accent" />
               Verified Stack Stream &bull; Real Toolchains
             </span>
-            <span className="text-[11px] font-mono text-muted hidden sm:inline">Hover to pause</span>
+            <span className="text-xs text-muted hidden sm:inline">Hover to pause</span>
           </div>
 
           {/* Masked Marquee Container */}
@@ -153,7 +153,7 @@ export function SkillsSection() {
               {[...MARQUEE_ROW_1, ...MARQUEE_ROW_1].map((tech, i) => (
                 <div
                   key={`r1-${i}`}
-                  className="px-4 py-2 rounded-xl bg-surface-elevated border border-border hover:border-accent/60 text-xs font-mono text-foreground whitespace-nowrap  hover:-translate-y-1 transition-transform cursor-default flex items-center gap-2 group"
+                  className="px-4 py-2 rounded-xl bg-surface-elevated border border-border hover:border-accent/60 text-xs font-medium text-foreground whitespace-nowrap hover:-translate-y-1 transition-transform cursor-default flex items-center gap-2 group"
                 >
                   <Sparkles className="w-3 h-3 text-accent group-hover:rotate-45 transition-transform" />
                   <span>{tech}</span>
@@ -166,7 +166,7 @@ export function SkillsSection() {
               {[...MARQUEE_ROW_2, ...MARQUEE_ROW_2].map((tech, i) => (
                 <div
                   key={`r2-${i}`}
-                  className="px-4 py-2 rounded-xl bg-surface-elevated border border-border hover:border-accent/60 text-xs font-mono text-foreground whitespace-nowrap  hover:-translate-y-1 transition-transform cursor-default flex items-center gap-2 group"
+                  className="px-4 py-2 rounded-xl bg-surface-elevated border border-border hover:border-accent/60 text-xs font-medium text-foreground whitespace-nowrap hover:-translate-y-1 transition-transform cursor-default flex items-center gap-2 group"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                   <span>{tech}</span>

@@ -3,6 +3,7 @@ import { isAdminAuthenticated } from "@/lib/admin-auth";
 import {
   listMusicAssets,
   deleteMusicAsset,
+  updateMusicAssetTitle,
   invalidateMusicCache,
 } from "@/lib/cloudinary-music";
 
@@ -97,6 +98,52 @@ export async function DELETE(req: NextRequest) {
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Failed to delete audio asset.";
     console.error("Admin music delete error:", err);
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
+
+/**
+ * PATCH /api/admin/music
+ * Update custom track title in Neon Postgres database
+ */
+export async function PATCH(req: NextRequest) {
+  try {
+    const isAuthed = await isAdminAuthenticated();
+    if (!isAuthed) {
+      return NextResponse.json(
+        { error: "Unauthorized. Admin session required to update audio assets." },
+        { status: 401 }
+      );
+    }
+
+    const body = await req.json().catch(() => null);
+    const id = body?.id || body?.publicId;
+    const title = body?.title?.trim();
+
+    if (!id || !title) {
+      return NextResponse.json(
+        { error: "Track 'id' (or 'publicId') and non-empty 'title' are required." },
+        { status: 400 }
+      );
+    }
+
+    const success = await updateMusicAssetTitle(id, title);
+    if (!success) {
+      return NextResponse.json(
+        { error: `Could not update title for track ${id}` },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      id,
+      title,
+      message: "Track title updated successfully in database.",
+    });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Failed to update track title.";
+    console.error("Admin music patch error:", err);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

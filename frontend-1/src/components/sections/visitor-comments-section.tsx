@@ -83,11 +83,11 @@ export function VisitorCommentsSection() {
   return (
     <section
       id="comments"
-      className="py-24 sm:py-32 px-6 sm:px-10 lg:px-16 bg-surface/20 scroll-mt-20 border-t border-border"
+      className="py-16 sm:py-24 px-6 sm:px-10 lg:px-16 bg-surface/20 scroll-mt-20 border-t border-border"
     >
       <div className="max-w-7xl mx-auto">
         <SectionHeader
-          title="HEY THERE!"
+          title="Visitor notes & thoughts."
           description="Have we worked together, built something interesting, or connected through my work? Leave me a note."
         />
 
@@ -179,10 +179,10 @@ export function VisitorCommentsSection() {
           {/* Right Column: Community Guestbook Feed */}
           <div className="lg:col-span-7 space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-border/60">
-              <span className="text-xs font-semibold text-muted uppercase tracking-wider">
-                Approved Notes ({comments.length})
+              <span className="text-xs font-semibold text-muted">
+              What other Said: ({comments.length})
               </span>
-              <span className="text-xs text-muted">All notes verified</span>
+              <span className="text-xs text-muted"></span>
             </div>
 
             {loading ? (

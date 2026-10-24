@@ -42,10 +42,26 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const singleTitle = formData.get("title") as string | null;
+    const titlesList = (formData.getAll("titles") as string[]) || [];
+    let titlesMap: Record<string, string> = {};
+    const titlesJson = formData.get("titlesJson") as string | null;
+    if (titlesJson) {
+      try {
+        titlesMap = JSON.parse(titlesJson);
+      } catch {}
+    }
+
     const uploadedAssets = [];
     const errors: { filename: string; error: string }[] = [];
 
-    for (const file of files) {
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const customTitle =
+        titlesMap[file.name] ||
+        titlesList[i] ||
+        (files.length === 1 && singleTitle ? singleTitle : undefined);
+
       // 1. Server-side format & size validation
       const validation = validateAudioFile(file);
       if (!validation.valid) {
@@ -56,9 +72,9 @@ export async function POST(req: NextRequest) {
         continue;
       }
 
-      // 2. Upload asset
+      // 2. Upload asset with custom title
       try {
-        const asset = await uploadMusicAsset(file);
+        const asset = await uploadMusicAsset(file, customTitle);
         uploadedAssets.push(asset);
       } catch (uploadErr: unknown) {
         const msg =

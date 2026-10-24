@@ -109,10 +109,10 @@ export function ExperienceSection() {
                     >
                       {/* Meta header */}
                       <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                        <span className="text-xs font-mono font-semibold text-accent uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-accent/15 border border-accent/25">
+                        <span className="text-xs font-semibold text-accent capitalize px-2.5 py-0.5 rounded-full bg-accent/15 border border-accent/25">
                           {exp.employmentType}
                         </span>
-                        <div className="flex items-center gap-2 text-xs font-mono text-muted">
+                        <div className="flex items-center gap-2 text-xs font-medium text-muted">
                           <Calendar className="w-3.5 h-3.5 text-muted" />
                           <span>
                             {exp.startDate} &ndash; {exp.endDate}
@@ -151,7 +151,7 @@ export function ExperienceSection() {
                         {exp.techTags.map((tag) => (
                           <span
                             key={tag}
-                            className="px-2.5 py-1 text-[11px] font-mono text-foreground bg-surface-elevated border border-border rounded-lg"
+                            className="px-2.5 py-1 text-[11px] font-medium text-foreground bg-surface-elevated border border-border rounded-lg"
                           >
                             {tag}
                           </span>

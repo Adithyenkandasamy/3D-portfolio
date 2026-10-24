@@ -53,7 +53,7 @@ export function CertificatesSection() {
                           <Award className="w-5 h-5" />
                         )}
                       </div>
-                      <span className="text-xs font-semibold text-muted bg-surface px-2.5 py-1 rounded-md font-mono border border-border/60">
+                      <span className="text-xs font-semibold text-muted bg-surface px-2.5 py-1 rounded-md border border-border/60">
                         {cert.issueDate}
                       </span>
                     </div>
@@ -62,7 +62,7 @@ export function CertificatesSection() {
                     <h3 className="text-base font-bold text-foreground mb-1 leading-snug group-hover:text-accent transition-colors">
                       {cert.title}
                     </h3>
-                    <p className="text-xs font-semibold text-muted mb-4 font-mono">
+                    <p className="text-xs font-semibold text-muted mb-4">
                       {cert.issuer}
                     </p>
 
@@ -72,7 +72,7 @@ export function CertificatesSection() {
                         {cert.skills.map((skill) => (
                           <span
                             key={skill}
-                            className="px-2 py-0.5 text-[11px] font-mono rounded bg-surface border border-border/60 text-foreground/80"
+                            className="px-2 py-0.5 text-[11px] font-medium rounded bg-surface border border-border/60 text-foreground/80"
                           >
                             {skill}
                           </span>
@@ -83,7 +83,7 @@ export function CertificatesSection() {
 
                   {/* Bottom Actions */}
                   <div className="pt-4 border-t border-border/60 flex items-center justify-between text-xs">
-                    <span className="text-[11px] text-muted flex items-center gap-1 font-mono">
+                    <span className="text-[11px] text-muted flex items-center gap-1 font-medium">
                       <CheckCircle2 className="w-3.5 h-3.5 text-accent" />
                       <span>{cert.credentialId}</span>
                     </span>
@@ -140,7 +140,7 @@ export function CertificatesSection() {
                 <h3 className="text-base font-bold text-foreground">
                   {viewingCert.title}
                 </h3>
-                <p className="text-xs text-muted font-mono mt-0.5">
+                <p className="text-xs text-muted font-medium mt-0.5">
                   {viewingCert.issuer} &bull; ID: {viewingCert.credentialId}
                 </p>
               </div>

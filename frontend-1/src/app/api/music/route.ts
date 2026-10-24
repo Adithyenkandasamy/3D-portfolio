@@ -1,12 +1,36 @@
-import { NextResponse } from "next/server";
-import { getPublicSongs } from "@/lib/cloudinary-music";
+import { NextRequest, NextResponse } from "next/server";
+import { getPublicSongs, getMusicTrackById } from "@/lib/cloudinary-music";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const trackId = searchParams.get("id");
+
+    // Single track lookup by ID
+    if (trackId) {
+      const track = await getMusicTrackById(trackId);
+      if (!track) {
+        return NextResponse.json(
+          { error: `Music track not found with id "${trackId}"` },
+          { status: 404 }
+        );
+      }
+      return NextResponse.json({
+        success: true,
+        song: {
+          id: track.id,
+          title: track.title,
+          filename: track.filename,
+          url: track.url,
+          duration: track.duration || 0,
+          format: track.format,
+        },
+      });
+    }
+
     const assets = await getPublicSongs();
 
     // Map to minimal metadata required by the public player
-    // Never expose Cloudinary internal IDs or credentials
     const songs = assets.map((song) => ({
       id: song.id,
       title: song.title,

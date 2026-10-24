@@ -45,9 +45,6 @@ export function ContactSection() {
       <div className="max-w-7xl mx-auto space-y-16">
         {/* Monumental Headline */}
         <div>
-          <span className="text-xs font-mono uppercase tracking-wider text-accent mb-4 inline-block">
-            Initiate Collaboration &bull; Direct Channel
-          </span>
           <h2 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.05]">
             Let&apos;s talk.
           </h2>
@@ -122,7 +119,7 @@ export function ContactSection() {
                 <div>
                   <label
                     htmlFor="contact-name"
-                    className="block text-xs font-mono uppercase tracking-wider text-muted mb-2"
+                    className="block text-xs font-medium text-muted mb-2"
                   >
                     Your Name
                   </label>
@@ -141,7 +138,7 @@ export function ContactSection() {
                 <div>
                   <label
                     htmlFor="contact-email"
-                    className="block text-xs font-mono uppercase tracking-wider text-muted mb-2"
+                    className="block text-xs font-medium text-muted mb-2"
                   >
                     Email Address
                   </label>
@@ -162,7 +159,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="contact-subject"
-                  className="block text-xs font-mono uppercase tracking-wider text-muted mb-2"
+                  className="block text-xs font-medium text-muted mb-2"
                 >
                   Subject
                 </label>
@@ -182,7 +179,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="contact-message"
-                  className="block text-xs font-mono uppercase tracking-wider text-muted mb-2"
+                  className="block text-xs font-medium text-muted mb-2"
                 >
                   Message
                 </label>

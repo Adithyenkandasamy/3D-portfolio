@@ -19,6 +19,9 @@ import {
   Loader2,
   Lock,
   X,
+  Copy,
+  Check,
+  Pencil,
 } from "lucide-react";
 
 interface MusicAsset {
@@ -58,12 +61,21 @@ export default function AdminMusicPage() {
   // Upload modal state
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [fileTitles, setFileTitles] = useState<Record<string, string>>({});
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [uploadResults, setUploadResults] = useState<{
     uploaded: string[];
     errors: { filename: string; error: string }[];
   } | null>(null);
+
+  // Edit / Rename modal state
+  const [songToEdit, setSongToEdit] = useState<MusicAsset | null>(null);
+  const [editTitleInput, setEditTitleInput] = useState("");
+  const [isRenaming, setIsRenaming] = useState(false);
+
+  // Copy ID feedback state
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   // Delete dialog state
   const [songToDelete, setSongToDelete] = useState<MusicAsset | null>(null);
@@ -256,7 +268,68 @@ export default function AdminMusicPage() {
     }
   };
 
-  // Multi-file upload submit handler (Direct Cloudinary upload with serverless fallback)
+  // Copy ID to clipboard handler
+  const handleCopyId = (id: string) => {
+    navigator.clipboard.writeText(id);
+    setCopiedId(id);
+    setTimeout(() => {
+      setCopiedId((curr) => (curr === id ? null : curr));
+    }, 2000);
+  };
+
+  // Open rename modal
+  const handleOpenEdit = (asset: MusicAsset) => {
+    setSongToEdit(asset);
+    setEditTitleInput(asset.title);
+  };
+
+  // Save renamed title to database via PATCH /api/admin/music
+  const handleSaveRename = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!songToEdit || !editTitleInput.trim() || isRenaming) return;
+
+    setIsRenaming(true);
+    const newTitle = editTitleInput.trim();
+
+    try {
+      const res = await fetch("/api/admin/music", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: songToEdit.id,
+          title: newTitle,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setStatusMessage({
+          type: "success",
+          text: `Track renamed to "${newTitle}" in database.`,
+        });
+        setAssets((prev) =>
+          prev.map((a) =>
+            a.id === songToEdit.id || a.publicId === songToEdit.publicId
+              ? { ...a, title: newTitle }
+              : a
+          )
+        );
+        setSongToEdit(null);
+      } else {
+        setStatusMessage({
+          type: "error",
+          text: data.error || "Failed to update track title.",
+        });
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Rename network error";
+      setStatusMessage({ type: "error", text: msg });
+    } finally {
+      setIsRenaming(false);
+    }
+  };
+
+  // Multi-file upload submit handler (Use server route)
   const handleUploadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (selectedFiles.length === 0 || isUploading) return;
@@ -266,76 +339,11 @@ export default function AdminMusicPage() {
     setUploadResults(null);
 
     try {
-      // 1. Attempt direct signed Cloudinary uploads (bypasses Vercel 4.5MB payload limit)
-      const signRes = await fetch("/api/admin/cloudinary-sign", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ folder: "portfolio/music" }),
-      });
-
-      if (signRes.ok) {
-        const signData = await signRes.json();
-        if (signData.signature && signData.uploadUrl) {
-          const uploadedNames: string[] = [];
-          const uploadErrors: { filename: string; error: string }[] = [];
-
-          for (let i = 0; i < selectedFiles.length; i++) {
-            const file = selectedFiles[i];
-            setUploadProgress(Math.round(20 + ((i + 1) / selectedFiles.length) * 70));
-
-            const cldData = new FormData();
-            cldData.append("file", file);
-            cldData.append("api_key", signData.apiKey);
-            cldData.append("timestamp", String(signData.timestamp));
-            cldData.append("signature", signData.signature);
-            cldData.append("folder", signData.folder);
-
-            try {
-              const cldRes = await fetch(signData.uploadUrl, {
-                method: "POST",
-                body: cldData,
-              });
-              if (cldRes.ok) {
-                uploadedNames.push(file.name);
-              } else {
-                const errData = await cldRes.json().catch(() => ({}));
-                uploadErrors.push({
-                  filename: file.name,
-                  error: errData.error?.message || "Cloudinary direct upload rejected.",
-                });
-              }
-            } catch (uErr: unknown) {
-              uploadErrors.push({
-                filename: file.name,
-                error: uErr instanceof Error ? uErr.message : "Network error during upload.",
-              });
-            }
-          }
-
-          setUploadProgress(100);
-          setUploadResults({ uploaded: uploadedNames, errors: uploadErrors });
-          if (uploadedNames.length > 0) {
-            setStatusMessage({
-              type: "success",
-              text: `Successfully uploaded ${uploadedNames.length} song(s) directly to Cloudinary.`,
-            });
-            setSelectedFiles([]);
-            loadMusicLibrary();
-          } else {
-            setStatusMessage({
-              type: "error",
-              text: "Upload failed. Please check file format and sizes.",
-            });
-          }
-          return;
-        }
-      }
-
-      // 2. Fallback to server route /api/admin/music/upload
       const formData = new FormData();
       selectedFiles.forEach((file) => {
         formData.append("files", file);
       });
+      formData.append("titlesJson", JSON.stringify(fileTitles));
 
       setUploadProgress(40);
 
@@ -351,18 +359,19 @@ export default function AdminMusicPage() {
       if (res.ok && data.success) {
         setUploadProgress(100);
         setUploadResults({
-          uploaded: data.uploaded.map((a: MusicAsset) => a.filename),
+          uploaded: data.uploaded.map((a: MusicAsset) => a.title || a.filename),
           errors: data.errors || [],
         });
         setStatusMessage({
           type: "success",
-          text: `Successfully uploaded ${data.totalUploaded} song(s).`,
+          text: `Successfully uploaded ${data.totalUploaded} song(s) with custom titles.`,
         });
         setSelectedFiles([]);
+        setFileTitles({});
         loadMusicLibrary();
       } else {
         setUploadResults({
-          uploaded: data.uploaded ? data.uploaded.map((a: MusicAsset) => a.filename) : [],
+          uploaded: data.uploaded ? data.uploaded.map((a: MusicAsset) => a.title || a.filename) : [],
           errors: data.errors || [{ filename: "Upload", error: data.error || "Upload rejected." }],
         });
         setStatusMessage({
@@ -407,8 +416,15 @@ export default function AdminMusicPage() {
           type: "success",
           text: `Deleted "${songToDelete.filename}" successfully from portfolio/music.`,
         });
+        setAssets((prev) =>
+          prev.filter(
+            (a) => a.publicId !== songToDelete.publicId && a.id !== songToDelete.id
+          )
+        );
+        setTotalCount((prev) => Math.max(0, prev - 1));
+        setTotalBytes((prev) => Math.max(0, prev - songToDelete.bytes));
         setSongToDelete(null);
-        loadMusicLibrary();
+        void loadMusicLibrary();
       } else {
         setStatusMessage({
           type: "error",
@@ -801,17 +817,28 @@ export default function AdminMusicPage() {
                               )}
                             </button>
 
-                            <div className="min-w-0 max-w-[240px]">
+                            <div className="min-w-0 max-w-[260px]">
                               <p className="font-semibold text-foreground truncate">
                                 {asset.title}
                               </p>
-                              <div className="flex items-center gap-1.5 mt-0.5">
+                              <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
                                 <span className="text-[10px] font-mono uppercase px-1.5 py-0.2 rounded bg-border text-muted">
                                   {asset.format}
                                 </span>
-                                <span className="text-[11px] text-muted truncate">
-                                  {asset.filename}
-                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => handleCopyId(asset.id)}
+                                  title="Click to copy track ID"
+                                  className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-border-subtle hover:bg-border text-[10px] font-mono text-muted hover:text-foreground transition-colors group cursor-pointer"
+                                >
+                                  <span>ID:</span>
+                                  <span className="truncate max-w-[120px]">{asset.id}</span>
+                                  {copiedId === asset.id ? (
+                                    <Check className="w-2.5 h-2.5 text-emerald-500 shrink-0" />
+                                  ) : (
+                                    <Copy className="w-2.5 h-2.5 opacity-60 group-hover:opacity-100 shrink-0" />
+                                  )}
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -860,13 +887,22 @@ export default function AdminMusicPage() {
 
                         {/* Actions */}
                         <td className="py-3.5 px-5 text-right">
-                          <button
-                            onClick={() => setSongToDelete(asset)}
-                            className="p-2 text-muted hover:text-destructive rounded-lg hover:bg-destructive/10 transition-colors"
-                            title="Delete audio asset"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
+                          <div className="flex items-center justify-end gap-1">
+                            <button
+                              onClick={() => handleOpenEdit(asset)}
+                              className="p-2 text-muted hover:text-foreground rounded-lg hover:bg-border-subtle transition-colors"
+                              title="Rename track title"
+                            >
+                              <Pencil className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => setSongToDelete(asset)}
+                              className="p-2 text-muted hover:text-destructive rounded-lg hover:bg-destructive/10 transition-colors"
+                              title="Delete audio asset"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     );
@@ -909,19 +945,44 @@ export default function AdminMusicPage() {
                           <p className="text-xs font-semibold text-foreground truncate">
                             {asset.title}
                           </p>
-                          <p className="text-[11px] text-muted truncate mt-0.5">
-                            {asset.filename}
-                          </p>
+                          <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+                            <span className="text-[10px] font-mono text-muted truncate max-w-[130px]">
+                              {asset.filename}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => handleCopyId(asset.id)}
+                              title="Click to copy track ID"
+                              className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-border-subtle hover:bg-border text-[10px] font-mono text-muted hover:text-foreground transition-colors group cursor-pointer"
+                            >
+                              <span>ID:</span>
+                              <span className="truncate max-w-[100px]">{asset.id}</span>
+                              {copiedId === asset.id ? (
+                                <Check className="w-2.5 h-2.5 text-emerald-500 shrink-0" />
+                              ) : (
+                                <Copy className="w-2.5 h-2.5 opacity-60 group-hover:opacity-100 shrink-0" />
+                              )}
+                            </button>
+                          </div>
                         </div>
                       </div>
 
-                      <button
-                        onClick={() => setSongToDelete(asset)}
-                        className="p-2 text-muted hover:text-destructive rounded-lg hover:bg-destructive/10 shrink-0"
-                        title="Delete song"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                      <div className="flex items-center gap-1 shrink-0">
+                        <button
+                          onClick={() => handleOpenEdit(asset)}
+                          className="p-2 text-muted hover:text-foreground rounded-lg hover:bg-border-subtle"
+                          title="Rename track"
+                        >
+                          <Pencil className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => setSongToDelete(asset)}
+                          className="p-2 text-muted hover:text-destructive rounded-lg hover:bg-destructive/10"
+                          title="Delete song"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
 
                     {/* Mobile Scrubber if active preview */}
@@ -1015,30 +1076,61 @@ export default function AdminMusicPage() {
                   disabled={isUploading}
                   onChange={(e) => {
                     if (e.target.files) {
-                      setSelectedFiles(Array.from(e.target.files));
+                      const files = Array.from(e.target.files);
+                      setSelectedFiles(files);
+                      const initialTitles: Record<string, string> = {};
+                      files.forEach((f) => {
+                        const ext = f.name.lastIndexOf(".") !== -1 ? f.name.slice(f.name.lastIndexOf(".")) : "";
+                        const base = f.name.replace(ext, "");
+                        const formatted = base
+                          .replace(/[_-]/g, " ")
+                          .replace(/\b\w/g, (c) => c.toUpperCase());
+                        initialTitles[f.name] = formatted;
+                      });
+                      setFileTitles(initialTitles);
                     }
                   }}
                   className="mt-3 block w-full text-xs text-muted file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-foreground file:text-background hover:file:bg-foreground/90 file:cursor-pointer"
                 />
               </div>
 
-              {/* Selected Files Preview List */}
+              {/* Selected Files Preview & Custom Title Input List */}
               {selectedFiles.length > 0 && (
-                <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1">
+                <div className="space-y-3 max-h-56 overflow-y-auto pr-1">
                   <p className="text-xs font-semibold text-foreground">
-                    Selected Files ({selectedFiles.length}):
+                    Name Your Tracks ({selectedFiles.length}):
                   </p>
                   {selectedFiles.map((file, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center justify-between text-xs p-2 rounded-lg bg-border-subtle/50 border border-border"
+                      className="p-3 rounded-xl bg-border-subtle/50 border border-border space-y-2"
                     >
-                      <span className="truncate max-w-[280px] text-foreground font-mono">
-                        {file.name}
-                      </span>
-                      <span className="text-muted font-mono shrink-0">
-                        {formatBytes(file.size)}
-                      </span>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="truncate max-w-[280px] text-muted font-mono text-[11px]">
+                          {file.name}
+                        </span>
+                        <span className="text-muted font-mono shrink-0 text-[11px]">
+                          {formatBytes(file.size)}
+                        </span>
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-medium text-foreground mb-1">
+                          Track Display Title / Name:
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={fileTitles[file.name] ?? ""}
+                          onChange={(e) =>
+                            setFileTitles((prev) => ({
+                              ...prev,
+                              [file.name]: e.target.value,
+                            }))
+                          }
+                          placeholder="e.g. Echoes of DC (Cyberpunk Mix)"
+                          className="w-full px-3 py-1.5 rounded-lg border border-border bg-background text-xs font-semibold text-foreground focus:border-foreground focus:outline-hidden"
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -1115,6 +1207,107 @@ export default function AdminMusicPage() {
                 >
                   {isUploading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                   <span>{isUploading ? "Uploading..." : "Start Upload"}</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================
+          EDIT / RENAME TRACK MODAL (Neon DB Title Sync)
+         ======================================================== */}
+      {songToEdit && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in">
+          <div className="w-full max-w-md bg-surface border border-border rounded-2xl p-6 shadow-elevated space-y-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-foreground text-background flex items-center justify-center">
+                  <Pencil className="w-4 h-4 text-accent" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-foreground">
+                    Rename Track
+                  </h3>
+                  <p className="text-xs text-muted">
+                    Update the song title saved in your Neon database
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  if (!isRenaming) setSongToEdit(null);
+                }}
+                disabled={isRenaming}
+                className="p-1.5 text-muted hover:text-foreground rounded-lg hover:bg-border-subtle disabled:opacity-50"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveRename} className="space-y-4">
+              <div className="p-3 rounded-xl bg-border-subtle/50 border border-border space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-muted">Track ID:</span>
+                  <button
+                    type="button"
+                    onClick={() => handleCopyId(songToEdit.id)}
+                    className="inline-flex items-center gap-1 font-mono text-[11px] text-foreground hover:underline"
+                    title="Click to copy ID"
+                  >
+                    <span className="truncate max-w-[200px]">{songToEdit.id}</span>
+                    {copiedId === songToEdit.id ? (
+                      <Check className="w-3 h-3 text-emerald-500" />
+                    ) : (
+                      <Copy className="w-3 h-3 text-muted" />
+                    )}
+                  </button>
+                </div>
+                <div className="flex items-center justify-between text-xs text-muted">
+                  <span>File:</span>
+                  <span className="font-mono text-[11px] truncate max-w-[200px]">{songToEdit.filename}</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-foreground mb-1.5">
+                  Song Title / Name
+                </label>
+                <input
+                  type="text"
+                  required
+                  autoFocus
+                  value={editTitleInput}
+                  onChange={(e) => setEditTitleInput(e.target.value)}
+                  placeholder="Enter song name..."
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-sm font-semibold text-foreground focus:border-foreground focus:outline-hidden"
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-2.5 pt-2">
+                <button
+                  type="button"
+                  disabled={isRenaming}
+                  onClick={() => setSongToEdit(null)}
+                  className="px-4 py-2 rounded-xl border border-border text-xs font-medium text-foreground hover:bg-border-subtle transition-colors disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={isRenaming || !editTitleInput.trim()}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-foreground text-background text-xs font-semibold hover:bg-foreground/90 transition-all shadow-xs disabled:opacity-50"
+                >
+                  {isRenaming ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    <span>Save Name</span>
+                  )}
                 </button>
               </div>
             </form>

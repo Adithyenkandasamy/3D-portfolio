@@ -13,16 +13,18 @@ interface WordProps {
 }
 
 function Word({ children, progress, range }: WordProps) {
-  const opacity = useTransform(progress, range, [0.18, 1]);
-  const color = useTransform(progress, range, ["#525262", "#F4F4F6"]);
+  const opacity = useTransform(progress, range, [0.35, 1]);
+  const color = useTransform(progress, range, ["#A1A1AA", "#F5F5F7"]);
 
   return (
-    <motion.span
-      style={{ opacity, color }}
-      className="inline-block mr-[0.28em] transition-colors duration-150"
-    >
-      {children}
-    </motion.span>
+    <>
+      <motion.span
+        style={{ opacity, color }}
+        className="inline-block transition-colors duration-150"
+      >
+        {children}
+      </motion.span>{" "}
+    </>
   );
 }
 
@@ -77,7 +79,7 @@ export function AboutSection() {
           {/* Left Column: Monumental Scroll-Filled Statement */}
           <div className="lg:col-span-7 space-y-10">
             <div ref={containerRef} className="py-4">
-              <p className="text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.3] tracking-tight select-none">
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-[28px] font-medium leading-[1.4] tracking-tight select-none">
                 {words.map((word, i) => {
                   const start = i / words.length;
                   const end = start + 1 / words.length;
@@ -107,7 +109,7 @@ export function AboutSection() {
                 className="object-cover grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
               />
               <div className="absolute inset-0 from-background/90 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface/90 border border-border  text-xs font-mono text-muted">
+              <div className="absolute bottom-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface/90 border border-border text-xs font-medium text-muted">
                 <Sparkles className="w-3.5 h-3.5 text-accent" />
                 <span>Form &bull; Precision &bull; Architectural Structure</span>
               </div>
@@ -116,25 +118,25 @@ export function AboutSection() {
 
           {/* Right Column: Verified Facts Column */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="px-4 py-2 rounded-xl bg-surface/60 border border-border/80 flex items-center justify-between">
-              <span className="text-xs font-mono uppercase tracking-wider text-muted">
-                Fast Facts &bull; Index
+            <div className="px-4 py-2.5 rounded-xl bg-surface border border-border flex items-center justify-between">
+              <span className="text-xs font-semibold text-foreground">
+                Technical Highlights &amp; Core Focus
               </span>
-              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              <span className="text-xs text-muted">4 pillars</span>
             </div>
 
             <div className="space-y-3.5">
               {FACTS.map((fact) => (
                 <div
                   key={fact.label}
-                  className="p-5 rounded-xl bg-surface border border-border hover:border-accent/40 transition-all hover:translate-x-1 duration-200 group"
+                  className="p-5 rounded-xl bg-surface border border-border hover:border-accent/40 transition-colors duration-200 group"
                 >
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-surface-elevated border border-border/80 flex items-center justify-center text-accent group-hover:scale-110 transition-transform">
+                    <div className="w-8 h-8 rounded-lg bg-surface-elevated border border-border/80 flex items-center justify-center text-accent">
                       <fact.icon className="w-4 h-4 text-accent" />
                     </div>
                     <div>
-                      <span className="text-[11px] font-mono uppercase tracking-wider text-muted">
+                      <span className="text-xs text-muted block">
                         {fact.label}
                       </span>
                       <h4 className="text-sm font-semibold text-foreground leading-snug">
@@ -148,7 +150,7 @@ export function AboutSection() {
             </div>
 
             {/* Quick highlight block */}
-            <div className="p-5 rounded-xl from-surface to-surface-elevated border border-border/80 space-y-2">
+            <div className="p-5 rounded-xl bg-surface border border-border space-y-2">
               <div className="flex items-center gap-2 text-xs font-semibold text-accent">
                 <Terminal className="w-4 h-4" />
                 <span>Autonomous Agent Readiness</span>

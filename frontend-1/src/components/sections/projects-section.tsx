@@ -75,11 +75,7 @@ function PinnedProjectCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className="sticky w-full transition-transform duration-300"
-      style={{
-        top: `calc(5.5rem + ${index * 24}px)`,
-        zIndex: index + 1,
-      }}
+      className="relative w-full"
     >
       <motion.div
         style={{
@@ -101,24 +97,9 @@ function PinnedProjectCard({
         {/* Left Column: Details */}
         <div className="w-full lg:w-1/2 flex flex-col justify-between h-full z-10">
           <div>
-            {/* Top Meta */}
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-full bg-background border border-border text-foreground">
-                {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-              </span>
-              <span className="text-xs font-semibold text-accent tracking-wide uppercase">
-                {project.category}
-              </span>
-              {project.featured && (
-                <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-accent/10 text-accent">
-                  <Sparkles className="w-3 h-3" />
-                  Featured
-                </span>
-              )}
-            </div>
 
             {/* Title */}
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-foreground group-hover:text-accent transition-colors leading-tight mb-4">
+            <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-foreground group-hover:text-accent transition-colors leading-tight mb-4">
               {project.title}
             </h3>
 
@@ -146,7 +127,7 @@ function PinnedProjectCard({
               {project.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-2.5 py-1 text-xs font-medium rounded-lg bg-background border border-border/80 text-foreground/90 font-mono"
+                  className="px-2.5 py-1 text-xs font-medium rounded-lg bg-background border border-border/80 text-foreground/90"
                 >
                   {tag}
                 </span>
@@ -225,7 +206,7 @@ export function ProjectsSection() {
   };
 
   return (
-    <section id="projects" className="py-24 sm:py-32 px-6 sm:px-10 lg:px-16 scroll-mt-20 md:scroll-mt-24">
+    <section id="projects" className="py-16 sm:py-24 px-6 sm:px-10 lg:px-16 scroll-mt-20 md:scroll-mt-24">
       <div className="max-w-7xl mx-auto">
         {/* Header with Mode Toggle */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
@@ -288,7 +269,7 @@ export function ProjectsSection() {
               <div className="pt-10 border-t border-border/80">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
                   <div>
-                    <span className="text-xs font-mono font-semibold uppercase tracking-wider text-accent-blue">
+                    <span className="text-xs font-semibold text-accent-blue">
                       Engineering Archive &amp; Hackathons
                     </span>
                     <h3 className="text-xl sm:text-2xl font-bold text-foreground mt-1">
@@ -311,7 +292,7 @@ export function ProjectsSection() {
                       >
                         <div>
                           <div className="flex items-center justify-between gap-2 mb-3">
-                            <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-border-subtle text-foreground/80">
+                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-border-subtle text-foreground/80">
                               {project.category}
                             </span>
                             <ArrowUpRight className="w-4 h-4 text-muted group-hover:text-accent-blue transition-colors" />
@@ -329,7 +310,7 @@ export function ProjectsSection() {
                             <div className="space-y-1.5 mb-4">
                               {project.highlights.slice(0, 2).map((h, hIdx) => (
                                 <div key={hIdx} className="text-[11px] text-foreground/80 flex items-start gap-2">
-                                  <span className="text-accent-blue font-mono font-bold">›</span>
+                                  <span className="text-accent-blue font-bold">›</span>
                                   <span className="line-clamp-1">{h}</span>
                                 </div>
                               ))}
@@ -342,7 +323,7 @@ export function ProjectsSection() {
                             {project.tags.slice(0, 4).map((tag) => (
                               <span
                                 key={tag}
-                                className="px-2 py-0.5 text-[10px] font-mono rounded bg-background border border-border/60 text-foreground/70"
+                                className="px-2 py-0.5 text-[10px] font-medium rounded bg-background border border-border/60 text-foreground/70"
                               >
                                 {tag}
                               </span>
@@ -372,8 +353,8 @@ export function ProjectsSection() {
                 className="py-6 sm:py-8 flex flex-col md:flex-row md:items-center justify-between gap-4 group cursor-pointer hover:bg-surface/50 px-4 -mx-4 rounded-xl transition-colors"
               >
                 <div className="flex items-start md:items-center gap-4 md:gap-6">
-                  <span className="text-xs font-mono text-muted shrink-0 mt-1 md:mt-0">
-                    {String(idx + 1).padStart(2, "0")}
+                  <span className="text-sm font-semibold text-muted shrink-0 mt-1 md:mt-0 w-6">
+                    {idx + 1}
                   </span>
                   <div>
                     <h3 className="text-xl sm:text-2xl font-bold text-foreground group-hover:text-accent transition-colors flex items-center gap-2">
@@ -387,12 +368,12 @@ export function ProjectsSection() {
                 </div>
 
                 <div className="flex items-center gap-3 self-end md:self-auto shrink-0">
-                  <span className="text-xs font-mono text-muted">{project.category}</span>
+                  <span className="text-xs font-medium text-muted">{project.category}</span>
                   <div className="flex gap-1">
                     {project.tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 text-[10px] font-mono rounded bg-background border border-border text-foreground/80"
+                        className="px-2 py-0.5 text-[10px] font-medium rounded bg-background border border-border text-foreground/80"
                       >
                         {tag}
                       </span>
@@ -437,7 +418,7 @@ export function ProjectsSection() {
               {/* Modal Top Bar */}
               <div className="p-6 border-b border-border flex items-center justify-between shrink-0 bg-surface">
                 <div>
-                  <span className="text-xs font-mono uppercase tracking-wider text-accent font-semibold">
+                  <span className="text-xs text-accent font-semibold capitalize">
                     {selectedProject.category}
                   </span>
                   <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground mt-0.5">
@@ -468,7 +449,7 @@ export function ProjectsSection() {
 
                 {/* Description */}
                 <div>
-                  <h4 className="text-xs font-mono uppercase tracking-wider text-muted mb-2">
+                  <h4 className="text-xs font-semibold text-muted mb-2">
                     Architecture &amp; Overview
                   </h4>
                   <p className="text-sm sm:text-base leading-relaxed text-foreground/90">
@@ -479,7 +460,7 @@ export function ProjectsSection() {
                 {/* Highlights */}
                 {selectedProject.highlights && selectedProject.highlights.length > 0 && (
                   <div>
-                    <h4 className="text-xs font-mono uppercase tracking-wider text-muted mb-3">
+                    <h4 className="text-xs font-semibold text-muted mb-3">
                       Key Engineering Accomplishments
                     </h4>
                     <ul className="space-y-2.5">
@@ -495,14 +476,14 @@ export function ProjectsSection() {
 
                 {/* Technologies */}
                 <div>
-                  <h4 className="text-xs font-mono uppercase tracking-wider text-muted mb-2.5">
+                  <h4 className="text-xs font-semibold text-muted mb-2.5">
                     Technology Stack
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {selectedProject.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3 py-1 text-xs font-mono font-medium rounded-lg bg-background border border-border text-foreground"
+                        className="px-3 py-1 text-xs font-medium rounded-lg bg-background border border-border text-foreground"
                       >
                         {tag}
                       </span>
@@ -513,7 +494,7 @@ export function ProjectsSection() {
 
               {/* Modal Footer Actions */}
               <div className="p-6 border-t border-border bg-background/50 flex flex-wrap items-center justify-between gap-4 shrink-0">
-                <span className="text-xs text-muted font-mono">
+                <span className="text-xs text-muted font-medium">
                   Verified open-source repository
                 </span>
                 <div className="flex items-center gap-3">

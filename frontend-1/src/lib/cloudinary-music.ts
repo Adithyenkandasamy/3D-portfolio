@@ -3,7 +3,13 @@ import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 import fs from "fs/promises";
 import path from "path";
 import crypto from "crypto";
-import { saveDbMusicTrack, deleteDbMusicTrack } from "@/lib/db";
+import {
+  saveDbMusicTrack,
+  deleteDbMusicTrack,
+  getDbMusicTracks,
+  updateDbMusicTrackTitle,
+  getDbMusicTrackById,
+} from "@/lib/db";
 
 const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
 const apiKey = process.env.CLOUDINARY_API_KEY;
@@ -115,6 +121,10 @@ export async function listMusicAssets(options?: {
       });
 
       const rawResources = res.resources || [];
+      const dbTracks = await getDbMusicTracks().catch(() => null);
+      const dbMap = new Map((dbTracks || []).map((t) => [t.id, t.title]));
+      const dbFilenameMap = new Map((dbTracks || []).map((t) => [t.filename, t.title]));
+
       const assets: MusicAsset[] = rawResources
         .filter((r: { public_id: string }) => r.public_id.startsWith("portfolio/music/"))
         .map((r: {
@@ -136,11 +146,17 @@ export async function listMusicAssets(options?: {
             .replace(/[_-]/g, " ")
             .replace(/\b\w/g, (c) => c.toUpperCase());
 
+          const title =
+            dbMap.get(r.public_id) ||
+            dbMap.get(r.asset_id) ||
+            dbFilenameMap.get(filename) ||
+            cleanTitle;
+
           return {
-            id: r.asset_id || r.public_id,
+            id: r.public_id,
             publicId: r.public_id,
             filename,
-            title: cleanTitle,
+            title,
             format: (r.format || "mp3").toUpperCase(),
             bytes: r.bytes || 0,
             duration: r.duration,
@@ -178,6 +194,10 @@ async function listLocalMusicAssets(): Promise<MusicLibraryResult> {
   const localMusicDir = path.join(process.cwd(), "public", "uploads", "music");
   const defaultAudioDir = path.join(process.cwd(), "public", "audio");
 
+  const dbTracks = await getDbMusicTracks().catch(() => null);
+  const dbMap = new Map((dbTracks || []).map((t) => [t.id, t.title]));
+  const dbFilenameMap = new Map((dbTracks || []).map((t) => [t.filename, t.title]));
+
   const assets: MusicAsset[] = [];
 
   // Scan public/uploads/music
@@ -191,11 +211,14 @@ async function listLocalMusicAssets(): Promise<MusicLibraryResult> {
           .basename(f, ext)
           .replace(/[_-]/g, " ")
           .replace(/\b\w/g, (c) => c.toUpperCase());
+        const publicId = `portfolio/music/local_${f}`;
+        const title = dbMap.get(publicId) || dbFilenameMap.get(f) || cleanTitle;
+
         assets.push({
-          id: `local_music_${f}`,
-          publicId: `portfolio/music/local_${f}`,
+          id: publicId,
+          publicId,
           filename: f,
-          title: cleanTitle,
+          title,
           format: ext.replace(".", "").toUpperCase(),
           bytes: stats.size,
           url: `/uploads/music/${f}`,
@@ -216,11 +239,13 @@ async function listLocalMusicAssets(): Promise<MusicLibraryResult> {
     const stats = await fs.stat(defaultPath);
     // Add default track if not already present
     if (!assets.some((a) => a.filename === defaultFile)) {
+      const publicId = "portfolio/music/sakura_ambient";
+      const title = dbMap.get(publicId) || dbFilenameMap.get(defaultFile) || "Sakura Ambient Harmony";
       assets.unshift({
-        id: "default_sakura",
-        publicId: "portfolio/music/sakura_ambient",
+        id: publicId,
+        publicId,
         filename: "sakura.mp3",
-        title: "Sakura Ambient Harmony",
+        title,
         format: "MP3",
         bytes: stats.size,
         duration: 214,
@@ -246,9 +271,10 @@ async function listLocalMusicAssets(): Promise<MusicLibraryResult> {
 }
 
 /**
- * Uploads a single audio file to portfolio/music in Cloudinary (or local fallback)
+ * Uploads a single audio file to portfolio/music in Cloudinary (or local fallback).
+ * Supports user-defined custom title saved to Neon database.
  */
-export async function uploadMusicAsset(file: File): Promise<MusicAsset> {
+export async function uploadMusicAsset(file: File, customTitle?: string): Promise<MusicAsset> {
   const validation = validateAudioFile(file);
   if (!validation.valid) {
     throw new Error(validation.error);
@@ -259,67 +285,85 @@ export async function uploadMusicAsset(file: File): Promise<MusicAsset> {
 
   // 1. Upload to Cloudinary if configured
   if (isCloudinaryConfigured) {
-    return new Promise((resolve, reject) => {
-      // In Cloudinary, audio should be uploaded with resource_type: "video" (or "auto")
-      const uploadStream = cloudinary.uploader.upload_stream(
-        {
-          folder: "portfolio/music",
-          resource_type: "auto",
-          use_filename: true,
-          unique_filename: true,
-        },
-        (error, result: UploadApiResponse | undefined) => {
-          if (error || !result) {
-            console.error("Cloudinary audio upload failed:", error);
-            let errorMsg = error?.message || "Failed to upload audio to Cloudinary.";
-            if (errorMsg.includes("403") || (error as { http_code?: number })?.http_code === 403) {
-              errorMsg = "Cloudinary rejected upload (HTTP 403): Verify that Cloudinary API credentials in .env.local have media upload permissions.";
+    try {
+      const asset = await new Promise<MusicAsset>((resolve, reject) => {
+        // In Cloudinary, audio should be uploaded with resource_type: "video" (or "auto")
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder: "portfolio/music",
+            resource_type: "auto",
+            use_filename: true,
+            unique_filename: true,
+          },
+          (error, result: UploadApiResponse | undefined) => {
+            if (error || !result) {
+              console.error("Cloudinary audio upload failed:", error);
+              const errAny = error as any;
+              if (
+                errAny?.http_code === 403 ||
+                errAny?.statusCode === 403 ||
+                (typeof error?.message === "string" && error.message.includes("403"))
+              ) {
+                return reject(new Error("CLOUDINARY_403"));
+              }
+              let errorMsg = error?.message || "Failed to upload audio to Cloudinary.";
+              if (errorMsg.includes("403")) {
+                errorMsg = "Cloudinary rejected upload (HTTP 403): Verify that Cloudinary API credentials in .env.local have media upload permissions.";
+              }
+              reject(new Error(errorMsg));
+              return;
             }
-            reject(new Error(errorMsg));
-            return;
+
+            invalidateMusicCache();
+
+            const ext = result.format || path.extname(file.name).replace(".", "") || "mp3";
+            const filename = result.original_filename
+              ? `${result.original_filename}.${ext}`
+              : file.name;
+            const cleanTitle = path
+              .basename(filename, `.${ext}`)
+              .replace(/[_-]/g, " ")
+              .replace(/\b\w/g, (c) => c.toUpperCase());
+            const trackTitle = customTitle?.trim() || cleanTitle;
+
+            const asset: MusicAsset = {
+              id: result.public_id,
+              publicId: result.public_id,
+              filename,
+              title: trackTitle,
+              format: ext.toUpperCase(),
+              bytes: result.bytes,
+              duration: result.duration,
+              url: result.secure_url,
+              createdAt: result.created_at,
+              provider: "cloudinary",
+              resourceType: "video",
+            };
+
+            // Record in Neon Postgres database
+            saveDbMusicTrack({
+              id: asset.publicId,
+              title: asset.title,
+              filename: asset.filename,
+              url: asset.url,
+              duration: asset.duration,
+              format: asset.format,
+            }).catch((e) => console.warn("[Neon DB] Music track sync warning:", e));
+
+            resolve(asset);
           }
+        );
 
-          invalidateMusicCache();
-
-          const ext = result.format || path.extname(file.name).replace(".", "") || "mp3";
-          const filename = result.original_filename
-            ? `${result.original_filename}.${ext}`
-            : file.name;
-          const cleanTitle = path
-            .basename(filename, `.${ext}`)
-            .replace(/[_-]/g, " ")
-            .replace(/\b\w/g, (c) => c.toUpperCase());
-
-          const asset: MusicAsset = {
-            id: result.asset_id || result.public_id,
-            publicId: result.public_id,
-            filename,
-            title: cleanTitle,
-            format: ext.toUpperCase(),
-            bytes: result.bytes,
-            duration: result.duration,
-            url: result.secure_url,
-            createdAt: result.created_at,
-            provider: "cloudinary",
-            resourceType: "video",
-          };
-
-          // Record in Neon Postgres database
-          saveDbMusicTrack({
-            id: asset.publicId,
-            title: asset.title,
-            filename: asset.filename,
-            url: asset.url,
-            duration: asset.duration,
-            format: asset.format,
-          }).catch((e) => console.warn("[Neon DB] Music track sync warning:", e));
-
-          resolve(asset);
-        }
-      );
-
-      uploadStream.end(buffer);
-    });
+        uploadStream.end(buffer);
+      });
+      return asset;
+    } catch (err: any) {
+      if (err?.message === "CLOUDINARY_403") {
+        // Fall through to local fallback
+      } else {
+        throw err;
+      }
+    }
   }
 
   // 2. Local fallback if Cloudinary is not configured
@@ -338,12 +382,13 @@ export async function uploadMusicAsset(file: File): Promise<MusicAsset> {
   invalidateMusicCache();
 
   const cleanTitle = sanitizedBase.replace(/[_-]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  const trackTitle = customTitle?.trim() || cleanTitle;
 
   const localAsset: MusicAsset = {
-    id: `local_music_${localFileName}`,
+    id: `portfolio/music/local_${localFileName}`,
     publicId: `portfolio/music/local_${localFileName}`,
     filename: file.name,
-    title: cleanTitle,
+    title: trackTitle,
     format: ext.replace(".", "").toUpperCase(),
     bytes: file.size,
     url: `/uploads/music/${localFileName}`,
@@ -361,6 +406,58 @@ export async function uploadMusicAsset(file: File): Promise<MusicAsset> {
   }).catch((e) => console.warn("[Neon DB] Music track sync warning:", e));
 
   return localAsset;
+}
+
+/**
+ * Updates a music track's title in Neon Postgres and invalidates cache
+ */
+export async function updateMusicAssetTitle(idOrPublicId: string, newTitle: string): Promise<boolean> {
+  const clean = newTitle.trim();
+  if (!clean) throw new Error("Title cannot be empty");
+
+  let updated = await updateDbMusicTrackTitle(idOrPublicId, clean);
+  if (!updated) {
+    const { assets } = await listMusicAssets({ max_results: 100 });
+    const target = assets.find((a) => a.id === idOrPublicId || a.publicId === idOrPublicId);
+    if (target) {
+      updated = await saveDbMusicTrack({
+        id: target.publicId,
+        title: clean,
+        filename: target.filename,
+        url: target.url,
+        duration: target.duration,
+        format: target.format,
+      });
+    }
+  }
+
+  invalidateMusicCache();
+  return updated;
+}
+
+/**
+ * Retrieves a music track by ID from Neon database or active asset list
+ */
+export async function getMusicTrackById(id: string): Promise<MusicAsset | null> {
+  const dbTrack = await getDbMusicTrackById(id);
+  if (dbTrack) {
+    return {
+      id: dbTrack.id,
+      publicId: dbTrack.id,
+      filename: dbTrack.filename,
+      title: dbTrack.title,
+      format: (dbTrack.format || "MP3").toUpperCase(),
+      bytes: 0,
+      duration: dbTrack.duration,
+      url: dbTrack.url,
+      createdAt: dbTrack.created_at || new Date().toISOString(),
+      provider: dbTrack.url.includes("cloudinary") ? "cloudinary" : "local",
+      resourceType: "video",
+    };
+  }
+
+  const { assets } = await listMusicAssets({ max_results: 100 });
+  return assets.find((a) => a.id === id || a.publicId === id) || null;
 }
 
 /**
@@ -404,6 +501,21 @@ export async function deleteMusicAsset(publicId: string): Promise<void> {
       } catch {
         // Ignore if file doesn't exist
       }
+    }
+  }
+
+  // Handle bundled default audio tracks (e.g. sakura.mp3 / sakura_ambient)
+  if (
+    publicId === "portfolio/music/sakura_ambient" ||
+    publicId === "default_sakura" ||
+    publicId.includes("sakura_ambient") ||
+    publicId.includes("sakura.mp3")
+  ) {
+    const defaultSakuraPath = path.join(process.cwd(), "public", "audio", "sakura.mp3");
+    try {
+      await fs.unlink(defaultSakuraPath);
+    } catch {
+      // Ignore if file already deleted
     }
   }
 

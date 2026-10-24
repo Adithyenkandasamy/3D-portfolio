@@ -37,6 +37,12 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
       }
     }
 
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("no-intro") === "true" || navigator.webdriver) {
+      onComplete();
+      return;
+    }
+
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (mediaQuery.matches) {
       onComplete();
